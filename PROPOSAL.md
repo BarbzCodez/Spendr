@@ -8,8 +8,8 @@ Spendr is designed to simplify group expenses by offering a comprehensive platfo
 
 1. User Management
 2. Group Management
-3. Expense Categorization
-4. Expense Analytics
+3. Expense Analytics
+4. AI Receipt Image Parser
 5. Alerts and Notifications
 
 ## Technologies
