@@ -12,7 +12,7 @@ Spendr is designed to empower individuals in monitoring and managing their expen
 4. Expense Analytics
 5. Group Expense Splitting
 
-## User Stories 
+## User Stories
 
 ### Feature 1. User Management
 
@@ -62,10 +62,10 @@ Spendr is designed to empower individuals in monitoring and managing their expen
 
 ## Technologies
 
-- **Frontend**: 
+- **Frontend**:
   - **Framework**: React with TypeScript
 
-- **Backend**: 
+- **Backend**:
   - **Framework**: Flask (Python)
   - **Containerization**: Docker
 
