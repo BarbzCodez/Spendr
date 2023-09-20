@@ -15,11 +15,17 @@ Stakeholders:
 
 ## Core Features
 
+### Functional Features
+
 1. User Management
 2. Expense Entry and History
 3. Budget Management
 4. Expense Analytics
 5. Group Expense Splitting
+
+### Non-Functional Feature
+
+**Performance**: 95% of user requests (e.g. logging in, adding an expense, checking analytics) should be processed and receive a response within 1 second under normal load conditions.
 
 ## User Stories
 
