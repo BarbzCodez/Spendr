@@ -44,11 +44,6 @@ Spendr is designed to empower individuals in monitoring and managing their expen
     - Can define a monthly or weekly budget amount.
     - The budget is displayed prominently in the application.
 
-- **User Story**: I want to be notified when I am close to reaching or have exceeded my budget.
-  - **Acceptance Criteria**:
-    - Receive a notification when my expenses are nearing the set budget limit.
-    - Get alerted if I exceed the budget.
-
 ### Feature 4. Expense Analytics
 
 - **User Story**: As a Spendr user, I want visual insights on my spending habits to make informed decisions.
@@ -65,6 +60,17 @@ Spendr is designed to empower individuals in monitoring and managing their expen
 
 ## Technologies
 
-[Potential technologies to be listed here.]
+- **Frontend**: 
+  - **Framework**: React with TypeScript
 
-[template for user story and acceptance criteria](https://rubygarage.org/blog/clear-acceptance-criteria-and-why-its-important)
+- **Backend**: 
+  - **Framework**: Flask (Python)
+  - **Containerization**: Docker
+
+- **Database**: PostgreSQL
+
+- **Authentication**: JWT (JSON Web Tokens)
+
+- **Version Control**: Git
+
+- **CI/CD**: GitHub Actions
