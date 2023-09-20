@@ -1,5 +1,12 @@
 # COMP 4350 Proposal Team - Spendr
 
+## Team Members
+ - Daniel La Rocque (larocq17@myumanitoba.ca)
+ - Victoria Kogan (koganv@myumanitoba.ca)
+ - Mark Lysack (lysackm@myumanitoba.ca)       
+ - Barbara Guzman Romero (guzmanrb@myumanitoba.ca)
+ - Ethan Ducharme (duchar36@myumanitoba.ca)       
+ 
 ## Project Summary and Vision
 
 In today's digital age, the ability to efficiently manage finances has become essential for individuals and groups alike. With this understanding, we present Spendr, an innovative solution engineered to offer users a holistic view of their finances and empower them with the tools necessary to make informed decisions.
