@@ -56,7 +56,9 @@ Spendr is designed to empower individuals in monitoring and managing their expen
 - **User Story**: When I have shared expenses, I want to split them among friends or roommates easily.
   - **Acceptance Criteria**:
     - Can add usernames when inputting an expense.
+    - Can split an expense equally or by percentages.
     - The application calculates and displays the share each individual owes.
+    - The user that made the expense or the individual that owe, can mark as paid.
 
 ## Technologies
 
