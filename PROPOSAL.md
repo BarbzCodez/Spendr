@@ -2,7 +2,16 @@
 
 ## Project Summary and Vision
 
-Spendr is designed to empower individuals in monitoring and managing their expenses. The application provides intuitive features for individual expense tracking, analytics, budgeting, and seamless group expense splitting.
+In today's digital age, the ability to efficiently manage finances has become essential for individuals and groups alike. With this understanding, we present Spendr, an innovative solution engineered to offer users a holistic view of their finances and empower them with the tools necessary to make informed decisions.
+
+Vision Statement: Spendr envisions a world where individuals possess the capability and ease to monitor, analyze, and manage their expenses seamlessly, both individually and in groups. We aim to transform the financial landscape by fostering financial literacy, ensuring transparency in shared financial engagements, and promoting fiscally responsible habits.
+
+Stakeholders:
+
+1. **End Users** - Individuals looking to track, analyze, and manage their expenses.
+2. **Group Users** - Friends, roommates, and colleagues aiming to split and manage shared expenses.
+3. **COMP 4350 Team** - The dedicated team responsible for developing, maintaining, and improving the Spendr application.
+4. **COMP 4350 Instructors and Evaluators** - Those overseeing the project's progression, offering guidance, and assessing the product's quality.
 
 ## Core Features
 
@@ -62,17 +71,9 @@ Spendr is designed to empower individuals in monitoring and managing their expen
 
 ## Technologies
 
-- **Frontend**:
-  - **Framework**: React with TypeScript
-
-- **Backend**:
-  - **Framework**: Flask (Python)
-  - **Containerization**: Docker
-
+- **Frontend Framework**: React (TypeScript)
+- **Backend Framework**: Express.js (TypeScript)
 - **Database**: PostgreSQL
-
-- **Authentication**: JWT (JSON Web Tokens)
-
+- **Hosting**: Vercel
 - **Version Control**: Git
-
 - **CI/CD**: GitHub Actions
