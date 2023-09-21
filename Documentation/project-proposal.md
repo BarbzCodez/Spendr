@@ -37,51 +37,45 @@ Stakeholders:
 
 ## User Stories
 
-### Feature 1. User Management
+### User Management
 
-- **User Story**: As a potential user, I want to register an account with Spendr to start tracking my expenses so that I can start keep track of my expenses.
-  - **Acceptance Criteria**:
-    - Can register with username and password.
+- As a new user, I want to create an account so that I can start using the platform's functionalities.
+- As a logged-out user, I want to be able to sign in to the website so that I can access my personal profile.
+- As a logged-in user, I want to be able to log out so that I can ensure my data is secure when I'm done.
+- As a registered user, I want to delete my account so that I can remove all my data from the platform.
+- As a registered user, I want to change my username and password so that I can update my login credentials.
 
-- **User Story**: As a registered user, I want to log in to my Spendr account to access my expenses and budgets so that I can add my expenses.
-  - **Acceptance Criteria**:
-    - Can securely log in using username and password.
-    - Can log out of the account.
+### Expense Management
 
-### Feature 2. Expense Entry and History
+- As a user, I want to add a new expense with details like amount, date, and category so that I can keep track of my spending.
+- As a user, I want to delete an expense so that I can correct mistakes or remove unnecessary entries.
+- As a user, I want to edit my expenses so that I can update incorrect or outdated information.
+- As a user, I want to view a history of my expenses in a list so that I can see my past spending at a glance.
+- As a user, I want to filter my expenses by category so that I can analyze my spending in specific areas.
 
-- **User Story**: As a Spendr user, I want to quickly input my daily expenses so that I can view my history later.
-  - **Acceptance Criteria**:
-    - Can add an expense with category, amount, and date.
-    - The added expense is recorded and reflected immediately in my history.
+### Budget Management
 
-- **User Story**: As a Spendr user, I want to view and manage my expense history so that I have an easy way to understand my expenses.
-  - **Acceptance Criteria**:
-    - Can view a list of all recorded expenses.
-    - Can edit or delete an existing expense.
+- As a user, I want to define weekly, monthly, and annual budgets so that I can set spending limits for different time frames.
+- As a user, I want to modify my budgets so that I can adjust them based on changing financial circumstances.
+- As a user, I want to remove a budget so that I can de-clutter my financial plans if a particular budget is no longer relevant.
+- As a user, I want to set budgets for specific categories like food and travel so that I can allocate funds to different areas of my life.
+- As a user, I want to see how much of my budget I have used so that I can adjust my spending habits
 
-### Feature 3. Budget Management
+### Expense Analytics
 
-- **User Story**: As a Spendr user, I want to set a monthly or weekly budget to control my spending so that I don't overspend.
-  - **Acceptance Criteria**:
-    - Can define a monthly or weekly budget amount.
-    - The budget is displayed prominently in the application.
+- As a user, I want visual insights into my expenses so that I can quickly understand my spending habits.
+- As a user, I want to analyze my expenses for specific time frames so that I can review my spending over set periods.
+- As a user, I want to compare expenses over different time frames so that I can identify trends or changes in my spending.
+- As a user, I want to see spending patterns for each category so that I can gain insights into where most of my money goes.
+- As a user, I want visual alerts for changes in my spending patterns so that I can be promptly informed of significant variations in my spending habits.
 
-### Feature 4. Expense Analytics
+### Group Expense Splitting
 
-- **User Story**: As a Spendr user, I want visual insights on my spending habits so that I make informed financial decisions later.
-  - **Acceptance Criteria**:
-    - Can view graphical representations (like bar and pie charts) of my spending by category or time.
-    - Can see a breakdown of expenses for specific periods (weekly, monthly, yearly).
-
-### Feature 5. Group Expense Splitting
-
-- **User Story**: When I have shared expenses, I want to split them among friends or roommates so that I can keep track of who owes me money.
-  - **Acceptance Criteria**:
-    - Can add usernames when inputting an expense.
-    - Can split an expense equally or by percentages.
-    - The application calculates and displays the share each individual owes.
-    - The user that made the expense or the individual that owe, can mark as paid.
+- As a user, I want to add other members to an expense by username so that we can jointly manage the expense.
+- As a user, I want to mark a group expense as "paid" in the list of expenses so that everyone in the group is updated.
+- As a user, I want to view the status of 'paid' by all other users part of the expense so that I know who has settled their share.
+- As a user, I want to set a share of the price for the expense, such as evenly or unevenly distributed, so that everyone knows their contribution amount.
+- As a user, I want to remove myself from a group expense so that I no longer participate in its tracking or payment.
 
 ## Technologies
 
