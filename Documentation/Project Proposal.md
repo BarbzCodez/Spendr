@@ -1,4 +1,4 @@
-# COMP 4350 Proposal Team - Spendr
+# COMP 4350 Project Proposal - Team Spendr
 
 ## Team Members
 
