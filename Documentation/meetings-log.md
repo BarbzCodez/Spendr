@@ -1,4 +1,4 @@
-# Minutes Log
+# Minutes Logs
 
 We've agreed on having meetings every Monday at 3pm
 
