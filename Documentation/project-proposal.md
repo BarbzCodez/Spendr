@@ -59,7 +59,7 @@ Then I should successfully log out of my account.
 
 4. As a logged-in user, I want to delete my account so that I can remove all my data from the platform.\
 **Acceptance Criteria:**\
-Given I am a logged in user,\
+Given I am a logged-in user,\
 When I navigate to user settings and choose the option to delete my account and accept the confirmation,\
 Then my account should be securely deleted.
 
