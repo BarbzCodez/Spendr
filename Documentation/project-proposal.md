@@ -21,6 +21,16 @@ Stakeholders:
 3. **COMP 4350 Team** - The dedicated team responsible for developing, maintaining, and improving the Spendr application.
 4. **COMP 4350 Instructors and Evaluators** - Those overseeing the project's progression, offering guidance, and assessing the product's quality.
 
+## Technologies
+
+- **Frontend Framework**: React (TypeScript)
+- **Backend Framework**: Express.js (TypeScript)
+- **Database**: PostgreSQL
+- **Containerization**: Docker
+- **Hosting**: Vercel
+- **Version Control**: Git
+- **CI/CD**: GitHub Actions
+
 ## Core Features
 
 ### Functional Features
@@ -82,13 +92,3 @@ Stakeholders:
     - Can split an expense equally or by percentages.
     - The application calculates and displays the share each individual owes.
     - The user that made the expense or the individual that owe, can mark as paid.
-
-## Technologies
-
-- **Frontend Framework**: React (TypeScript)
-- **Backend Framework**: Express.js (TypeScript)
-- **Database**: PostgreSQL
-- **Containerization**: Docker
-- **Hosting**: Vercel
-- **Version Control**: Git
-- **CI/CD**: GitHub Actions
