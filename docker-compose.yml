@@ -1,0 +1,38 @@
+version: "3"
+services:
+  db:
+    image: postgres:latest
+    volumes:
+      - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
+    environment:
+      POSTGRES_DB: spendr_database
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin
+    ports:
+      - "5432:5432"
+
+  pgadmin:
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: 'admin@admin.com'
+      PGADMIN_DEFAULT_PASSWORD: 'root'
+    ports:
+      - '5050:80'
+  
+  server:
+    build: ./server
+    volumes:
+      - ./server/src:/app/src
+    ports:
+      - "7005:7005"
+    depends_on:
+      - db
+  
+  client:
+    build: ./client
+    volumes:
+      - ./client/src:/app/src
+    ports:
+      - "3000:3000"
+    depends_on:
+      - server

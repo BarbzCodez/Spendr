@@ -1,0 +1,47 @@
+# Node.js dependencies
+node_modules/
+client/node_modules/
+server/node_modules/
+
+# TypeScript
+*.tsbuildinfo
+server/build/
+server/.tscache/
+client/build/
+
+# Docker
+*.env
+.dockerenv
+docker-compose.override.yml
+
+# Logs and databases
+*.log
+*.sqlite
+
+# OS generated files
+.DS_Store
+Thumbs.db
+*.swp
+
+# Editor folders
+.vscode/
+.idea/
+*.iml
+
+# Temporary files
+*.tmp
+*.temp
+*.swp
+*.bak
+
+# Yarn integrity file
+.yarn-integrity
+
+# npm debug logs
+npm-debug.log*
+
+# Environment configuration files
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
