@@ -1,18 +1,13 @@
 # Spendr
 
 [Project Proposal](./Documentation/Project%20Proposal.md)
+[Meeting Logs](./Documentation/meetings-log.md)
 
 ## Sprints
 
 - Sprint 2
 - Sprint 3
 - Sprint 4
-
-## Coding conventions
-
--`kebab-case` for doc names
--`camelCase` for vars
-Do we have a preferred linter?
 
 ## Recommended Extensions
 
