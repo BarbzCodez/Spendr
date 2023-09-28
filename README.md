@@ -9,7 +9,6 @@
 - Sprint 3
 - Sprint 4
 
-
 ## Recommended Extensions
 
 - [GitLens](https://marketplace.visualstudio.com/items?itemName=eamodio.gitlens) - Amazing for historic purposes, and see who did what

@@ -206,12 +206,3 @@ Then the expense amount of everyone involved should be updated appropriately.
 Given I am a logged-in user,\
 When I remove myself from a group expense,\
 Then I should no longer participate in its tracking or payment.
-
-## Technologies
-
-- **Frontend Framework**: React (TypeScript)
-- **Backend Framework**: Express.js (TypeScript)
-- **Database**: PostgreSQL
-- **Containerization**: Docker
-- **Version Control**: Git
-- **CI/CD**: GitHub Actions
