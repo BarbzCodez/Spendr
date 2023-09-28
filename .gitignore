@@ -22,6 +22,7 @@ docker-compose.override.yml
 .DS_Store
 Thumbs.db
 *.swp
+*.un~
 
 # Editor folders
 .vscode/
