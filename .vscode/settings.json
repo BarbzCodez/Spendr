@@ -1,0 +1,15 @@
+{
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.formatOnPaste": false, // required
+  "editor.formatOnType": false, // required
+  "editor.formatOnSave": true, // optional
+  "editor.formatOnSaveMode": "file", // required to format on save
+  "files.autoSave": "onFocusChange", // optional but recommended
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true
+  },
+  "vs-code-prettier-eslint.prettierLast": false,
+  "eslint.workingDirectories": ["./client", "./server"],
+  "prettier.configPath": "./.prettierrc",
+  "prettier.requireConfig": true
+}
