@@ -1,13 +1,16 @@
 # Spendr
 
-[Project Proposal](./Documentation/Project%20Proposal.md)
-[Meeting Logs](./Documentation/meetings-log.md)
+Spendr is a web application that offers users a holistic view of their finances and empowers them with the tools they need to make informed financial decisions.
 
-## Sprints
+## Architecture
 
-- Sprint 2
-- Sprint 3
-- Sprint 4
+![client-server-architecture](https://github.com/BarbzCodez/Spendr/assets/64338275/5803a954-68ad-4cc6-9ec4-432e94b7d19c)
+
+
+## Documentation
+
+- [Project Proposal](./documentation/project-proposal.md)
+- [Meeting Logs](./documentation/meeting-logs/)
 
 ## Recommended Extensions
 
