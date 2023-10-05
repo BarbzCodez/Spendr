@@ -6,7 +6,6 @@ Spendr is a web application that offers users a holistic view of their finances 
 
 ![client-server-architecture](https://github.com/BarbzCodez/Spendr/assets/64338275/5803a954-68ad-4cc6-9ec4-432e94b7d19c)
 
-
 ## Documentation
 
 - [Project Proposal](./documentation/project-proposal.md)
