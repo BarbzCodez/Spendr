@@ -3,7 +3,7 @@
 ## Changelog
 
 | Version | Change Date | By                                                     | Description                                            |
-| ------- | ----------- | -------------------------------------------------- --- | ------------------------------------------------------ |
+| ------- | ----------- | ------------------------------------------------------ | ------------------------------------------------------ |
 | 0.1     | 10/02/2023  | [Daniel La Rocque](https://github.com/dlarocque)       | Created initial testing plan template in markdown.     |
 | 0.2     | 10/03/2023  | [Daniel La Rocque](https://github.com/dlarocque)       | Wrote initial draft for test plan.                     |
 | 0.3     | 10/04/2023  | [Barbara Guzman Romero](https://github.com/dlarocque)  | Fixed the tables, added Victoria back as a QA Analyst  |
