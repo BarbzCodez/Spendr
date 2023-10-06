@@ -260,7 +260,62 @@ describe('POST /update-user', () => {
     expect(response.body.errors).toBeDefined();
   });
 
+  it('returns 400 if user does not exist', async () => {
+    // Mocking the user check based on ID
+    prismaMock.user.findUnique.mockResolvedValueOnce(null);
+
+    const response = await request(app).post('/update-user').send({
+      username: 'testuser',
+      password: 'testpassword',
+      securityQuestion: 'Your favorite color?',
+      securityAnswer: 'Blue',
+    });
+
+    expect(response.status).toBe(400);
+  });
+
+  it('returns 400 if new username already exists', async () => {
+    // Mocking the user check based on ID
+    prismaMock.user.findUnique.mockResolvedValueOnce({
+      id: 1,
+      username: 'oldUsername',
+      password: 'oldpassword',
+      securityQuestion: 'Your old favorite color?',
+      securityAnswer: 'OldBlue',
+    });
+
+    // Mocking the user check based on new username
+    prismaMock.user.findUnique.mockResolvedValueOnce({
+      id: 1,
+      username: 'existingUsername',
+      password: 'existingPasswor',
+      securityQuestion: 'Your old favorite color?',
+      securityAnswer: 'OldBlue',
+    }); // Indicates new username doesn't exist
+
+    const response = await request(app).post('/update-user').send({
+      username: 'testuser',
+      password: 'testpassword',
+      securityQuestion: 'Your favorite color?',
+      securityAnswer: 'Blue',
+    });
+
+    expect(response.status).toBe(400);
+  });
+
   it('returns 200 if user is updated', async () => {
+    // Mocking the user check based on ID
+    prismaMock.user.findUnique.mockResolvedValueOnce({
+      id: 1,
+      username: 'oldUsername',
+      password: 'oldpassword',
+      securityQuestion: 'Your old favorite color?',
+      securityAnswer: 'OldBlue',
+    });
+
+    // Mocking the user check based on new username
+    prismaMock.user.findUnique.mockResolvedValueOnce(null); // Indicates new username doesn't exist
+
     prismaMock.user.update.mockResolvedValue({
       id: 1,
       username: 'testuser',
@@ -280,7 +335,7 @@ describe('POST /update-user', () => {
   });
 
   it('returns 500 when there is a server error', async () => {
-    prismaMock.user.update.mockRejectedValue(new Error()); // Mocking database error
+    prismaMock.user.findUnique.mockRejectedValue(new Error()); // Mocking database error
 
     const response = await request(app).post('/update-user').send({
       username: 'testuser',
