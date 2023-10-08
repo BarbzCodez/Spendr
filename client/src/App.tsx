@@ -4,7 +4,7 @@ import { Routes, Route, BrowserRouter } from 'react-router-dom';
 import CssBaseline from '@mui/material/CssBaseline';
 
 import theme from './assets/styles/theme';
-import Greetings from './pages/Greetings/Greetings';
+import Greetings from './pages/Greetings';
 
 /**
  * main App component
