@@ -2,11 +2,12 @@
 
 ## Changelog
 
-| Version | Change Date | By                                               | Description                                        |
-| ------- | ----------- | ------------------------------------------------ | -------------------------------------------------- |
-| 0.1     | 10/02/2023  | [Daniel La Rocque](https://github.com/dlarocque) | Created initial testing plan template in markdown. |
-| 0.2     | 10/03/2023  | [Daniel La Rocque](https://github.com/dlarocque) | Wrote initial draft for test plan. |
-| 0.3     | 10/08/2023  | [Daniel La Rocque](https://github.com/dlarocque) | Wrote final unit test cases and added integration tests. |
+| Version | Change Date | By                                                     | Description                                            |
+| ------- | ----------- | ------------------------------------------------------ | ------------------------------------------------------ |
+| 0.1     | 10/02/2023  | [Daniel La Rocque](https://github.com/dlarocque)       | Created initial testing plan template in markdown.     |
+| 0.2     | 10/03/2023  | [Daniel La Rocque](https://github.com/dlarocque)       | Wrote initial draft for test plan.                     |
+| 0.3     | 10/04/2023  | [Barbara Guzman Romero](https://github.com/BarbzCodez) | Fixed the tables, added Victoria back as a QA Analyst  |
+| 0.4     | 10/08/2023  | [Daniel La Rocque](https://github.com/dlarocque)       | Added final unit tests and added integration tests     |
 
 ## 1. Introduction
 
@@ -16,13 +17,13 @@ This test plan covers unit, integration, acceptance, regression, and load testin
 
 ### 1.2 Roles and Responsibilities
 
-| Name | UMNet ID | GitHub username | Role |
-| ---- | -------- | --------------- | ---- |
-| Daniel La Rocque | larocq17 | dlarocque | Backend Developer, Test Manager, Security Analyst |
-| Victoria Kogan | koganv | VictoriaKGN | Frontend Developer |
-| Mark Lysack | lysackm | lysackm | Backend Developer, DevOps Developer |
-| Barbara Guzman Romero | guzmanrb | BarbzCodez | Frontend Developer, QA Analyst |
-| Ethan Ducharme | duchar36 | DucharmeEthan | Backend Developer, Database Administrator |
+| Name                  | UMNet ID  | GitHub username | Role                                                |
+| --------------------- | --------- | --------------- | --------------------------------------------------- |
+| Daniel La Rocque      | larocq17  | dlarocque       | Backend Developer, Test Manager, Security Analyst   |
+| Victoria Kogan        | koganv    | VictoriaKGN     | Frontend Developer, QA Analyst                      |
+| Mark Lysack           | lysackm   | lysackm         | Backend Developer, DevOps Developer                 |
+| Barbara Guzman Romero | guzmanrb  | BarbzCodez      | Frontend Developer, QA Analyst                      |
+| Ethan Ducharme        | duchar36  | DucharmeEthan   | Backend Developer, Database Administrator           |
 
 ### 1.3 Role definitions
 
@@ -149,10 +150,12 @@ This test plan covers unit, integration, acceptance, regression, and load testin
 
 ## 4. Terms/Acronyms
 
-| Term/Acronym | Definition                    |
-| ------------ | ----------------------------- |
-| API          | Application Program Interface |
-| AUT          | Application Under Test        |
-| QA           | Quality Assurance             |
-| CI/CD        | Continuous Integration / Continuous Deployment |
-| JWT          | JSON Web Token |
+Make a mention of any terms or acronyms used in the project
+
+| Term/Acronym | Definition                                       |
+| ------------ | ------------------------------------------------ |
+| API          | Application Program Interface                    |
+| AUT          | Application Under Test                           |
+| QA           | Quality Assurance                                |
+| CI/CD        | Continuous Integration / Continuous Deployment   |
+| JWT          | JSON Web Token                                   |
