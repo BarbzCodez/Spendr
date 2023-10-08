@@ -4,9 +4,11 @@ import { AppBar, Box, Button } from '@mui/material';
 export const StyledHeader = styled(AppBar)({
   position: 'static',
   background: '#1a1a2480',
-  height: 60,
+  height: 75,
   alignItems: 'center',
   justifyContent: 'center',
+  margin: 0,
+  padding: 0,
 });
 
 export const TabsBox = styled(Box)({

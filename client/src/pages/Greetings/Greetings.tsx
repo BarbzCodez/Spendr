@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { StyledDiv } from '../../assets/styles/styles';
-import Header from '../../components/Header/Header';
+import Header from '../../components/Header';
 
 /**
  * greetings page component
@@ -9,7 +9,7 @@ import Header from '../../components/Header/Header';
 const Greetings = () => {
   return (
     <StyledDiv>
-      <Header isLoggedIn={true} setIsLoggedIn={() => null} />
+      <Header isLoggedIn={false} setIsLoggedIn={() => null} />
     </StyledDiv>
   );
 };

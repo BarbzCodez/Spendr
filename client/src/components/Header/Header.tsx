@@ -11,9 +11,11 @@ import {
   MenuItem,
 } from '@mui/material';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import { Link } from 'react-router-dom';
 
 import { StyledHeader, TabsBox, TabButton } from './styles';
 import { LoggedInProps } from '../../interfaces/interfaces';
+import logo from '../../assets/images/spendr_1.png';
 
 /**
  * the top header component
@@ -46,26 +48,15 @@ const Header: React.FC<LoggedInProps> = ({ isLoggedIn, setIsLoggedIn }) => {
 
   return (
     <StyledHeader>
-      <Container maxWidth="xl">
+      <Container maxWidth="xl" style={{ padding: 0 }}>
         <Toolbar disableGutters>
-          <Typography
-            variant="h6"
-            noWrap
-            component="a"
-            href="#app-bar-with-responsive-menu"
-            sx={{
-              mr: 2,
-              display: { xs: 'none', md: 'flex' },
-              fontFamily: 'monospace',
-              fontWeight: 700,
-              letterSpacing: '.3rem',
-              color: 'inherit',
-              textDecoration: 'none',
-            }}
-          >
-            LOGO
-          </Typography>
-
+          <Link to="/home">
+            <img
+              src={logo}
+              alt="Logo"
+              style={{ height: '100%', width: '85px', objectFit: 'contain' }}
+            />
+          </Link>
           {isLoggedIn && (
             <TabsBox>
               <TabButton key={'Expenses'} href="/expenses">
