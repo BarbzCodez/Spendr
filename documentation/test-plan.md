@@ -5,7 +5,8 @@
 | Version | Change Date | By                                               | Description                                        |
 | ------- | ----------- | ------------------------------------------------ | -------------------------------------------------- |
 | 0.1     | 10/02/2023  | [Daniel La Rocque](https://github.com/dlarocque) | Created initial testing plan template in markdown. |
-| 0.2     | 10/03/2023  | [Daniel La Rocque](https://github.com/dlarocque) | Wrote initial draft for test plan.|
+| 0.2     | 10/03/2023  | [Daniel La Rocque](https://github.com/dlarocque) | Wrote initial draft for test plan. |
+| 0.3     | 10/08/2023  | [Daniel La Rocque](https://github.com/dlarocque) | Wrote final unit test cases and added integration tests. |
 
 ## 1. Introduction
 
@@ -46,65 +47,82 @@ This test plan covers unit, integration, acceptance, regression, and load testin
 ### Unit Tests
 
 1. User Management
-   - Return `201 Created` upon POST request to `/register` with valid payload.
-   - Return `409 Conflict` upon POST request to `/register` with an already used username.
-   - Return `200 OK` upon POST to `/login` with correct credentials.
-   - Return `401 Unauthorized` upon POST to `/login` with incorrect credentials.
-   - Verify session termination upon POST to `/logout`.
-   - Return `200 OK` upon DELETE to `/account` from authenticated session.
-   - Return `200 OK` upon PATCH to `/account/username` with valid new username.
-   - Return `200 OK` upon PATCH to `/account/password` with valid old and new password.
-   - Return `200 OK` upon PATCH to `/account/password` with valid old and new security question or answer.
-   - Return `401 Unauthorized` upon accessing protected resource after `/logout`.
+   1. Return `201 Created` upon POST request to `/api/auth/register` with valid payload.
+   2. Return `400 Bad Request` upon POST request to `/api/auth/register` with an already used username.
+   3. Return `200 OK` and a JWT upon POST to `/api/auth/login` with correct credentials.
+   4. Return `400 Bad Request` upon POST to `/api/auth/login` with incorrect credentials.
+   5. Return `200 OK` upon POST to `/api/auth/reset-password` with the correct security answer.
+   6. Return `400 Bad Request` upon POST to `/api/auth/reset-password` with the incorrect security answer.
+   7. Return `400 Bad Request` upon POST to `/api/auth/reset-password` with a missing payload.
+   8. Return `200 OK` upon PUT to `/api/account` with valid new user data.
+   9. Return `400 Bad Request` upon PUT to `/api/account` with a new username that already exists.
+   10. Return `200 OK` upon DELETE to `/api/account` from authenticated session.
 2. Expense Entry and History
-   - Return `201 Created` upon POST to `/expense` with valid payload.
-   - Return `200 OK` upon DELETE to `/expense/{id}` with valid expense ID.
-   - Return `200 OK` upon PATCH to `/expense/{id}` with valid updates.
-   - Return `200 OK` upon GET to `/expense/{id}`.
-   - Return `200 OK` upon GET to `/expenses`.
-   - Return correct expenses in payload upon GET to `/expenses`.
-   - Return `400 Bad Request` upon POST to `/expense` with invalid payload.
-   - Return `404 Not Found` upon DELETE to `/expense/{nonExistingId}`.
-   - Return `404 Not Found` upon PATCH to `/expense/{nonExistingId}`.
-   - Return `401 Unauthorized` upon POST to `/expense` without valid session.
+   1. Return `201 Created` upon PUT to `/api/expenses` with a valid new expense.
+   2. Return `200 OK` upon DELETE to `/api/expenses/:id` with valid expense ID.
+   3. Return `200 OK` upon PATCH to `/api/expenses/:id` with valid updates.
+   4. Return `200 OK` and correct expenses upon GET to `/api/expenses`.
+   5. Return `200 OK` and correct expense upon GET to `/api/expenses/:id` with a valid expense ID.
+   6. Return `400 Bad Request` upon POST to `/api/expenses/:id` with an invalid payload.
+   7. Return `400 Bad Request` upon POST to `/api/expenses/:id` with an invalid expense value.
+   8. Return `404 Not Found` upon DELETE to `/api/expenses/:id` with a non-existent expense ID.
+   9. Return `404 Not Found` upon PATCH to `/api/expenses/:id` with a non-existent expense ID.
+   10. Return `400 Bad Request` upon PATCH to `/api/expenses/:id` with an invalid expense.
 3. Budget Management
-   - Return `201 Created` upon POST to `/budget` with valid payload for setting a budget.
-   - Return `200 OK` upon PATCH to `/budget/{id}` with valid updates.
-   - Return `200 OK` upon DELETE to `/budget/{id}` with a valid budget ID.
-   - Return `200 OK` upon GET to `/budgets` to retrieve all set budgets.
-   - Return `400 Bad Request` upon POST to `/budget` with invalid payload.
-   - Return `404 Not Found` upon DELETE to `/budget/{nonExistingId}`.
-   - Return `404 Not Found` upon PATCH to `/budget/{nonExistingId}` with invalid updates.
-   - Return `200 OK` upon GET to `/budget/{id}` with a valid budget ID.
-   - Return `401 Unauthorized` upon POST to `/budget` without valid session
+   1. Return `201 Created` upon POST to `/api/budgets` with valid payload for setting a budget.
+   2. Return `200 OK` upon PUT to `/api/budgets/:id` with valid budget.
+   3. Return `200 OK` upon DELETE to `/api/budgets/:id` with a valid budget ID.
+   4. Return `200 OK` and all the correct budgets upon GET to `/api/budgets` to retrieve all set budgets.
+   5. Return `200 OK` and the correct budget upon GET to `/api/budget/:id` to retrieve a specific budget.
+   6. Return `400 Bad Request` upon POST to `/api/budgets` with invalid payload.
+   7. Return `404 Not Found` upon DELETE to `/api/budgets/:id` with a budget ID that does not exist.
+   8. Return `404 Not Found` upon PUT to `/api/budgets/:id` with an invalid payload.
+   9. Return `400 Bad Request` upon GET to `/api/budgets/:id` with a budget ID that does not exist.
+   10. Return `400 Bad Request` upon POST to `/api/budgets` with an negative budget amount.
 4. Expense Analytics
-   - Return `200 OK` upon GET to `/analytics` to retrieve analytics data.
-   - Return `200 OK` upon POST to `/analytics/timeframe` with valid time frame payload.
-   - Verify correct expense comparison upon GET to `/analytics/compare?timeFrame1={timeFrame1}&timeFrame2={timeFrame2}`.
-   - Verify spending patterns upon GET to `/analytics?category=food`.
-   - Return `400 Bad Request` upon POST to `/analytics/timeframe` with invalid time frame.
-   - Verify alert generation upon significant variations in spending patterns.
-   - Return `401 Unauthorized` upon GET to `/analytics` without valid session.
-   - Return `404 Not Found` upon accessing non-existing analytics endpoint.
+   1. Return `200 OK` and average amount spent per day for a month upon GET to `/api/analytics/average-daily/` with a valid year and month.
+   2. Return `400 Bad Request` upon GET to `/api/analytics/average-daily` for a month in the future.
+   3. Return `400 Bad Request` upon GET to `/api/analytics/average-daily` with invalid date formats.
+   4. Return `200 OK` and average amount spent per day for a month for a category upon GET to `/api/analytics/average-daily/` with a valid year, month, and category.
+   5. Return `400 Bad Request` upon GET to `/api/analytics/average-daily` for a category that does not exist.
+   6. Return `400 Bad Request` upon GET to `/api/analytics/average-daily` with a missing payload.
+   7. Return `200 OK` and average amount spent per month since the first month upon GET to `/api/analytics/average-monthly`.
+   8. Return `200 OK` and total amount spent for each category upon GET to `/api/analytics/amount/`.
+   9. Return `200 OK` and total amount spent for a specific category upon GET to `/api/analytics/amount` with an existing category.
+   10. Return `400 Bad Request` upon GET to `/api/analytics/amount` with a category that does not exist.
 5. Group Expense Splitting
-   - Return `201 Created` upon POST to `/groupExpense` with valid payload for adding an expense.
-   - Verify other members' usernames are prompted upon POST to `/groupExpense`.
-   - Return `200 OK` upon PATCH to `/groupExpense/{id}/markPaid` to mark a group expense as paid.
-   - Return `200 OK` upon GET to `/groupExpense/{id}` to retrieve status of 'paid' by all other users.
-   - Verify updated expense amounts upon setting contributions (even or custom percentages).
-   - Return `200 OK` upon DELETE to `/groupExpense/{id}/removeSelf` to remove oneself from a group expense.
-   - Return `400 Bad Request` upon POST to `/groupExpense` with invalid payload.
-   - Return `404 Not Found` upon DELETE to `/groupExpense/{nonExistingId}`.
-   - Return `404 Not Found` upon PATCH to `/groupExpense/{nonExistingId}` with invalid updates.
-   - Return `401 Unauthorized` upon POST to `/groupExpense` without valid session.
+   1. Return `201 Created` upon POST to `/api/group-expenses` with valid amount, breakdown, and users that exist.
+   2. Return `200 OK` and correct group expense data upon GET to `/api/group-expenses/:id` with an existing group expense ID.
+   3. Return `200 OK` upon PUT to `/api/group-expenses/:id/paid` to mark a group expense as paid.
+   4. Return `200 OK` upon GET to `/api/group-expenses/:id/paid` to retrieve status of 'paid' by all other users.
+   5. Return `200 OK` and all group expense data upon GET to `/api/group-expenses`.
+   6. Return `200 OK` upon PUT to `/api/group-expenses/:id/opt-out` to opt out of a group expense.
+   7. Return `200 OK` upon DELETE to `/api/group-expenses/:id` to delete a group expense, as the creator of the expense with a valid group expense ID.
+   8. Return `400 Bad Request` upon POST to `/api/group-expenses` with a negative expense value.
+   9. Return `400 Bad Request` upon POST to `/api/group-expenses` including a username that does not exist.
+   10. Return `400 Bad Request` upon GET to `/api/group-expenses/:id` with a group expense ID that does not exist.
 
-#### Integration Tests
+### Integration Tests
+
+1. After creating a new user with a POST request to `/api/auth/register`, the new user data is found in the database with the hashed security answer and password.
+2. After a client obtains JWT from signing in via POST to `/api/auth/login`, the JWT can be used to make request to an authorized route.
+3. After a client sends the correct security answer via POST to `/api/auth/reset-password`, their password is successfully hashed and updated in the database.
+4. After a client sends new user data via POST to `/api/account/`, their new user data is updated in the database.
+5. After an expense is created via POST to `/api/expenses`, the user can then fetch the expense they just created via GET to `/api/expenses/:id`.
+6. After an expense is deleted via POST to `/api/expenses/:id`, the expense no longer exists in the database, and they can no longer fetch the expense they just deleted via GET to `/api/expenses/:id`.
+7. After an expense is created via POST to `/api/expenses`, it correctly contributes to the current months average daily spending retrieved from `/api/analytics/average-daily`.
+8. After a user deletes their account via DELETE to `/api/account`, all data in the database associated with their user is deleted, except for group expenses.
+9. After a user creates a group expense via POST to `/api/group-expenses`, and marks it as paid via `/api/group-expenses/:id`, the expense is added to their expenses in the database.
+10. After a user creates a budget via POST to `/api/budgets`, the budget exists in the database and is associated with their account.
 
 ### 2.2 Test Completeness
 
-- 100% back-end code coverage
+- 100% back-end code coverage according to Jest
+- 10 Integration tests
+- Acceptance tests function as they are described in markdown files
 - All unit, integration, regression, and acceptance tests pass
 - All tests will be ran against each commit in each pull request
+- Regression tests must pass on the most recent commit in master
 
 ## 3. Resource & Environment Needs
 
@@ -114,26 +132,22 @@ This test plan covers unit, integration, acceptance, regression, and load testin
 
 - **Bug-tracking tool**: GitHub Issues
 - **Automation tools**: Jest
+- **Code coverage**: Jest
 - **CI/CD**: GitHub Actions
 
 **Backend**:
 
 - Jest
 - Chai
+- Supertest
 
 ### 3.2 Test Environment
 
-It mentions the minimum hardware requirements that will be used to test the Application.
-
-**Example**, following software's are required in addition to client-specific software.
-
-- Windows 10
-- Docker-compose
+- Windows 10 or Ubuntu 22
+- Docker-compose (latest version)
 - Chrome (latest version)
 
 ## 4. Terms/Acronyms
-
-Make a mention of any terms or acronyms used in the project
 
 | Term/Acronym | Definition                    |
 | ------------ | ----------------------------- |
@@ -141,3 +155,4 @@ Make a mention of any terms or acronyms used in the project
 | AUT          | Application Under Test        |
 | QA           | Quality Assurance             |
 | CI/CD        | Continuous Integration / Continuous Deployment |
+| JWT          | JSON Web Token |
