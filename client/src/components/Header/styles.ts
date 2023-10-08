@@ -7,8 +7,6 @@ export const StyledHeader = styled(AppBar)({
   height: 75,
   alignItems: 'center',
   justifyContent: 'center',
-  margin: 0,
-  padding: 0,
 });
 
 export const TabsBox = styled(Box)({
@@ -25,4 +23,6 @@ export const TabButton = styled(Button)({
   display: 'block',
   marginY: 0,
   padding: '10px 15px',
+  whiteSpace: 'nowrap',
+  minWidth: 'max-content',
 });

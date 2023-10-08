@@ -6,7 +6,6 @@ import {
   Typography,
   Menu,
   Container,
-  Button,
   Tooltip,
   MenuItem,
 } from '@mui/material';
@@ -48,13 +47,13 @@ const Header: React.FC<LoggedInProps> = ({ isLoggedIn, setIsLoggedIn }) => {
 
   return (
     <StyledHeader>
-      <Container maxWidth="xl" style={{ padding: 0 }}>
+      <Container maxWidth="xl">
         <Toolbar disableGutters>
           <Link to="/home">
             <img
               src={logo}
               alt="Logo"
-              style={{ height: '100%', width: '85px', objectFit: 'contain' }}
+              style={{ width: '85px', objectFit: 'contain' }}
             />
           </Link>
           {isLoggedIn && (
