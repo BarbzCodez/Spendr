@@ -11,5 +11,7 @@ RUN npm install
 # Copy local code to container
 COPY . .
 
+RUN npx prisma generate
+
 # Start the app
 CMD npm run build && npm start
