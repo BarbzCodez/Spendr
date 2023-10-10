@@ -9,8 +9,8 @@ export const StyledDiv = styled('div')(({ theme }) => ({
 }));
 
 export const StyledButton = styled(Button)(({ theme }) => ({
-  backgroundColor: '#FFFFFF',
-  color: '#084F09',
+  backgroundColor: theme.palette.primary.contrastText,
+  color: theme.palette.info.main,
   fontVariant: 'button',
   fontSize: '18px',
   '&:hover': {
