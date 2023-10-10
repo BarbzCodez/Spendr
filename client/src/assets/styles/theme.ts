@@ -5,16 +5,13 @@ const theme = createTheme({
   typography: {
     fontFamily: 'Roboto',
     h3: {
-      fontFamily: 'Roboto',
       fontWeight: 'bold',
     },
     body1: {
-      fontFamily: 'Roboto',
       fontWeight: 'regular',
       fontSize: '18px',
     },
     button: {
-      fontFamily: 'Roboto',
       fontWeight: 'bold',
       fontSize: '18px',
     },
