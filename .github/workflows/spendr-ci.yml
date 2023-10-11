@@ -2,9 +2,9 @@ name: 'Spendr Continuous Integration'
 
 on:
   push:
-    branches: ['main']
+    branches: ['ci-cd-configurations']
   pull_request:
-    branches: ['main']
+    branches: ['ci-cd-configurations']
 
 jobs:
   build:
