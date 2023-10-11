@@ -5,4 +5,5 @@ export const StyledDiv = styled('div')(({ theme }) => ({
   minHeight: '100vh',
   display: 'flex',
   margin: '0px',
+  flexDirection: 'column',
 }));

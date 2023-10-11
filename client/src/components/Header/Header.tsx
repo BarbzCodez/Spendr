@@ -11,7 +11,7 @@ import {
   MenuItem,
 } from '@mui/material';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 import { StyledHeader, TabsBox, TabButton } from './styles';
 import { LoggedInProps } from '../../interfaces/interfaces';
@@ -24,6 +24,8 @@ import logo from '../../assets/images/spendr_1.png';
  * @returns {JSX.Element} - top header component
  */
 const Header: React.FC<LoggedInProps> = ({ isLoggedIn, setIsLoggedIn }) => {
+  const navigate = useNavigate();
+
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
     null,
   );
@@ -38,7 +40,7 @@ const Header: React.FC<LoggedInProps> = ({ isLoggedIn, setIsLoggedIn }) => {
 
   const handleNavSettings = () => {
     handleCloseUserMenu();
-    // navigate to user settings page
+    navigate('/user-settings');
   };
 
   const handleLogOut = () => {
@@ -68,7 +70,7 @@ const Header: React.FC<LoggedInProps> = ({ isLoggedIn, setIsLoggedIn }) => {
               <TabButton key={'Analytics'} href="/analytics">
                 Analytics
               </TabButton>
-              <TabButton key={'Group Expenses'} href="/group-Expenses">
+              <TabButton key={'Group Expenses'} href="/group-expenses">
                 Group Expenses
               </TabButton>
             </TabsBox>
@@ -83,7 +85,7 @@ const Header: React.FC<LoggedInProps> = ({ isLoggedIn, setIsLoggedIn }) => {
               </Tooltip>
               <Menu
                 sx={{ mt: '45px' }}
-                id="menu-appbar"
+                id="menu-app-bar"
                 anchorEl={anchorElUser}
                 anchorOrigin={{
                   vertical: 'top',
