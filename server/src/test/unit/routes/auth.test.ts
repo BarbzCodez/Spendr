@@ -358,3 +358,55 @@ describe('POST /users/update-user', () => {
     expect(response.body.message).toBe('Server error');
   });
 });
+
+describe('DELETE /users/delete-account', () => {
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+
+  it('returns 400 if user does not exist', async () => {
+    // Mocking the user check based on ID
+    prismaMock.user.findUnique.mockResolvedValueOnce(null);
+
+    const response = await request(app)
+      .delete('/users/delete-account')
+      .send({});
+
+    expect(response.status).toBe(400);
+  });
+
+  it('returns 200 if user is deleted', async () => {
+    prismaMock.user.findUnique.mockResolvedValueOnce({
+      id: 1,
+      username: 'testuser',
+      password: 'testpassword',
+      securityQuestion: 'Your old favorite color?',
+      securityAnswer: 'Blue',
+    });
+
+    prismaMock.user.delete.mockResolvedValueOnce({
+      id: 1,
+      username: 'testuser',
+      password: 'testpassword',
+      securityQuestion: 'Your old favorite color?',
+      securityAnswer: 'Blue',
+    });
+
+    const response = await request(app)
+      .delete('/users/delete-account')
+      .send({});
+
+    expect(response.status).toBe(200);
+  });
+
+  it('returns 500 when there is a server error', async () => {
+    prismaMock.user.findUnique.mockRejectedValue(new Error()); // Mocking database error
+
+    const response = await request(app)
+      .delete('/users/delete-account')
+      .send({});
+
+    expect(response.status).toBe(500);
+    expect(response.body.message).toBe('Server error');
+  });
+});
