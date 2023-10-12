@@ -12,7 +12,7 @@ const router = express.Router();
 /**
  * Register a new user
  *
- * @route POST /api/auth/register
+ * @route POST /users/register
  * @group auth - Operations about authentication
  * @param {string} username.body.required - Username
  * @param {string} password.body.required - Password
@@ -82,7 +82,7 @@ router.post(
  *
  * This route will return a JWT that can be used to authenticate the user.
  *
- * @route POST /api/auth/login
+ * @route POST /users/login
  * @group auth - Operations about authentication
  * @param {string} username.body.required - Username
  * @param {string} password.body.required - Password
@@ -141,7 +141,7 @@ router.post(
  *
  * This route will reset a user's password if the security answer is correct.
  *
- * @route POST /api/auth/reset-password
+ * @route POST /users/reset-password
  * @group auth - Operations about authentication
  * @param {string} username.body.required - Username
  * @param {string} securityAnswer.body.required - Security Answer
@@ -211,7 +211,7 @@ router.post(
  * This route will update a user's username, password, security question, and security answer.
  * The user must be authenticated to make this request.
  *
- * @route POST /api/auth/update-user
+ * @route POST /users/update-user
  * @group auth - Operations about authentication
  * @param {string} username.body.required - Username
  * @param {string} password.body.required - Password
