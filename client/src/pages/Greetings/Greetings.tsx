@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Divider, Stack } from '@mui/material';
 
-import { StyledButton } from '../../assets/styles/styles';
+import { PrimaryButton } from '../../assets/styles/styles';
 import logo from '../../assets/images/spendr_1.png';
 import picture from '../../assets/images/stonks-nobackground.png';
 import {
@@ -36,26 +36,26 @@ const Greetings = () => {
           taking control of your expenses today and experience the freedom of
           financial clarity!
         </BodyText>
-        <StyledButton
+        <PrimaryButton
           variant="contained"
           href="/signup"
           style={{ width: '200px' }}
         >
           Get Started
-        </StyledButton>
+        </PrimaryButton>
         <Divider
           orientation="horizontal"
           style={{ width: '200px', margin: '1vh 0' }}
         >
           OR
         </Divider>
-        <StyledButton
+        <PrimaryButton
           variant="contained"
           href="/login"
           style={{ width: '200px', margin: '0' }}
         >
           Log In
-        </StyledButton>
+        </PrimaryButton>
       </LeftStack>
       <RightBox>
         <ClipArt src={picture} alt="picture" />

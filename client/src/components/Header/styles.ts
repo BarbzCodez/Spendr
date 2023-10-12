@@ -1,7 +1,7 @@
 import { styled } from '@mui/system';
 import { AppBar, Box, Button } from '@mui/material';
 
-export const StyledHeader = styled(AppBar)({
+export const PrimaryBar = styled(AppBar)({
   position: 'static',
   background: '#1a1a2480',
   height: 75,

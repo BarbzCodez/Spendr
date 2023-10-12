@@ -1,8 +1,8 @@
 import * as React from 'react';
-import { StyledDiv } from '../../assets/styles/styles';
+import { PrimaryDiv } from '../../assets/styles/styles';
 
 const Signup = () => {
-  return <StyledDiv></StyledDiv>;
+  return <PrimaryDiv></PrimaryDiv>;
 };
 
 export default Signup;

@@ -1,8 +1,8 @@
 import { styled } from '@mui/system';
-import { StyledDiv } from '../../assets/styles/styles';
+import { PrimaryDiv } from '../../assets/styles/styles';
 import { Box, Typography, Stack } from '@mui/material';
 
-export const GreetingsDiv = styled(StyledDiv)(() => ({
+export const GreetingsDiv = styled(PrimaryDiv)(() => ({
   width: '100vw',
   height: '100vh',
   padding: '10vh 10vw',
