@@ -5,6 +5,8 @@ import CssBaseline from '@mui/material/CssBaseline';
 
 import theme from './assets/styles/theme';
 import Greetings from './pages/Greetings';
+import Login from './pages/Login';
+import Signup from './pages/Signup';
 
 /**
  * main App component
@@ -17,6 +19,8 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Greetings />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<Signup />} />
         </Routes>
       </BrowserRouter>
     </ThemeProvider>
