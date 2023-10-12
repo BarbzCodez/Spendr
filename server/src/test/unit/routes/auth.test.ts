@@ -11,7 +11,7 @@ jest.mock('../../../middleware/authenticate', () => ({
   },
 }));
 
-describe('POST /register', () => {
+describe('POST /users/register', () => {
   afterEach(() => {
     jest.clearAllMocks();
   });
@@ -29,7 +29,7 @@ describe('POST /register', () => {
 
     prismaMock.user.create.mockResolvedValue(user);
 
-    const response = await request(app).post('/register').send({
+    const response = await request(app).post('/users/register').send({
       username: 'testuser1',
       password: 'testpassword',
       securityQuestion: 'Your favorite color?',
@@ -50,7 +50,7 @@ describe('POST /register', () => {
       securityAnswer: 'Red',
     });
 
-    const response = await request(app).post('/register').send({
+    const response = await request(app).post('/users/register').send({
       username: 'testuser2',
       password: 'testpassword',
       securityQuestion: 'Your favorite color?',
@@ -62,7 +62,7 @@ describe('POST /register', () => {
   });
 
   it('should return 400 if any required field is missing', async () => {
-    const response = await request(app).post('/register').send({
+    const response = await request(app).post('/users/register').send({
       username: 'testuser3',
       password: 'testpassword',
       securityQuestion: 'Your favorite color?',
@@ -75,7 +75,7 @@ describe('POST /register', () => {
   it('should return 500 if user fails to be created', async () => {
     prismaMock.user.create.mockRejectedValue(new Error()); // Mocking database error
 
-    const response = await request(app).post('/register').send({
+    const response = await request(app).post('/users/register').send({
       username: 'testuser3',
       password: 'testpassword',
       securityQuestion: 'Your favorite color?',
@@ -87,9 +87,9 @@ describe('POST /register', () => {
   });
 });
 
-describe('POST /login', () => {
+describe('POST /users/login', () => {
   it('should return 400 if the validation fails', async () => {
-    const response = await request(app).post('/login').send({
+    const response = await request(app).post('/users/login').send({
       username: 'testUser',
       password: 12345678, // Invalid password type (number instead of string)
     });
@@ -101,7 +101,7 @@ describe('POST /login', () => {
   it('should return 400 if username does not exist', async () => {
     prismaMock.user.findUnique.mockResolvedValue(null); // Mocking no user found
 
-    const response = await request(app).post('/login').send({
+    const response = await request(app).post('/users/login').send({
       username: 'wrongUsername',
       password: 'testPassword',
     });
@@ -120,7 +120,7 @@ describe('POST /login', () => {
       securityAnswer: 'Blue',
     });
 
-    const response = await request(app).post('/login').send({
+    const response = await request(app).post('/users/login').send({
       username: 'testUser',
       password: 'wrongPassword',
     });
@@ -141,7 +141,7 @@ describe('POST /login', () => {
       securityAnswer: hashedSecurityAnswer,
     });
 
-    const response = await request(app).post('/login').send({
+    const response = await request(app).post('/users/login').send({
       username: 'testUser',
       password: password,
     });
@@ -153,7 +153,7 @@ describe('POST /login', () => {
   it('should return 500 if there is a server error', async () => {
     prismaMock.user.findUnique.mockRejectedValue(new Error()); // Mocking database error
 
-    const response = await request(app).post('/login').send({
+    const response = await request(app).post('/users/login').send({
       username: 'testUser',
       password: 'testPassword',
     });
@@ -163,9 +163,9 @@ describe('POST /login', () => {
   });
 });
 
-describe('/reset-password', () => {
+describe('/users/reset-password', () => {
   it('returns 400 for validation errors', async () => {
-    const response = await request(app).post('/reset-password').send({
+    const response = await request(app).post('/users/reset-password').send({
       username: 123, // invalid username for testing
       securityAnswer: 'testAnswer',
       newPassword: 'newPassword',
@@ -178,7 +178,7 @@ describe('/reset-password', () => {
   it('returns 400 if user not found', async () => {
     prismaMock.user.findUnique.mockResolvedValue(null); // Mocking no user found
 
-    const response = await request(app).post('/reset-password').send({
+    const response = await request(app).post('/users/reset-password').send({
       username: 'testUser',
       securityAnswer: 'testAnswer',
       newPassword: 'newPassword',
@@ -198,7 +198,7 @@ describe('/reset-password', () => {
       securityAnswer: hashedAnswer,
     });
 
-    const response = await request(app).post('/reset-password').send({
+    const response = await request(app).post('/users/reset-password').send({
       username: 'testUser',
       securityAnswer: 'wrongAnswer',
       newPassword: 'newPassword',
@@ -219,7 +219,7 @@ describe('/reset-password', () => {
       securityAnswer: hashedAnswer,
     });
 
-    const response = await request(app).post('/reset-password').send({
+    const response = await request(app).post('/users/reset-password').send({
       username: 'testUser',
       securityAnswer: correctAnswer,
       newPassword: 'newPassword',
@@ -232,7 +232,7 @@ describe('/reset-password', () => {
   it('returns 500 if there is a server error', async () => {
     prismaMock.user.findUnique.mockRejectedValue(new Error()); // Mocking database error
 
-    const response = await request(app).post('/reset-password').send({
+    const response = await request(app).post('/users/reset-password').send({
       username: 'testUser',
       securityAnswer: 'testAnswer',
       newPassword: 'newPassword',
@@ -243,13 +243,13 @@ describe('/reset-password', () => {
   });
 });
 
-describe('POST /update-user', () => {
+describe('POST /users/update-user', () => {
   afterEach(() => {
     jest.clearAllMocks();
   });
 
   it('returns 400 for validation errors', async () => {
-    const response = await request(app).post('/update-user').send({
+    const response = await request(app).post('/users/update-user').send({
       username: 123, // not a string
       password: 'testpassword',
       securityQuestion: 'Your favorite color?',
@@ -264,7 +264,7 @@ describe('POST /update-user', () => {
     // Mocking the user check based on ID
     prismaMock.user.findUnique.mockResolvedValueOnce(null);
 
-    const response = await request(app).post('/update-user').send({
+    const response = await request(app).post('/users/update-user').send({
       username: 'testuser',
       password: 'testpassword',
       securityQuestion: 'Your favorite color?',
@@ -293,7 +293,7 @@ describe('POST /update-user', () => {
       securityAnswer: 'OldBlue',
     }); // Indicates new username doesn't exist
 
-    const response = await request(app).post('/update-user').send({
+    const response = await request(app).post('/users/update-user').send({
       username: 'testuser',
       password: 'testpassword',
       securityQuestion: 'Your favorite color?',
@@ -324,7 +324,7 @@ describe('POST /update-user', () => {
       securityAnswer: 'Blue',
     });
 
-    const response = await request(app).post('/update-user').send({
+    const response = await request(app).post('/users/update-user').send({
       username: 'testuser',
       password: 'testpassword',
       securityQuestion: 'Your favorite color?',
@@ -337,7 +337,7 @@ describe('POST /update-user', () => {
   it('returns 500 when there is a server error', async () => {
     prismaMock.user.findUnique.mockRejectedValue(new Error()); // Mocking database error
 
-    const response = await request(app).post('/update-user').send({
+    const response = await request(app).post('/users/update-user').send({
       username: 'testuser',
       password: 'testpassword',
       securityQuestion: 'Your favorite color?',
