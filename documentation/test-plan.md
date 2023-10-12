@@ -48,16 +48,16 @@ This test plan covers unit, integration, acceptance, regression, and load testin
 ### Unit Tests
 
 1. User Management
-   1. Return `201 Created` upon POST request to `/auth/register` with valid payload.
-   2. Return `400 Bad Request` upon POST request to `/auth/register` with an already used username.
-   3. Return `200 OK` and a JWT upon POST to `/auth/login` with correct credentials.
-   4. Return `400 Bad Request` upon POST to `/auth/login` with incorrect credentials.
-   5. Return `200 OK` upon POST to `/auth/reset-password` with the correct security answer.
-   6. Return `400 Bad Request` upon POST to `/auth/reset-password` with the incorrect security answer.
-   7. Return `400 Bad Request` upon POST to `/auth/reset-password` with a missing payload.
-   8. Return `200 OK` upon PUT to `/account` with valid new user data.
-   9. Return `400 Bad Request` upon PUT to `/account` with a new username that already exists.
-   10. Return `200 OK` upon DELETE to `/account` from authenticated session.
+   1. Return `201 Created` upon POST request to `/users/register` with valid payload.
+   2. Return `400 Bad Request` upon POST request to `/users/register` with an already used username.
+   3. Return `200 OK` and a JWT upon POST to `/users/login` with correct credentials.
+   4. Return `400 Bad Request` upon POST to `/users/login` with incorrect credentials.
+   5. Return `200 OK` upon POST to `/users/reset-password` with the correct security answer.
+   6. Return `400 Bad Request` upon POST to `/users/reset-password` with the incorrect security answer.
+   7. Return `400 Bad Request` upon POST to `/users/reset-password` with a missing payload.
+   8. Return `200 OK` upon PUT to `/users` with valid new user data.
+   9. Return `400 Bad Request` upon PUT to `/users` with a new username that already exists.
+   10. Return `200 OK` upon DELETE to `/users` from authenticated session.
 2. Expense Entry and History
    1. Return `201 Created` upon PUT to `/expenses` with a valid new expense.
    2. Return `200 OK` upon DELETE to `/expenses/:id` with valid expense ID.
@@ -105,9 +105,9 @@ This test plan covers unit, integration, acceptance, regression, and load testin
 
 ### Integration Tests
 
-1. After creating a new user with a POST request to `/auth/register`, the new user data is found in the database with the hashed security answer and password.
-2. After a client obtains JWT from signing in via POST to `/auth/login`, the JWT can be used to make request to an authorized route.
-3. After a client sends the correct security answer via POST to `/auth/reset-password`, their password is successfully hashed and updated in the database.
+1. After creating a new user with a POST request to `/users/register`, the new user data is found in the database with the hashed security answer and password.
+2. After a client obtains JWT from signing in via POST to `/users/login`, the JWT can be used to make request to an authorized route.
+3. After a client sends the correct security answer via POST to `/users/reset-password`, their password is successfully hashed and updated in the database.
 4. After a client sends new user data via POST to `/account/`, their new user data is updated in the database.
 5. After an expense is created via POST to `/expenses`, the user can then fetch the expense they just created via GET to `/expenses/:id`.
 6. After an expense is deleted via POST to `/expenses/:id`, the expense no longer exists in the database, and they can no longer fetch the expense they just deleted via GET to `/expenses/:id`.
