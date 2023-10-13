@@ -22,7 +22,7 @@ import logo from '../../assets/images/spendr_1.png';
  * @param {Function} setIsLoggedIn - Function to change the user's login state
  * @returns {JSX.Element} - top header component
  */
-const Header: React.FC<LoggedInProps> = ({ isLoggedIn, setIsLoggedIn }) => {
+const Header: React.FC<LoggedInProps> = ({ isLoggedIn }) => {
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
     null,
   );
