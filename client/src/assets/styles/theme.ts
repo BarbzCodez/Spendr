@@ -44,6 +44,7 @@ export const theme = createTheme({
     },
     info: {
       main: '#084F09',
+      light: '#000000',
     },
     error: {
       main: '#EE5A5E',
