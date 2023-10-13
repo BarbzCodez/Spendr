@@ -4,13 +4,11 @@ import React from 'react';
 import { SettingsList } from '../styles';
 import { SecondaryText } from './styles';
 
-interface SettingsListItemProps {}
-
 /**
  * Return the list of settings component
  * @returns {JSX.Element} - List of settings component
  */
-const SettingsListComponent: React.FC<SettingsListItemProps> = ({}) => {
+const SettingsListComponent = (): JSX.Element => {
   const SettingsListItem = (label: string, info: string) => (
     <ListItem
       key={label}

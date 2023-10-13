@@ -8,13 +8,11 @@ import {
   SecondaryText,
 } from './styles';
 
-interface DangerZoneProps {}
-
 /**
  * Return the the box component with the danger zone attributes
  * @returns {JSX.Element} - Danger Zone component
  */
-const DangerZone: React.FC<DangerZoneProps> = ({}) => {
+const DangerZone = (): JSX.Element => {
   const deleteButton = () => (
     <DeleteButton
       variant="outlined"
@@ -29,8 +27,7 @@ const DangerZone: React.FC<DangerZoneProps> = ({}) => {
     <Stack>
       <Typography variant="subtitle1">Delete Account</Typography>
       <SecondaryText>
-        After the account is deleted, there will be no means of recovering or
-        restoring this account.
+        Once deleted, there will be no way of retrieving this account
       </SecondaryText>
     </Stack>
   );

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Divider, Stack } from '@mui/material';
+import { Divider } from '@mui/material';
 
 import { PrimaryButton } from '../../assets/styles/styles';
 import logo from '../../assets/images/spendr_1.png';
