@@ -15,6 +15,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { PrimaryBar, TabsBox, TabButton } from './styles';
 import { LoggedInProps } from '../../interfaces/interfaces';
 import logo from '../../assets/images/spendr_1.png';
+import { theme } from '../../assets/styles';
 
 /**
  * the top header component
@@ -79,7 +80,10 @@ const Header: React.FC<LoggedInProps> = ({ isLoggedIn, setIsLoggedIn }) => {
             <Box sx={{ flexGrow: 0 }}>
               <Tooltip title="Open settings">
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                  <AccountCircleIcon fontSize="large" color="info" />
+                  <AccountCircleIcon
+                    fontSize="large"
+                    style={{ color: `${theme.palette.primary.contrastText}` }}
+                  />
                 </IconButton>
               </Tooltip>
               <Menu
@@ -99,10 +103,20 @@ const Header: React.FC<LoggedInProps> = ({ isLoggedIn, setIsLoggedIn }) => {
                 onClose={handleCloseUserMenu}
               >
                 <MenuItem key={'Settings'} onClick={handleNavSettings}>
-                  <Typography textAlign="center">Settings</Typography>
+                  <Typography
+                    textAlign="center"
+                    style={{ color: `${theme.palette.info.light}` }}
+                  >
+                    Settings
+                  </Typography>
                 </MenuItem>
                 <MenuItem key={'Log Out'} onClick={handleLogOut}>
-                  <Typography textAlign="center">Log Out</Typography>
+                  <Typography
+                    textAlign="center"
+                    style={{ color: `${theme.palette.info.light}` }}
+                  >
+                    Log Out
+                  </Typography>
                 </MenuItem>
               </Menu>
             </Box>
