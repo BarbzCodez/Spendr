@@ -287,25 +287,18 @@ router.post(
 );
 
 router.delete(
-  '/delete-account',
+  '/delete',
   authenticate,
   async (req: Request, res: Response) => {
     try {
       // Get user from token
       const userId = req.userId;
 
-      // Verify that the user that made the request exists
-      const user = await prisma.user.findUnique({
+      // Update user to be deleted
+      // If the user does not exist, this will throw an error
+      const updatedUser = await prisma.user.update({
         where: { id: userId },
-      });
-
-      if (!user) {
-        return res.status(400).json({ message: 'Invalid credentials' });
-      }
-
-      // Delete user from database
-      await prisma.user.delete({
-        where: { id: userId },
+        data: { userDeleted: true },
       });
 
       res.status(200).json({ message: 'User successfully deleted' });
