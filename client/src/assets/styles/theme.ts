@@ -1,7 +1,7 @@
 import { createTheme } from '@mui/material/styles';
 import '@fontsource/roboto/400.css';
 
-const theme = createTheme({
+export const theme = createTheme({
   typography: {
     fontFamily: 'Roboto',
     h3: {

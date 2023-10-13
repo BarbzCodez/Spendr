@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { StyledDiv } from '../../assets/styles/';
+import { PrimaryDiv } from '../../assets/styles/';
 import Header from '../../components/Header';
 import { Typography } from '@mui/material';
 import { SettingsStack, PopupDiv } from './styles';
@@ -12,7 +12,7 @@ import DangerZone from './components/DangerZone';
  */
 const UserSettings = (): JSX.Element => {
   return (
-    <StyledDiv>
+    <PrimaryDiv>
       <Header isLoggedIn={true} setIsLoggedIn={() => null} />
       <PopupDiv>
         <SettingsStack spacing={2} boxShadow={5}>
@@ -23,7 +23,7 @@ const UserSettings = (): JSX.Element => {
           <DangerZone />
         </SettingsStack>
       </PopupDiv>
-    </StyledDiv>
+    </PrimaryDiv>
   );
 };
 
