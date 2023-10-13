@@ -16,7 +16,7 @@ const UserSettings = (): JSX.Element => {
       <Header isLoggedIn={true} setIsLoggedIn={() => null} />
       <PopupDiv>
         <SettingsStack spacing={2} boxShadow={5}>
-          <Typography variant="h5" component="h2" noWrap>
+          <Typography variant="h4" component="h2" noWrap>
             {'User Settings'}
           </Typography>
           <SettingsListComponent />

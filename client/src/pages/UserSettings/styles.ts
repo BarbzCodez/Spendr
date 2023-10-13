@@ -1,22 +1,15 @@
 import { styled, Stack, Box } from '@mui/system';
-import { List } from '@mui/material';
-
-export const SettingsList = styled(List)({
-  width: '45vw',
-  minWidth: '350px',
-  maxWidth: '600px',
-});
+import { theme } from '../../assets/styles';
 
 export const SettingsStack = styled(Stack)({
-  background: 'rgb(53, 52, 73, 0.8)',
-  width: '50vw',
+  background: `${theme.palette.secondary.main} 0%`,
+  width: '60vw',
   minWidth: '450px',
   maxWidth: '700px',
   display: 'flex',
   margin: '0rem',
   flexDirection: 'column',
   color: 'white',
-
   alignItems: 'center',
   borderRadius: '15px',
   paddingTop: '2vh',

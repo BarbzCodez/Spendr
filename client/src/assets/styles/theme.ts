@@ -7,9 +7,23 @@ export const theme = createTheme({
     h3: {
       fontWeight: 'bold',
     },
+    h4: {
+      fontWeight: 'bold',
+    },
+    h5: {
+      fontWeight: 'bold',
+    },
     body1: {
       fontWeight: 'regular',
       fontSize: '18px',
+    },
+    subtitle1: {
+      fontWeight: 'normal',
+      fontSize: '18px',
+    },
+    subtitle2: {
+      fontWeight: 'lighter',
+      fontSize: '12px',
     },
     button: {
       fontWeight: 'bold',
@@ -26,10 +40,13 @@ export const theme = createTheme({
     },
     secondary: {
       main: '#353549',
-      contrastText: '#FFFFFF',
+      contrastText: '#B6B6B6',
     },
     info: {
       main: '#084F09',
+    },
+    error: {
+      main: '#EE5A5E',
     },
   },
 });
