@@ -6,14 +6,13 @@ import {
   Typography,
   Menu,
   Container,
-  Button,
   Tooltip,
   MenuItem,
 } from '@mui/material';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import { Link, useNavigate } from 'react-router-dom';
 
-import { StyledHeader, TabsBox, TabButton } from './styles';
+import { PrimaryBar, TabsBox, TabButton } from './styles';
 import { LoggedInProps } from '../../interfaces/interfaces';
 import logo from '../../assets/images/spendr_1.png';
 
@@ -49,14 +48,14 @@ const Header: React.FC<LoggedInProps> = ({ isLoggedIn, setIsLoggedIn }) => {
   };
 
   return (
-    <StyledHeader>
-      <Container maxWidth="xl" style={{ padding: 0 }}>
+    <PrimaryBar>
+      <Container maxWidth="xl">
         <Toolbar disableGutters>
           <Link to="/home">
             <img
               src={logo}
               alt="Logo"
-              style={{ height: '100%', width: '85px', objectFit: 'contain' }}
+              style={{ width: '85px', objectFit: 'contain' }}
             />
           </Link>
           {isLoggedIn && (
@@ -110,7 +109,7 @@ const Header: React.FC<LoggedInProps> = ({ isLoggedIn, setIsLoggedIn }) => {
           )}
         </Toolbar>
       </Container>
-    </StyledHeader>
+    </PrimaryBar>
   );
 };
 export default Header;
