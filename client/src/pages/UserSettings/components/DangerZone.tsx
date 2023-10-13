@@ -3,10 +3,12 @@ import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import React from 'react';
 import {
   DangerZoneStack,
+  DangerZoneStackElements,
   DeleteButton,
   ErrorBox,
   SecondaryText,
 } from './styles';
+import { theme } from '../../../assets/styles';
 
 /**
  * Return the the box component with the danger zone attributes
@@ -18,15 +20,16 @@ const DangerZone = (): JSX.Element => {
       variant="outlined"
       startIcon={<DeleteForeverIcon />}
       aria-label="delete-account-button"
+      sx={{ whiteSpace: 'nowrap' }}
     >
-      <Typography variant="subtitle2">Delete Forever</Typography>
+      Delete Forever
     </DeleteButton>
   );
 
   const deleteText = () => (
     <Stack>
       <Typography variant="subtitle1">Delete Account</Typography>
-      <SecondaryText>
+      <SecondaryText variant="subtitle2">
         Once deleted, there will be no way of retrieving this account
       </SecondaryText>
     </Stack>
@@ -34,16 +37,19 @@ const DangerZone = (): JSX.Element => {
 
   return (
     <DangerZoneStack>
-      <Typography variant="h6" component="h3" noWrap>
+      <Typography variant="h5" component="h3" noWrap>
         {'Danger Zone'}
       </Typography>
       <ErrorBox
         sx={{
-          border: '2px solid #EE5A5E',
+          border: '2px solid',
+          borderColor: theme.palette.error.main,
         }}
       >
-        {deleteText()}
-        {deleteButton()}
+        <DangerZoneStackElements>
+          {deleteText()}
+          {deleteButton()}
+        </DangerZoneStackElements>
       </ErrorBox>
     </DangerZoneStack>
   );
