@@ -44,7 +44,6 @@ export const DangerZoneStackElements = styled(Stack)({
   flexDirection: 'row',
   paddingLeft: '0.5rem',
   paddingRight: '0.5rem',
-  // padding: '0.5rem',
 });
 
 export const DangerZoneStack = styled(Stack)({
