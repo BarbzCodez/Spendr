@@ -17,7 +17,7 @@ import {
  * greetings page component
  * @returns {JSX.Element} - greetings page
  */
-const Greetings = () => {
+const Greetings = (): JSX.Element => {
   return (
     <GreetingsDiv>
       <LeftStack spacing={'3vh'} alignItems="center">

@@ -10,11 +10,12 @@ import {
   MenuItem,
 } from '@mui/material';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 import { PrimaryBar, TabsBox, TabButton } from './styles';
 import { LoggedInProps } from '../../interfaces/interfaces';
 import logo from '../../assets/images/spendr_1.png';
+import { theme } from '../../assets/styles';
 
 /**
  * the top header component
@@ -23,6 +24,8 @@ import logo from '../../assets/images/spendr_1.png';
  * @returns {JSX.Element} - top header component
  */
 const Header: React.FC<LoggedInProps> = ({ isLoggedIn }) => {
+  const navigate = useNavigate();
+
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
     null,
   );
@@ -37,7 +40,7 @@ const Header: React.FC<LoggedInProps> = ({ isLoggedIn }) => {
 
   const handleNavSettings = () => {
     handleCloseUserMenu();
-    // navigate to user settings page
+    navigate('/user-settings');
   };
 
   const handleLogOut = () => {
@@ -67,7 +70,7 @@ const Header: React.FC<LoggedInProps> = ({ isLoggedIn }) => {
               <TabButton key={'Analytics'} href="/analytics">
                 Analytics
               </TabButton>
-              <TabButton key={'Group Expenses'} href="/group-Expenses">
+              <TabButton key={'Group Expenses'} href="/group-expenses">
                 Group Expenses
               </TabButton>
             </TabsBox>
@@ -77,12 +80,15 @@ const Header: React.FC<LoggedInProps> = ({ isLoggedIn }) => {
             <Box sx={{ flexGrow: 0 }}>
               <Tooltip title="Open settings">
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                  <AccountCircleIcon fontSize="large" color="info" />
+                  <AccountCircleIcon
+                    fontSize="large"
+                    style={{ color: `${theme.palette.primary.contrastText}` }}
+                  />
                 </IconButton>
               </Tooltip>
               <Menu
                 sx={{ mt: '45px' }}
-                id="menu-appbar"
+                id="menu-app-bar"
                 anchorEl={anchorElUser}
                 anchorOrigin={{
                   vertical: 'top',
@@ -97,10 +103,20 @@ const Header: React.FC<LoggedInProps> = ({ isLoggedIn }) => {
                 onClose={handleCloseUserMenu}
               >
                 <MenuItem key={'Settings'} onClick={handleNavSettings}>
-                  <Typography textAlign="center">Settings</Typography>
+                  <Typography
+                    textAlign="center"
+                    style={{ color: `${theme.palette.info.light}` }}
+                  >
+                    Settings
+                  </Typography>
                 </MenuItem>
                 <MenuItem key={'Log Out'} onClick={handleLogOut}>
-                  <Typography textAlign="center">Log Out</Typography>
+                  <Typography
+                    textAlign="center"
+                    style={{ color: `${theme.palette.info.light}` }}
+                  >
+                    Log Out
+                  </Typography>
                 </MenuItem>
               </Menu>
             </Box>
