@@ -22,6 +22,7 @@ interface SignupTextFieldProps {
   id: string;
   label: string;
   value: string;
+  type?: string;
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   onBlur: (event: React.FocusEvent<HTMLInputElement>) => void;
   error?: boolean;
@@ -54,6 +55,7 @@ const SignupTextField: React.FC<SignupTextFieldProps> = ({
   id,
   label,
   value,
+  type = 'text',
   onChange,
   onBlur,
   error,
@@ -66,6 +68,7 @@ const SignupTextField: React.FC<SignupTextFieldProps> = ({
       label={label}
       variant="filled"
       size="small"
+      type={type}
       inputProps={{
         style: { color: theme.palette.primary.contrastText },
       }}
@@ -192,6 +195,7 @@ const SignupForm = (): JSX.Element => {
         id="password"
         label="Password"
         value={formik.values.password}
+        type="password"
         onChange={formik.handleChange}
         onBlur={formik.handleBlur}
         error={formik.touched.password && Boolean(formik.errors.password)}
@@ -205,6 +209,7 @@ const SignupForm = (): JSX.Element => {
         id="confirmPassword"
         label="Confirm Password"
         value={formik.values.confirmPassword}
+        type="password"
         onChange={formik.handleChange}
         onBlur={formik.handleBlur}
         error={

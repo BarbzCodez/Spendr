@@ -7,10 +7,6 @@ import { RightBox, LeftStack, SignupBox, ClipArt } from './styles';
 import picture from '../../assets/images/otherStonks-noBackgrounds.png';
 import SignupForm from './components/SignupForm';
 
-function delay(ms: number) {
-  return new Promise((resolve) => setTimeout(resolve, ms));
-}
-
 /**
  * Signup page component
  * @returns {JSX.Element} - Signup page
