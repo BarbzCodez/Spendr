@@ -1,13 +1,17 @@
 import * as React from 'react';
-import { Typography, TextField } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
+import { Typography, TextField, Alert, Snackbar } from '@mui/material';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
+import axios, { AxiosResponse, AxiosError } from 'axios';
 
 import { PrimaryButton, PrimaryDiv } from '../../assets/styles/styles';
 import Header from '../../components/Header';
 import { RightBox, LeftStack, SignupBox, ClipArt } from './styles';
 import picture from '../../assets/images/otherStonks-noBackgrounds.png';
-import theme from '../../assets/styles/theme';
+import { theme } from '../../assets/styles/theme';
+import { SignupFields } from '../../interfaces/interfaces';
+import { signup } from '../../api/UserAPI';
 
 const validationSchema = yup.object().shape({
   username: yup.string().required('Username cannot be empty'),
@@ -25,9 +29,60 @@ const validationSchema = yup.object().shape({
     .required('Security answer answer cannot be empty'),
 });
 
+function delay(ms: number) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
 const Signup = () => {
-  const handleSignUp = async () => {
-    return;
+  const navigate = useNavigate();
+  const [usernameError, setUsernameError] = React.useState(' ');
+  const [generalError, setGeneralError] = React.useState(false);
+  const [openSnackbar, setOpenSnackbar] = React.useState(false);
+
+  const handleSignup = async (values: SignupFields) => {
+    try {
+      const { username, password, securityQuestion, securityAnswer } = values;
+      const response: AxiosResponse = await signup({
+        username,
+        password,
+        securityQuestion,
+        securityAnswer,
+      });
+      if (response.status === 201) {
+        setOpenSnackbar(true);
+        await delay(3000);
+        navigate('/login');
+      } else {
+        setGeneralError(true);
+      }
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        const axiosError: AxiosError = error;
+        if (axiosError.response?.status === 400) {
+          setUsernameError('Username already exists');
+        } else {
+          setGeneralError(true);
+        }
+      } else {
+        setGeneralError(true);
+      }
+    }
+  };
+
+  const handleUsernameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setUsernameError(' ');
+    formik.handleChange(event);
+  };
+
+  const handleSnackbarClose = (
+    event?: React.SyntheticEvent | Event,
+    reason?: string,
+  ) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setOpenSnackbar(false);
   };
 
   const formik = useFormik({
@@ -39,13 +94,27 @@ const Signup = () => {
       securityAnswer: '',
     },
     validationSchema: validationSchema,
-    onSubmit: (values) => {
-      alert(JSON.stringify(values, null, 2));
+    onSubmit: (values: SignupFields) => {
+      setGeneralError(false);
+      handleSignup(values);
     },
   });
 
   return (
     <PrimaryDiv>
+      <Snackbar
+        open={openSnackbar}
+        autoHideDuration={6000}
+        onClose={handleSnackbarClose}
+      >
+        <Alert
+          onClose={handleSnackbarClose}
+          severity="success"
+          sx={{ width: '100%' }}
+        >
+          Username successfully created!
+        </Alert>
+      </Snackbar>
       <Header isLoggedIn={false} />
       <SignupBox>
         <LeftStack direction="column" spacing={'2vh'} alignItems="center">
@@ -68,13 +137,16 @@ const Signup = () => {
               }}
               style={{ width: 300 }}
               value={formik.values.username}
-              onChange={formik.handleChange}
+              onChange={handleUsernameChange}
               onBlur={formik.handleBlur}
-              error={formik.touched.username && Boolean(formik.errors.username)}
+              error={
+                formik.touched.username &&
+                (Boolean(formik.errors.username) || usernameError != ' ')
+              }
               helperText={
                 formik.touched.username && Boolean(formik.errors.username)
                   ? formik.errors.username
-                  : ' '
+                  : usernameError
               }
               sx={{ marginBottom: 1 }}
             />
@@ -186,9 +258,18 @@ const Signup = () => {
               }
               sx={{ marginBottom: 1 }}
             />
+            <Typography
+              variant="body1"
+              color="error"
+              style={{
+                color: `${theme.palette.error}`,
+                opacity: generalError ? 1 : 0,
+              }}
+            >
+              An error occurred, try again
+            </Typography>
             <PrimaryButton
               variant="contained"
-              onClick={handleSignUp}
               style={{ width: 300, marginTop: 5 }}
               type="submit"
             >

@@ -7,7 +7,6 @@ export const PrimaryDiv = styled('div')(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',
   margin: '0px',
-  flexDirection: 'column',
 }));
 
 export const PrimaryButton = styled(Button)(({ theme }) => ({
