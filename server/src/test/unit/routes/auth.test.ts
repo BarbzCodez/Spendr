@@ -374,9 +374,7 @@ describe('DELETE /users/delete', () => {
       userDeleted: true,
     });
 
-    const response = await request(app)
-      .delete('/users/delete')
-      .send();
+    const response = await request(app).delete('/users/delete').send();
 
     expect(response.status).toBe(200);
     expect(response.body.message).toBe('User successfully deleted');
@@ -385,9 +383,33 @@ describe('DELETE /users/delete', () => {
   it('returns 500 when there is a server error', async () => {
     prismaMock.user.update.mockRejectedValue(new Error());
 
-    const response = await request(app)
-      .delete('/users/delete')
-      .send();
+    const response = await request(app).delete('/users/delete').send();
+
+    expect(response.status).toBe(500);
+    expect(response.body.message).toBe('Server error');
+  });
+});
+
+describe('GET /users/:userId/expenses', () => {
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+
+  it('returns 200 if expenses are found', async () => {});
+
+  it('returns empty array if no expenses are found', async () => {
+    prismaMock.expense.findMany.mockResolvedValue([]);
+
+    const response = await request(app).get('/users/1/expenses').send();
+
+    expect(response.status).toBe(200);
+    expect(response.body.data).toStrictEqual([]);
+  });
+
+  it('returns 500 when there is a server error', async () => {
+    prismaMock.expense.findMany.mockRejectedValue(new Error());
+
+    const response = await request(app).get('/users/1/expenses').send();
 
     expect(response.status).toBe(500);
     expect(response.body.message).toBe('Server error');

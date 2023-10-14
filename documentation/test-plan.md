@@ -59,7 +59,7 @@ This test plan covers unit, integration, acceptance, regression, and load testin
    9. Return `400 Bad Request` upon PUT to `/users` with a new username that already exists.
    10. Return `200 OK` upon DELETE to `/users` from authenticated session.
 2. Expense Entry and History
-   1. Return `201 Created` upon PUT to `/expenses` with a valid new expense.
+   1. Return `201 Created` upon POST to `/expenses` with a valid new expense.
    2. Return `200 OK` upon DELETE to `/expenses/:id` with valid expense ID.
    3. Return `200 OK` upon PATCH to `/expenses/:id` with valid updates.
    4. Return `200 OK` and correct expenses upon GET to `/expenses`.
