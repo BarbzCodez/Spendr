@@ -5,6 +5,7 @@ export const PrimaryDiv = styled('div')(({ theme }) => ({
   background: `linear-gradient(135deg, ${theme.palette.secondary.main} 0%, ${theme.palette.secondary.main} 40%, ${theme.palette.primary.main} 60%, ${theme.palette.primary.main} 100%)`,
   minHeight: '100vh',
   display: 'flex',
+  flexDirection: 'column',
   margin: '0px',
 }));
 
@@ -16,4 +17,9 @@ export const PrimaryButton = styled(Button)(({ theme }) => ({
   '&:hover': {
     backgroundColor: '#d3d3d3',
   },
+}));
+
+export const ResizingImg = styled('img')(() => ({
+  width: '30vw',
+  objectFit: 'contain',
 }));
