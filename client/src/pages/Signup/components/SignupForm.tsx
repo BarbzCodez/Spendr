@@ -9,7 +9,6 @@ import { PrimaryButton } from '../../../assets/styles/styles';
 import { theme } from '../../../assets/styles';
 import { signup } from '../../../api/UserAPI';
 
-//=============== interfaces ===============//
 interface SignupFields {
   username: string;
   password: string;
@@ -29,12 +28,10 @@ interface SignupTextFieldProps {
   helperText?: string;
 }
 
-//=============== functions ===============//
 function delay(ms: number) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
-//=============== consts ===============//
 const validationSchema = yup.object().shape({
   username: yup.string().required('Username cannot be empty'),
   password: yup
@@ -86,12 +83,13 @@ const SignupTextField: React.FC<SignupTextFieldProps> = ({
 };
 
 /**
- * Signup Textfield
- * @returns {JSX.Element} - Signup page
+ * Signup form for signup page
+ *
+ * @returns {JSX.Element} - Signup form
  */
 const SignupForm = (): JSX.Element => {
   const navigate = useNavigate();
-  const [usernameError, setUsernameError] = React.useState(' ');
+  const [usernameError, setUsernameError] = React.useState(' '); // initial state is space to reserve the vertical space for the error
   const [generalError, setGeneralError] = React.useState(false);
   const [openSnackbar, setOpenSnackbar] = React.useState(false);
 

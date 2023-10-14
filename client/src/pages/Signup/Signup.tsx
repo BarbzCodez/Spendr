@@ -9,6 +9,7 @@ import SignupForm from './components/SignupForm';
 
 /**
  * Signup page component
+ *
  * @returns {JSX.Element} - Signup page
  */
 const Signup = (): JSX.Element => {
@@ -21,7 +22,7 @@ const Signup = (): JSX.Element => {
           <SignupForm />
         </LeftStack>
         <RightBox>
-          <ClipArt src={picture} alt="Picutre" />
+          <ClipArt src={picture} alt="Picture" />
         </RightBox>
       </SignupBox>
     </PrimaryDiv>
