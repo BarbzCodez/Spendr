@@ -10,10 +10,66 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum ExpenseCategory {
+  GROCERIES
+  TRANSPORT
+  ENTERTAINMENT
+  HEALTH
+  UTILITIES
+  OTHER
+}
+
 model User {
-  id               Int      @id @default(autoincrement())
-  username         String   @unique
-  password         String
+  id              Int               @id @default(autoincrement())
+  username        String            @unique
+  password        String
   securityQuestion String
-  securityAnswer   String
+  securityAnswer  String
+  userDeleted  Boolean              @default(false)  //For when a user's account is deleted to soft remove
+  expenses        Expense[]           // Easily query for expenses
+  groupExpenses   GroupExpenseSplit[] // Easily query for groupExpenses
+  budgets         Budget[]            //Easily query user budgets
+}
+
+// Individual expenses
+model Expense {
+  id        Int              @id @default(autoincrement())
+  userId    Int
+  user      User             @relation(fields: [userId], references: [id])
+  title     String
+  amount    Float
+  category  ExpenseCategory
+  createdAt DateTime         @default(now())
+}
+
+// Group expenses (not associated with users)
+model GroupExpense {
+  id           Int               @id @default(autoincrement())
+  title        String
+  totalAmount  Float
+  members      GroupExpenseSplit[]
+  category     ExpenseCategory   // Assign category to each group expense
+  createdAt    DateTime           @default(now())
+}
+
+// Individual splits of a Group expense (associated with users)
+model GroupExpenseSplit {
+  id           Int          @id @default(autoincrement())
+  userId       Int
+  user         User         @relation(fields: [userId], references: [id])
+  groupExpenseId Int
+  groupExpense GroupExpense @relation(fields: [groupExpenseId], references: [id])
+  shareAmount  Float
+  hasPaid      Boolean      @default(false) //Default payment status is user has not paid
+}
+
+model Budget{
+  id             Int             @id @default(autoincrement())
+  userId         Int
+  user           User            @relation(fields: [userId], references: [id])
+  category       ExpenseCategory
+  amountSpent    Float
+  spendingLimit  Float
+  dateTill       DateTime
+  dateFrom       DateTime        @default(now())
 }

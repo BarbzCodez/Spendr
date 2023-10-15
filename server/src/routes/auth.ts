@@ -286,4 +286,26 @@ router.post(
   },
 );
 
+router.delete(
+  '/delete',
+  authenticate,
+  async (req: Request, res: Response) => {
+    try {
+      // Get user from token
+      const userId = req.userId;
+
+      // Update user to be deleted
+      // If the user does not exist, this will throw an error
+      const updatedUser = await prisma.user.update({
+        where: { id: userId },
+        data: { userDeleted: true },
+      });
+
+      res.status(200).json({ message: 'User successfully deleted' });
+    } catch (error: unknown) {
+      res.status(500).json({ message: 'Server error' });
+    }
+  },
+);
+
 export default router;

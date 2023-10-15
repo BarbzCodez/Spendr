@@ -6,6 +6,7 @@ export const PrimaryDiv = styled('div')(({ theme }) => ({
   minHeight: '100vh',
   display: 'flex',
   margin: '0px',
+  flexDirection: 'column',
 }));
 
 export const PrimaryButton = styled(Button)(({ theme }) => ({
