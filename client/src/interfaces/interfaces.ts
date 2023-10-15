@@ -8,3 +8,8 @@ export interface SignupVals {
   securityQuestion: string;
   securityAnswer: string;
 }
+
+export interface LoginVals {
+  username: string;
+  password: string;
+}
