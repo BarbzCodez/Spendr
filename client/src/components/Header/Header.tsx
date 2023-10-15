@@ -18,9 +18,9 @@ import logo from '../../assets/images/spendr_1.png';
 import { theme } from '../../assets/styles';
 
 /**
- * the top header component
+ * Top header component
+ *
  * @param {boolean} isLoggedIn - represent the user's login state
- * @param {Function} setIsLoggedIn - Function to change the user's login state
  * @returns {JSX.Element} - top header component
  */
 const Header: React.FC<LoggedInProps> = ({ isLoggedIn }) => {

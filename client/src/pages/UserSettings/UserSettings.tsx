@@ -13,7 +13,7 @@ import DangerZone from './components/DangerZone';
 const UserSettings = (): JSX.Element => {
   return (
     <PrimaryDiv>
-      <Header isLoggedIn={true} setIsLoggedIn={() => null} />
+      <Header isLoggedIn={true} />
       <PopupDiv>
         <SettingsStack spacing={2} boxShadow={5}>
           <Typography variant="h4" component="h2" noWrap>
