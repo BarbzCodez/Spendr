@@ -23,7 +23,7 @@ import { theme } from '../../assets/styles';
  * @param {Function} setIsLoggedIn - Function to change the user's login state
  * @returns {JSX.Element} - top header component
  */
-const Header: React.FC<LoggedInProps> = ({ isLoggedIn, setIsLoggedIn }) => {
+const Header: React.FC<LoggedInProps> = ({ isLoggedIn }) => {
   const navigate = useNavigate();
 
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(

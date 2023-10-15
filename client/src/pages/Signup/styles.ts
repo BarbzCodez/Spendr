@@ -1,10 +1,9 @@
 import { styled } from '@mui/system';
-import { PrimaryDiv, ResizingImg } from '../../assets/styles/styles';
 import { Box, Typography, Stack } from '@mui/material';
+import { ResizingImg } from '../../assets/styles/styles';
 
-export const GreetingsDiv = styled(PrimaryDiv)(() => ({
-  width: '100vw',
-  height: '100vh',
+export const SignupBox = styled(Box)(() => ({
+  flexGrow: 1,
   padding: '10vh 10vw',
   display: 'flex',
   flexDirection: 'row',
@@ -12,22 +11,15 @@ export const GreetingsDiv = styled(PrimaryDiv)(() => ({
 
 export const LeftStack = styled(Stack)(() => ({
   width: '50%',
-  height: '100%',
-}));
-
-export const WelcomeHeader = styled(Typography)(() => ({
-  textAlign: 'center',
-}));
-
-export const BodyText = styled(Typography)(() => ({
-  width: '90%',
-  textAlign: 'center',
 }));
 
 export const RightBox = styled(Box)(() => ({
   position: 'relative',
   width: '50%',
-  height: '100%',
+}));
+
+export const WelcomeHeader = styled(Typography)(() => ({
+  textAlign: 'center',
 }));
 
 export const ClipArt = styled(ResizingImg)(() => ({

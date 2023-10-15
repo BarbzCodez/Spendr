@@ -1,4 +1,10 @@
 export interface LoggedInProps {
   isLoggedIn: boolean;
-  setIsLoggedIn: Function;
+}
+
+export interface SignupVals {
+  username: string;
+  password: string;
+  securityQuestion: string;
+  securityAnswer: string;
 }
