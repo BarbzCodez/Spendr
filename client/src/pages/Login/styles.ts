@@ -1,5 +1,5 @@
 import { styled } from '@mui/system';
-import { Box, Typography, Stack } from '@mui/material';
+import { Box, Stack } from '@mui/material';
 import { ResizingImg } from '../../assets/styles/styles';
 
 export const LoginBox = styled(Box)(() => ({

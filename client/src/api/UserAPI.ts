@@ -1,6 +1,11 @@
-import axios, { AxiosResponse, AxiosError } from 'axios';
+import axios, { AxiosResponse } from 'axios';
 
-import { SignupVals, LoginVals } from '../interfaces/interfaces';
+import {
+  SignupVals,
+  SignupResponse,
+  LoginVals,
+  LoginResponse,
+} from '../interfaces/interfaces';
 
 /**
  * API signup request
@@ -12,9 +17,11 @@ import { SignupVals, LoginVals } from '../interfaces/interfaces';
  * @returns {AxiosResponse}
  * @throws {AxiosError}
  */
-export const signup = async (data: SignupVals): Promise<AxiosResponse> => {
+export const signupRequest = async (
+  data: SignupVals,
+): Promise<AxiosResponse<SignupResponse>> => {
   try {
-    const response: AxiosResponse = await axios.post(
+    const response: AxiosResponse = await axios.post<SignupResponse>(
       'http://localhost:7005/users/register',
       data,
     );
@@ -32,9 +39,11 @@ export const signup = async (data: SignupVals): Promise<AxiosResponse> => {
  * @returns {AxiosResponse}
  * @throws {AxiosError}
  */
-export const login = async (data: LoginVals): Promise<AxiosResponse> => {
+export const loginRequest = async (
+  data: LoginVals,
+): Promise<AxiosResponse<LoginResponse>> => {
   try {
-    const response: AxiosResponse = await axios.post(
+    const response = await axios.post<LoginResponse>(
       'http://localhost:7005/users/login',
       data,
     );

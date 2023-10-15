@@ -52,7 +52,14 @@ const Header: React.FC<LoggedInProps> = ({ isLoggedIn }) => {
     <PrimaryBar>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <Link to="/home">
+          <Link
+            to="/home"
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}
+          >
             <img
               src={logo}
               alt="Logo"

@@ -7,8 +7,9 @@ import { Typography, TextField } from '@mui/material';
 
 import { PrimaryButton } from '../../../assets/styles/styles';
 import { theme } from '../../../assets/styles';
-import { login } from '../../../api/UserAPI';
-import { LoginVals } from '../../../interfaces/interfaces';
+import { loginRequest } from '../../../api/UserAPI';
+import { LoginVals, LoginResponse } from '../../../interfaces/interfaces';
+import { useUser } from '../../../context/UserContext';
 
 const validationSchema = yup.object().shape({
   username: yup.string().required('Username cannot be empty'),
@@ -18,13 +19,14 @@ const validationSchema = yup.object().shape({
 const LoginForm = (): JSX.Element => {
   const navigate = useNavigate();
   const [error, setError] = React.useState(' ');
+  const { login } = useUser();
 
   const handleLogin = async (values: LoginVals) => {
     try {
-      const response: AxiosResponse = await login(values);
+      const response: AxiosResponse<LoginResponse> = await loginRequest(values);
       if (response.status === 200) {
-        // navigate to home
-        // set global id and token
+        login(response.data.user.id, response.data.token);
+        navigate('/home');
       } else {
         setError('An error occurred, try again');
       }
@@ -88,6 +90,7 @@ const LoginForm = (): JSX.Element => {
         label="Password"
         variant="filled"
         size="small"
+        type="password"
         inputProps={{
           style: { color: theme.palette.primary.contrastText },
         }}
