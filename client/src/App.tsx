@@ -20,10 +20,10 @@ function App() {
       <CssBaseline />
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Greetings />} />
+          {/* <Route path="/" element={<Greetings />} /> */}
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
-          <Route path="/expenses" element={<Expenses />} />
+          <Route path="/" element={<Expenses />} />
           <Route path="/user-settings" element={<UserSettings />} />
         </Routes>
       </BrowserRouter>
