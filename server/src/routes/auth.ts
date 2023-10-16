@@ -72,7 +72,7 @@ router.post(
         user: { id: newUser.id, username: newUser.username },
       });
     } catch (error: unknown) {
-      res.status(500).json({ message: 'Server error' });
+      res.status(500).json({ message: 'Server error', err: error });
     }
   },
 );
@@ -286,23 +286,57 @@ router.post(
   },
 );
 
-router.delete(
-  '/delete',
+router.delete('/delete', authenticate, async (req: Request, res: Response) => {
+  try {
+    // Get user from token
+    const userId = req.userId;
+
+    // Update user to be deleted
+    // If the user does not exist, this will throw an error
+    await prisma.user.update({
+      where: { id: userId },
+      data: { userDeleted: true },
+    });
+
+    res.status(200).json({ message: 'User successfully deleted' });
+  } catch (error: unknown) {
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
+/**
+ * Get all expenses for a user
+ *
+ * This route will return all expenses for a user, including individual expenses and group expenses where the user has a split.
+ * The user must be authenticated to make this request.
+ *
+ * @route GET /users/:userId/expenses
+ * @group users - Operations about users
+ * @param {string} userId.path.required - User ID
+ * @returns {object} 200 - All expenses for the user
+ * @returns {Error}  500 - Server error
+ */
+router.get(
+  '/:userId/expenses',
   authenticate,
   async (req: Request, res: Response) => {
-    try {
-      // Get user from token
-      const userId = req.userId;
+    const { userId } = req.params;
 
-      // Update user to be deleted
-      // If the user does not exist, this will throw an error
-      const updatedUser = await prisma.user.update({
-        where: { id: userId },
-        data: { userDeleted: true },
+    try {
+      // Fetch individual expenses for the user
+      const individualExpenses = await prisma.expense.findMany({
+        where: {
+          userId: parseInt(userId),
+        },
       });
 
-      res.status(200).json({ message: 'User successfully deleted' });
-    } catch (error: unknown) {
+      // TODO: Fetch group expenses
+
+      // Combine individual and group expenses into one list
+      const allExpenses = [...individualExpenses];
+
+      res.status(200).json({ success: true, data: allExpenses });
+    } catch (error) {
       res.status(500).json({ message: 'Server error' });
     }
   },
