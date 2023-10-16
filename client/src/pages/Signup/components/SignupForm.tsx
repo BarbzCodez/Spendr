@@ -3,11 +3,11 @@ import { useNavigate } from 'react-router-dom';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 import { Typography, TextField, Alert, Snackbar } from '@mui/material';
-import axios, { AxiosResponse, AxiosError } from 'axios';
+import axios, { AxiosError } from 'axios';
 
 import { PrimaryButton } from '../../../assets/styles/styles';
 import { theme } from '../../../assets/styles';
-import { signup } from '../../../api/UserAPI';
+import { signupRequest } from '../../../api/UserAPI';
 
 interface SignupFields {
   username: string;
@@ -96,7 +96,7 @@ const SignupForm = (): JSX.Element => {
   const handleSignup = async (values: SignupFields) => {
     try {
       const { username, password, securityQuestion, securityAnswer } = values;
-      const response: AxiosResponse = await signup({
+      const response = await signupRequest({
         username,
         password,
         securityQuestion,
@@ -112,7 +112,11 @@ const SignupForm = (): JSX.Element => {
     } catch (error) {
       if (axios.isAxiosError(error)) {
         const axiosError: AxiosError = error;
-        if (axiosError.response?.status === 400) {
+        const errorData = axiosError.response?.data as { message: string };
+        if (
+          axiosError.response?.status === 400 &&
+          errorData.message === 'Username already exists'
+        ) {
           setUsernameError('Username already exists');
         } else {
           setGeneralError(true);
