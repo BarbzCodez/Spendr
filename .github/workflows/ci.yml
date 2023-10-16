@@ -1,0 +1,75 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  lint-and-build-client:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Check out code
+      uses: actions/checkout@v2
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '19'
+
+    - name: Install Dependencies
+      run: cd client && npm install
+
+    - name: Lint Client Code
+      run: cd client && npm run lint
+
+    - name: Check Client Formatting
+      run: cd client && npx prettier --check ./
+
+    - name: Build Client
+      run: cd client && npm run build
+
+  lint-and-build-server:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Check out code
+      uses: actions/checkout@v2
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '19'
+
+    - name: Install Dependencies
+      run: cd server && npm install
+
+    - name: Lint Server Code
+      run: cd server && npm run lint
+
+    - name: Check Server Formatting
+      run: cd server && npx prettier --check ./
+
+    - name: Build Server
+      run: cd server && npm run build
+
+  test:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Check out code
+      uses: actions/checkout@v2
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '19'
+
+    - name: Install Dependencies
+      run: cd server && npm install
+
+    - name: Run Jest Tests
+      run: cd server && npm test
+      env:
+        JWT_SECRET: ${{ secrets.JWT_SECRET }}
