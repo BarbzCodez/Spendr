@@ -7,39 +7,33 @@ on:
     branches: ['ci-cd-configurations']
 
 jobs:
-  build-front-end:
+  build-server:
     runs-on: ubuntu-latest
 
-    # steps:
-    #   - run: echo "The job was automatically triggered by a ${{ github.event_name }} event."
-    #   - run: echo "This job is now running on a ${{ runner.os }} server hosted by GitHub"
-    #   - run: echo "The name of your branch is ${{ github.ref }} and your repository is ${{ github.repository }}."
-
-    #   - uses: actions/checkout@v3
-    #   - name: Build the Docker image
-    #     run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
-
-    #   - name: Use Node.js ${{ matrix.node-version }}
-    #     uses: actions/setup-node@v3
-    #     with:
-    #       node-version: 16.x
-
-    #   - run: npm ci
-    #   - run: npm run build --if-present
-    #   - run: npm test
-    
     steps:
     - uses: actions/checkout@v2
-    - name: Build and Test
+    - name: Build
       run: |
         cd server
         npm install
         npm run build
+
+  test-server:
+    steps:
+    - uses: actions/checkout@v2
+    - name: Test
+      run: |
         npm test
         npm run lint
-    - name: Build Docker Image
-      uses: docker/build-push-action@v2
-      with:
-        context: .
-        push: true
-        tags: your-dockerhub-username/your-image-name:${{ github.sha }}
+
+  build-client:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Build
+      run: |
+      cd client
+      npm install
+      npm start
+
