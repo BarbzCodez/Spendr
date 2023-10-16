@@ -103,20 +103,10 @@ const Header: React.FC<LoggedInProps> = ({ isLoggedIn }) => {
                 onClose={handleCloseUserMenu}
               >
                 <MenuItem key={'Settings'} onClick={handleNavSettings}>
-                  <Typography
-                    textAlign="center"
-                    style={{ color: `${theme.palette.info.light}` }}
-                  >
-                    Settings
-                  </Typography>
+                  <Typography textAlign="center">Settings</Typography>
                 </MenuItem>
                 <MenuItem key={'Log Out'} onClick={handleLogOut}>
-                  <Typography
-                    textAlign="center"
-                    style={{ color: `${theme.palette.info.light}` }}
-                  >
-                    Log Out
-                  </Typography>
+                  <Typography textAlign="center">Log Out</Typography>
                 </MenuItem>
               </Menu>
             </Box>

@@ -49,5 +49,9 @@ export const theme = createTheme({
     error: {
       main: '#EE5A5E',
     },
+    background: {
+      default: '#353549',
+      paper: '#353549',
+    },
   },
 });

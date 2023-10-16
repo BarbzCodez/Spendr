@@ -8,6 +8,7 @@ import Greetings from './pages/Greetings';
 import UserSettings from './pages/UserSettings';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
+import Expenses from './pages/Expenses';
 
 /**
  * main App component
@@ -20,9 +21,10 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Greetings />} />
-          <Route path="/user-settings" element={<UserSettings />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
+          <Route path="/expenses" element={<Expenses />} />
+          <Route path="/user-settings" element={<UserSettings />} />
         </Routes>
       </BrowserRouter>
     </ThemeProvider>
