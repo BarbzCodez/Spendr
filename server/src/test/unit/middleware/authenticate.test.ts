@@ -73,6 +73,25 @@ describe('authenticate middleware', () => {
     expect(req.userId).toBe(userId);
     expect(next).toHaveBeenCalled();
   });
+
+  it('sets userId to 1 in development environment', () => {
+    // Store the original NODE_ENV
+    const originalNodeEnv = process.env.NODE_ENV;
+
+    // Override NODE_ENV for this test
+    process.env.NODE_ENV = 'development';
+
+    authenticate(req as Request, res as Response, next);
+
+    // Check that userId is set to 1
+    expect(req.userId).toBe(1);
+
+    // Check that the next function has been called
+    expect(next).toHaveBeenCalled();
+
+    // Restore the original NODE_ENV
+    process.env.NODE_ENV = originalNodeEnv;
+  });
 });
 
 afterAll(() => {

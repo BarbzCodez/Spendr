@@ -4,14 +4,16 @@ FROM node:19.4
 # Set working directory
 WORKDIR /app
 
-# Install dependencies
 COPY package*.json ./
+
+# Install dependencies
 RUN npm install
 
 # Copy local code to container
 COPY . .
 
+# Generate Prisma Client
 RUN npx prisma generate
 
 # Start the app
-CMD npm run build && npm start
+CMD ["./entrypoint.sh"]

@@ -25,6 +25,7 @@ describe('POST /users/register', () => {
       password: hashedPassword,
       securityQuestion: 'Your favorite color?',
       securityAnswer: hashedSecurityAnswer,
+      userDeleted: false,
     };
 
     prismaMock.user.create.mockResolvedValue(user);
@@ -48,6 +49,7 @@ describe('POST /users/register', () => {
       password: 'testpassword',
       securityQuestion: 'Your favorite color?',
       securityAnswer: 'Red',
+      userDeleted: false,
     });
 
     const response = await request(app).post('/users/register').send({
@@ -118,6 +120,7 @@ describe('POST /users/login', () => {
       password: hashedPassword,
       securityQuestion: 'Your favorite color?',
       securityAnswer: 'Blue',
+      userDeleted: false,
     });
 
     const response = await request(app).post('/users/login').send({
@@ -139,6 +142,7 @@ describe('POST /users/login', () => {
       password: hashedPassword,
       securityQuestion: 'Your favorite color?',
       securityAnswer: hashedSecurityAnswer,
+      userDeleted: false,
     });
 
     const response = await request(app).post('/users/login').send({
@@ -196,6 +200,7 @@ describe('/users/reset-password', () => {
       password: 'hashedPassword',
       securityQuestion: 'Your favorite color?',
       securityAnswer: hashedAnswer,
+      userDeleted: false,
     });
 
     const response = await request(app).post('/users/reset-password').send({
@@ -217,6 +222,7 @@ describe('/users/reset-password', () => {
       password: 'hashedPassword',
       securityQuestion: 'Your favorite color?',
       securityAnswer: hashedAnswer,
+      userDeleted: false,
     });
 
     const response = await request(app).post('/users/reset-password').send({
@@ -282,15 +288,17 @@ describe('POST /users/update-user', () => {
       password: 'oldpassword',
       securityQuestion: 'Your old favorite color?',
       securityAnswer: 'OldBlue',
+      userDeleted: false,
     });
 
     // Mocking the user check based on new username
     prismaMock.user.findUnique.mockResolvedValueOnce({
       id: 1,
       username: 'existingUsername',
-      password: 'existingPasswor',
+      password: 'existingPassword',
       securityQuestion: 'Your old favorite color?',
       securityAnswer: 'OldBlue',
+      userDeleted: false,
     }); // Indicates new username doesn't exist
 
     const response = await request(app).post('/users/update-user').send({
@@ -311,6 +319,7 @@ describe('POST /users/update-user', () => {
       password: 'oldpassword',
       securityQuestion: 'Your old favorite color?',
       securityAnswer: 'OldBlue',
+      userDeleted: false,
     });
 
     // Mocking the user check based on new username
@@ -322,6 +331,7 @@ describe('POST /users/update-user', () => {
       password: 'testpassword',
       securityQuestion: 'Your favorite color?',
       securityAnswer: 'Blue',
+      userDeleted: false,
     });
 
     const response = await request(app).post('/users/update-user').send({
@@ -343,6 +353,63 @@ describe('POST /users/update-user', () => {
       securityQuestion: 'Your favorite color?',
       securityAnswer: 'Blue',
     });
+
+    expect(response.status).toBe(500);
+    expect(response.body.message).toBe('Server error');
+  });
+});
+
+describe('DELETE /users/delete', () => {
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+
+  it('returns 200 if user is deleted', async () => {
+    prismaMock.user.update.mockResolvedValueOnce({
+      id: 1,
+      username: 'testuser',
+      password: 'testpassword',
+      securityQuestion: 'Your old favorite color?',
+      securityAnswer: 'Blue',
+      userDeleted: true,
+    });
+
+    const response = await request(app).delete('/users/delete').send();
+
+    expect(response.status).toBe(200);
+    expect(response.body.message).toBe('User successfully deleted');
+  });
+
+  it('returns 500 when there is a server error', async () => {
+    prismaMock.user.update.mockRejectedValue(new Error());
+
+    const response = await request(app).delete('/users/delete').send();
+
+    expect(response.status).toBe(500);
+    expect(response.body.message).toBe('Server error');
+  });
+});
+
+describe('GET /users/:userId/expenses', () => {
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+
+  it('returns 200 if expenses are found', async () => {});
+
+  it('returns empty array if no expenses are found', async () => {
+    prismaMock.expense.findMany.mockResolvedValue([]);
+
+    const response = await request(app).get('/users/1/expenses').send();
+
+    expect(response.status).toBe(200);
+    expect(response.body.data).toStrictEqual([]);
+  });
+
+  it('returns 500 when there is a server error', async () => {
+    prismaMock.expense.findMany.mockRejectedValue(new Error());
+
+    const response = await request(app).get('/users/1/expenses').send();
 
     expect(response.status).toBe(500);
     expect(response.body.message).toBe('Server error');

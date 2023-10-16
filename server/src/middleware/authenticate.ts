@@ -20,6 +20,12 @@ export const authenticate = (
   res: Response,
   next: NextFunction,
 ) => {
+  // Bypass authentication in development environment
+  if (process.env.NODE_ENV === 'development') {
+    req.userId = 1;
+    return next();
+  }
+
   const token = req.header('Authorization')?.replace('Bearer ', '');
 
   if (!token) {
