@@ -71,3 +71,5 @@ jobs:
 
     - name: Run Jest Tests
       run: cd server && npm test
+      env:
+        JWT: ${{ secrets.JWT }}
