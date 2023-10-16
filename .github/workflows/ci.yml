@@ -24,10 +24,10 @@ jobs:
       run: npm install
 
     - name: Lint Server Code
-      run: cd server && npm run lint
+      run: cd server && npx eslint --ext .ts .
       
     - name: Lint Client Code
-      run: cd client && npn run lint
+      run: cd client && npx eslint --ext .ts,.tsx .
 
     - name: Check Server Formatting
       run: cd server && npx prettier --check ./
