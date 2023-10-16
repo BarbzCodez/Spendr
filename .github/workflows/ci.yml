@@ -1,0 +1,59 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - ci # CHANGEME
+  pull_request:
+    branches:
+      - ci # CHANGEME
+
+jobs:
+  lint-and-build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Check out code
+      uses: actions/checkout@v2
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '19'
+
+    - name: Install Dependencies
+      run: npm install
+
+    - name: Lint Server Code
+      run: cd server && npm run lint
+      
+    - name: Lint Client Code
+      run: cd client && npn run lint
+
+    - name: Check Server Formatting
+      run: cd server && npx prettier --check ./
+
+    - name: Check Client Formatting
+      run: cd client && npx prettier --check ./
+
+    - name: Build Server
+      run: cd server && npm run build
+
+    - name: Build Client
+      run: cd client && npm run build
+
+  test:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Check out code
+      uses: actions/checkout@v2
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '14'
+
+    - name: Install Dependencies
+      run: npm install
+
+    - name: Run Jest Tests
+      run: cd server && npm test
