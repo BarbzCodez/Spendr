@@ -12,7 +12,7 @@ import { ExpenseData } from '../../interfaces/interfaces';
 import { theme } from '../../assets/styles';
 
 const Expenses = () => {
-  const [isFormOpen, setIsFormOpen] = React.useState(true);
+  const [isFormOpen, setIsFormOpen] = React.useState(false);
   const [editingExpense, setEditingExpense] =
     React.useState<ExpenseData | null>(null);
 

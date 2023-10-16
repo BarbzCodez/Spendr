@@ -54,7 +54,7 @@ const columns: GridColDef[] = [
   {
     field: 'category',
     headerName: 'Category',
-    align: 'center',
+    align: 'left',
     headerAlign: 'left',
     type: 'singleSelect',
     minWidth: 150,
