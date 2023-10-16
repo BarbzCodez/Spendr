@@ -20,7 +20,7 @@ jobs:
 
   test-server:
     runs-on: ubuntu-latest
-    
+
     steps:
     - uses: actions/checkout@v2
     - name: Test
@@ -37,5 +37,3 @@ jobs:
       run: |
         cd client
         npm install
-        npm start
-
