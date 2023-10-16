@@ -1,5 +1,6 @@
 import { GridActionsCellItem } from '@mui/x-data-grid';
 import { styled, Box } from '@mui/system';
+import { DataGrid } from '@mui/x-data-grid';
 import { theme } from '../../../assets/styles';
 import { Stack } from '@mui/material';
 
@@ -28,4 +29,20 @@ export const BackgroundBox = styled(Box)({
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'center',
+});
+
+export const ExpensesDataGrid = styled(DataGrid)({
+  padding: '1rem',
+  '& .MuiDataGrid-sortIcon': {
+    opacity: 1,
+    color: 'white',
+  },
+  '& .MuiDataGrid-menuIconButton': {
+    opacity: 1,
+    color: 'white',
+  },
+  '&.MuiListItemIcon': {
+    opacity: 1,
+    color: 'white',
+  },
 });

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { DataGrid, GridColDef } from '@mui/x-data-grid';
+import { GridColDef } from '@mui/x-data-grid';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import EditIcon from '@mui/icons-material/Edit';
 
@@ -7,6 +7,7 @@ import {
   ExpensesStack,
   BackgroundBox,
   GridActionsCellItemStyled,
+  ExpensesDataGrid,
 } from './styles';
 
 const StartRows = [
@@ -93,7 +94,7 @@ export const ExpensesTable = () => {
   return (
     <BackgroundBox>
       <ExpensesStack spacing={2} boxShadow={5}>
-        <DataGrid
+        <ExpensesDataGrid
           rows={rows}
           columns={columns}
           getRowId={(rows) => rows.name}
