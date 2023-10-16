@@ -9,6 +9,8 @@ import UserSettings from './pages/UserSettings';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
 import Expenses from './pages/Expenses';
+import Home from './pages/Home';
+import { UserProvider } from './context/UserContext';
 
 /**
  * main App component
@@ -17,16 +19,19 @@ import Expenses from './pages/Expenses';
 function App() {
   return (
     <ThemeProvider theme={theme}>
-      <CssBaseline />
-      <BrowserRouter>
-        <Routes>
-          {/* <Route path="/" element={<Greetings />} /> */}
-          <Route path="/login" element={<Login />} />
-          <Route path="/signup" element={<Signup />} />
-          <Route path="/" element={<Expenses />} />
-          <Route path="/user-settings" element={<UserSettings />} />
-        </Routes>
-      </BrowserRouter>
+      <UserProvider>
+        <CssBaseline />
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<Greetings />} />
+            <Route path="/signup" element={<Signup />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/home" element={<Home />} />
+            <Route path="/" element={<Expenses />} />
+            <Route path="/user-settings" element={<UserSettings />} />
+          </Routes>
+        </BrowserRouter>
+      </UserProvider>
     </ThemeProvider>
   );
 }

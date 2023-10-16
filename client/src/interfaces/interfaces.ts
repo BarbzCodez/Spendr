@@ -9,6 +9,28 @@ export interface SignupVals {
   securityAnswer: string;
 }
 
+export interface SignupResponse {
+  message: string;
+  user: {
+    id: number;
+    username: string;
+  };
+}
+
+export interface LoginVals {
+  username: string;
+  password: string;
+}
+
+export interface LoginResponse {
+  message: string;
+  user: {
+    id: number;
+    username: string;
+  };
+  token: string;
+}
+
 export interface ExpenseData {
   title: string;
   amount: number;

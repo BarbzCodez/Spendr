@@ -15,7 +15,6 @@ import SignupForm from './components/SignupForm';
 const Signup = (): JSX.Element => {
   return (
     <PrimaryDiv>
-      <Header isLoggedIn={false} />
       <SignupBox>
         <LeftStack direction="column" spacing={'2vh'} alignItems="center">
           <Typography variant="h3">Create Account</Typography>

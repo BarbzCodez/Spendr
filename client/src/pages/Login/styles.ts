@@ -2,7 +2,7 @@ import { styled } from '@mui/system';
 import { Box, Stack } from '@mui/material';
 import { ResizingImg } from '../../assets/styles/styles';
 
-export const SignupBox = styled(Box)(() => ({
+export const LoginBox = styled(Box)(() => ({
   flexGrow: 1,
   padding: '10vh 10vw',
   display: 'flex',
