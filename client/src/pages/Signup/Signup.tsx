@@ -2,7 +2,6 @@ import * as React from 'react';
 import { Typography } from '@mui/material';
 
 import { PrimaryDiv } from '../../assets/styles/styles';
-import Header from '../../components/Header';
 import { RightBox, LeftStack, SignupBox, ClipArt } from './styles';
 import picture from '../../assets/images/otherStonks-noBackgrounds.png';
 import SignupForm from './components/SignupForm';
