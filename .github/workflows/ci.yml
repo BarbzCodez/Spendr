@@ -3,10 +3,10 @@ name: CI
 on:
   push:
     branches:
-      - ci # CHANGEME
+      - main
   pull_request:
     branches:
-      - ci # CHANGEME
+      - main
 
 jobs:
   lint-and-build-client:
