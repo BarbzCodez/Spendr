@@ -290,6 +290,18 @@ router.post(
   },
 );
 
+/**
+ * Update a user's username
+ *
+ * This route will update a user's username.
+ *
+ * @route POST /users/update-username
+ * @group auth - Operations about authentication
+ * @param {string} username.body.required - Username
+ * @returns {object} 200 - Username successfully updated
+ * @returns {Error}  400 - Invalid credentials
+ * @returns {Error}  500 - Server error
+ */
 router.post(
   '/update-username',
   authenticate,
@@ -337,6 +349,18 @@ router.post(
   },
 );
 
+/**
+ * Update a user's password
+ *
+ * This route will update a user's password.
+ *
+ * @route POST /users/update-password
+ * @group auth - Operations about authentication
+ * @param {string} password.body.required - Password
+ * @returns {object} 200 - Password successfully updated
+ * @returns {Error}  400 - Invalid credentials
+ * @returns {Error}  500 - Server error
+ */
 router.post(
   '/update-password',
   authenticate,
