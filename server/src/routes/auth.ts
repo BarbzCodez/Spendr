@@ -290,6 +290,94 @@ router.post(
   },
 );
 
+router.post(
+  '/update-username',
+  authenticate,
+  body('username').isString().withMessage('Username must be a string.'),
+  async (req: Request, res: Response) => {
+    // Check for validation errors
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+
+    // Get user from token
+    const userId = req.userId;
+
+    try {
+      // Verify that the user that made the request exists
+      const user = await prisma.user.findUnique({
+        where: { id: userId },
+      });
+
+      if (!user || user.userDeleted) {
+        return res.status(400).json({ message: 'Invalid credentials' });
+      }
+
+      // Verify that a user with the new username doesn't already exist
+      const { username } = req.body;
+      const userWithNewUsername = await prisma.user.findUnique({
+        where: { username },
+      });
+
+      if (userWithNewUsername) {
+        return res.status(400).json({ message: 'Username already exists' });
+      }
+
+      // Update user in database
+      await prisma.user.update({
+        where: { id: userId },
+        data: { username },
+      });
+
+      res.status(200).json({ message: 'Username successfully updated' });
+    } catch (error) {
+      res.status(500).json({ message: 'Server error' });
+    }
+  },
+);
+
+router.post(
+  '/update-password',
+  authenticate,
+  body('password').isString().withMessage('Password must be a string.'),
+  async (req: Request, res: Response) => {
+    // Check for validation errors
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+
+    // Get user from token
+    const userId = req.userId;
+
+    try {
+      // Verify that the user that made the request exists
+      const user = await prisma.user.findUnique({
+        where: { id: userId },
+      });
+
+      if (!user) {
+        return res.status(400).json({ message: 'Invalid credentials' });
+      }
+
+      // Hash the new password
+      const { password } = req.body;
+      const hashedPassword = await bcrypt.hash(password, 10);
+
+      // Update user in database
+      await prisma.user.update({
+        where: { id: userId },
+        data: { password: hashedPassword },
+      });
+
+      res.status(200).json({ message: 'Password successfully updated' });
+    } catch (error) {
+      res.status(500).json({ message: 'Server error' });
+    }
+  },
+);
+
 router.delete('/delete', authenticate, async (req: Request, res: Response) => {
   try {
     // Get user from token
