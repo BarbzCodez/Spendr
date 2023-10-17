@@ -3,6 +3,9 @@ import { GridColDef } from '@mui/x-data-grid';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import EditIcon from '@mui/icons-material/Edit';
 
+import { theme } from '../../../assets/styles';
+import { ExpenseTableProps } from '../../../interfaces/interfaces';
+
 import {
   ExpensesStack,
   BackgroundBox,
@@ -73,12 +76,16 @@ const columns: GridColDef[] = [
     width: 75,
     getActions: () => [
       <GridActionsCellItemStyled
-        icon={<EditIcon style={{ color: 'violet' }} />}
+        icon={
+          <EditIcon
+            style={{ color: `${theme.palette.primary.contrastText}` }}
+          />
+        }
         label="Edit"
         key="edit"
       />,
       <GridActionsCellItemStyled
-        icon={<DeleteOutlineIcon style={{ color: 'red' }} />}
+        icon={<DeleteOutlineIcon style={{ color: `${theme.palette.error}` }} />}
         label="Delete"
         key="delete"
       />,
@@ -88,7 +95,10 @@ const columns: GridColDef[] = [
 
 type Row = (typeof StartRows)[number];
 
-export const ExpensesTable = () => {
+export const ExpensesTable: React.FC<ExpenseTableProps> = (
+  expenses,
+  setExpenses,
+) => {
   const [rows] = React.useState<Row[]>(StartRows);
 
   return (

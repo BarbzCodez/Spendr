@@ -15,6 +15,15 @@ const Expenses = () => {
   const [isFormOpen, setIsFormOpen] = React.useState(false);
   const [editingExpense, setEditingExpense] =
     React.useState<ExpenseData | null>(null);
+  const [expenses, setExpenses] = React.useState<ExpenseData[]>([]);
+
+  React.useEffect(() => {
+    fetchExpenses();
+  }, []);
+
+  const fetchExpenses = async () => {
+    return;
+  };
 
   const openForm = () => {
     setIsFormOpen(true);
@@ -61,7 +70,7 @@ const Expenses = () => {
           expenseData={editingExpense}
         />
       </Stack>
-      <ExpensesTable />
+      <ExpensesTable expenses={expenses} setExpenses={setExpenses} />
     </PrimaryDiv>
   );
 };

@@ -50,3 +50,8 @@ export interface ExpenseDialogProps {
   onSave: (expenseData: ExpenseData) => void;
   expenseData?: ExpenseData | null;
 }
+
+export interface ExpenseTableProps {
+  expenses: ExpenseData[];
+  setExpenses: React.Dispatch<React.SetStateAction<ExpenseData[]>>;
+}
