@@ -9,37 +9,25 @@ import {
 /**
  * API add expense
  *
- * @param {string} title - Expense title
- * @param {number} amount - Expense amount
- * @param {string} category - Expense category
- * @param {number} userId - user id
- * @param {string} token - user token
- * @returns {AxiosResponse}
+ * @param {ExpenseUIVals} data - expense values from UI
+ * @param {UserInfo} user - user info
+ * @returns {AxiosResponse<AddExpenseResponse>}
  * @throws {AxiosError}
  */
 export const addExpenseRequest = async (
   data: ExpenseUIVals,
   user: UserInfo,
 ): Promise<AxiosResponse<AddExpenseResponse>> => {
-  try {
-    console.log(data.amount);
-    const expenseWithTime = {
-      ...data,
-      createdAt: new Date().toISOString(),
-    };
-    console.log(expenseWithTime);
+  const expenseWithTime = { ...data, createdAt: new Date().toISOString() };
 
-    const response = await axios.post<AddExpenseResponse>(
-      'http://localhost:7005/expenses',
-      expenseWithTime,
-      {
-        headers: {
-          Authorization: `Bearer ${user.token}`,
-        },
+  const response = await axios.post<AddExpenseResponse>(
+    'http://localhost:7005/expenses',
+    expenseWithTime,
+    {
+      headers: {
+        Authorization: `Bearer ${user.token}`,
       },
-    );
-    return response;
-  } catch (error) {
-    throw error;
-  }
+    },
+  );
+  return response;
 };
