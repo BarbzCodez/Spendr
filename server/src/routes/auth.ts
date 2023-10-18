@@ -350,7 +350,7 @@ router.post(
 );
 
 /**
- * Update an user's password
+ * Update a user's password
  *
  * This route will update a user's password.
  *
