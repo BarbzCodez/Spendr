@@ -291,7 +291,7 @@ router.post(
 );
 
 /**
- * Update an user's username
+ * Update a user's username
  *
  * This route will update a user's username.
  *
