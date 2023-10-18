@@ -1,6 +1,6 @@
 import * as React from 'react';
 import AddIcon from '@mui/icons-material/Add';
-import { Alert, Snackbar, Box } from '@mui/material';
+import { Alert, Snackbar } from '@mui/material';
 
 import { PrimaryDiv } from '../../assets/styles/styles';
 import ExpensesTable from './Components/ExpenseTable';
@@ -15,8 +15,13 @@ import { theme } from '../../assets/styles';
 import { useUser } from '../../context/UserContext';
 import { TableBox } from './styles';
 
+/**
+ * Expenses page component
+ *
+ * @returns {JSX.Element} - expenses page
+ */
 const Expenses = (): JSX.Element => {
-  const [isFormOpen, setIsFormOpen] = React.useState(false);
+  const [isDialogOpen, setIsDialogOpen] = React.useState(false);
   const [editingExpense, setEditingExpense] =
     React.useState<ExpenseVals | null>(null);
   const [expenses, setExpenses] = React.useState<ExpenseVals[]>([]);
@@ -44,11 +49,11 @@ const Expenses = (): JSX.Element => {
   };
 
   const openForm = () => {
-    setIsFormOpen(true);
+    setIsDialogOpen(true);
   };
 
   const closeForm = () => {
-    setIsFormOpen(false);
+    setIsDialogOpen(false);
     setEditingExpense(null);
   };
 
@@ -67,6 +72,7 @@ const Expenses = (): JSX.Element => {
         if (response.status === 201) {
           const newExpense: ExpenseVals = response.data.expense.newExpense;
           setExpenses([newExpense, ...expenses]);
+          setIsDialogOpen(false);
         }
       }
     } catch (error) {
@@ -94,7 +100,7 @@ const Expenses = (): JSX.Element => {
   return (
     <PrimaryDiv>
       <ExpenseDialog
-        open={isFormOpen}
+        open={isDialogOpen}
         onClose={closeForm}
         onSave={handleSaveExpense}
         expenseData={editingExpense}

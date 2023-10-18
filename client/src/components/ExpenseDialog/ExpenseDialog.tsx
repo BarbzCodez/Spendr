@@ -25,6 +25,15 @@ const validationSchema = yup.object().shape({
   category: yup.string().required('Category cannot be empty'),
 });
 
+/**
+ * Expense dialog component
+ *
+ * @param {boolean} open - open/closed state of the dialog
+ * @param {function} onClose - function when cancel is clicked
+ * @param {function} onSave - function when save is clicked
+ * @param {ExpenseVals} expenseData - expense data when editting
+ * @returns {React.FC} - expense dialog component
+ */
 const ExpenseDialog: React.FC<ExpenseDialogProps> = ({
   open,
   onClose,
@@ -42,6 +51,16 @@ const ExpenseDialog: React.FC<ExpenseDialogProps> = ({
       onSave(values);
     },
   });
+
+  const resetFormFields = () => {
+    formik.resetForm();
+  };
+
+  React.useEffect(() => {
+    if (!open) {
+      resetFormFields();
+    }
+  }, [open]);
 
   return (
     <Dialog open={open} onClose={onClose}>

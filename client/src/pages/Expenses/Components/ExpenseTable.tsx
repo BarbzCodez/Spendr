@@ -82,6 +82,13 @@ const columns: GridColDef[] = [
   },
 ];
 
+/**
+ * Expenses table component
+ *
+ * @param {ExpenseVals[]} expenses - expenses to display
+ * @param {React.Dispatch<React.SetStateAction<ExpenseVals[]>>} setExpenses - set function for expenses
+ * @returns {JSX.Element} - expenses table
+ */
 export const ExpensesTable: React.FC<ExpenseTableProps> = ({
   expenses,
   setExpenses,
