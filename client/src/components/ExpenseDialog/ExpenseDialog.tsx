@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import * as React from 'react';
 import {
-  Button,
   Dialog,
   DialogActions,
   DialogContent,
@@ -12,7 +11,7 @@ import {
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 
-import { ExpenseData, ExpenseDialogProps } from '../../interfaces/interfaces';
+import { ExpenseUIVals, ExpenseDialogProps } from '../../interfaces/interfaces';
 import { theme } from '../../assets/styles';
 import { PrimaryButton } from '../../assets/styles/styles';
 
@@ -39,8 +38,8 @@ const ExpenseDialog: React.FC<ExpenseDialogProps> = ({
       category: expenseData?.category || '',
     },
     validationSchema: validationSchema,
-    onSubmit: (values: ExpenseData) => {
-      return;
+    onSubmit: (values: ExpenseUIVals) => {
+      onSave(values);
     },
   });
 
@@ -80,6 +79,7 @@ const ExpenseDialog: React.FC<ExpenseDialogProps> = ({
             onChange={formik.handleChange}
             fullWidth
             variant="filled"
+            type="number"
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">$</InputAdornment>
@@ -126,22 +126,22 @@ const ExpenseDialog: React.FC<ExpenseDialogProps> = ({
             }
           >
             <MenuItem value="GROCERIES" key="GROCERIES">
-              Groceries
+              GROCERIES
             </MenuItem>
             <MenuItem value="TRANSPORT" key="TRANSPORT">
-              Transport
+              TRANSPORT
             </MenuItem>
             <MenuItem value="ENTERTAINMENT" key="ENTERTAINMENT">
-              Entertainment
+              ENTERTAINMENT
             </MenuItem>
             <MenuItem value="HEALTH" key="HEALTH">
-              Health
+              HEALTH
             </MenuItem>
             <MenuItem value="UTILITIES" key="UTILITIES">
-              Utilities
+              UTILITIES
             </MenuItem>
             <MenuItem value="OTHER" key="OTHER">
-              Other
+              OTHER
             </MenuItem>
           </TextField>
         </DialogContent>

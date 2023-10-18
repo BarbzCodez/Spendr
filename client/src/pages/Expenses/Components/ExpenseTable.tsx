@@ -7,44 +7,29 @@ import { theme } from '../../../assets/styles';
 import { ExpenseTableProps } from '../../../interfaces/interfaces';
 
 import {
-  ExpensesStack,
   BackgroundBox,
   GridActionsCellItemStyled,
   ExpensesDataGrid,
 } from './styles';
 
-const StartRows = [
-  {
-    name: 'Dinner with mom',
-    date: new Date('2023-01-16'),
-    amount: 25,
-    category: 'Food',
-  },
-  {
-    name: 'Groceries with dad',
-    date: new Date('2023-05-13'),
-    amount: 25,
-    category: 'Groceries',
-  },
-];
-
 const columns: GridColDef[] = [
   {
-    field: 'name',
-    headerName: 'Name',
+    field: 'title',
+    headerName: 'Title',
     type: 'string',
     align: 'left',
     headerAlign: 'left',
     flex: 1,
-    minWidth: 400,
+    minWidth: 200,
   },
   {
-    field: 'date',
+    field: 'createdAt',
     headerName: 'Date',
     align: 'left',
     headerAlign: 'left',
-    type: 'date',
-    minWidth: 100,
+    type: 'string',
+    flex: 1,
+    minWidth: 200,
   },
   {
     field: 'amount',
@@ -52,6 +37,7 @@ const columns: GridColDef[] = [
     align: 'left',
     headerAlign: 'left',
     type: 'number',
+    flex: 1,
     minWidth: 125,
   },
   {
@@ -61,13 +47,14 @@ const columns: GridColDef[] = [
     headerAlign: 'left',
     type: 'singleSelect',
     minWidth: 150,
+    flex: 1,
     valueOptions: [
-      'Groceries',
-      'Transport',
-      'Entertainment',
-      'Health',
-      'Utilities',
-      'Other',
+      'GROCERIES',
+      'TRANSPORT',
+      'ENTERTAINMENT',
+      'HEALTH',
+      'UTILITIES',
+      'OTHER',
     ],
   },
   {
@@ -85,7 +72,9 @@ const columns: GridColDef[] = [
         key="edit"
       />,
       <GridActionsCellItemStyled
-        icon={<DeleteOutlineIcon style={{ color: `${theme.palette.error}` }} />}
+        icon={
+          <DeleteOutlineIcon style={{ color: `${theme.palette.error.main}` }} />
+        }
         label="Delete"
         key="delete"
       />,
@@ -93,32 +82,28 @@ const columns: GridColDef[] = [
   },
 ];
 
-type Row = (typeof StartRows)[number];
-
-export const ExpensesTable: React.FC<ExpenseTableProps> = (
+export const ExpensesTable: React.FC<ExpenseTableProps> = ({
   expenses,
   setExpenses,
-) => {
-  const [rows] = React.useState<Row[]>(StartRows);
-
+}) => {
   return (
     <BackgroundBox>
-      <ExpensesStack spacing={2} boxShadow={5}>
-        <ExpensesDataGrid
-          rows={rows}
-          columns={columns}
-          getRowId={(rows) => rows.name}
-          style={{
-            padding: '1rem',
-          }}
-          initialState={{
-            pagination: {
-              paginationModel: { page: 0, pageSize: 5 },
-            },
-          }}
-          pageSizeOptions={[10, 25, 50]}
-        />
-      </ExpensesStack>
+      <ExpensesDataGrid
+        rows={expenses}
+        columns={columns}
+        getRowId={(row) => row.id}
+        style={{
+          padding: '1rem',
+        }}
+        initialState={{
+          pagination: {
+            paginationModel: { page: 0, pageSize: 10 },
+          },
+          sorting: {
+            sortModel: [{ field: 'createdAt', sort: 'desc' }],
+          },
+        }}
+      />
     </BackgroundBox>
   );
 };

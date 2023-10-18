@@ -1,23 +1,42 @@
-import axios, { AxiosResponse, AxiosError } from 'axios';
+import axios, { AxiosResponse } from 'axios';
 
-import { ExpenseVals } from '../interfaces/interfaces';
+import {
+  ExpenseUIVals,
+  UserInfo,
+  AddExpenseResponse,
+} from '../interfaces/interfaces';
 
 /**
- * API Expense
+ * API add expense
  *
  * @param {string} title - Expense title
  * @param {number} amount - Expense amount
  * @param {string} category - Expense category
- * @param {string} createdAt - Expense creation time
+ * @param {number} userId - user id
+ * @param {string} token - user token
  * @returns {AxiosResponse}
  * @throws {AxiosError}
  */
-export const expense = async (data: ExpenseVals): Promise<AxiosResponse> => {
+export const addExpenseRequest = async (
+  data: ExpenseUIVals,
+  user: UserInfo,
+): Promise<AxiosResponse<AddExpenseResponse>> => {
   try {
-    const response: AxiosResponse = await axios.post(
-      // TODO fetch userId and put it in path
-      'http://localhost:7005/users/expenses',
-      data,
+    console.log(data.amount);
+    const expenseWithTime = {
+      ...data,
+      createdAt: new Date().toISOString(),
+    };
+    console.log(expenseWithTime);
+
+    const response = await axios.post<AddExpenseResponse>(
+      'http://localhost:7005/expenses',
+      expenseWithTime,
+      {
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+        },
+      },
     );
     return response;
   } catch (error) {

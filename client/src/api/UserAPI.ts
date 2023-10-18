@@ -1,10 +1,11 @@
 import axios, { AxiosResponse } from 'axios';
-
 import {
   SignupVals,
   SignupResponse,
   LoginVals,
   LoginResponse,
+  AllExpensesResponse,
+  UserInfo,
 } from '../interfaces/interfaces';
 
 /**
@@ -46,6 +47,32 @@ export const loginRequest = async (
     const response = await axios.post<LoginResponse>(
       'http://localhost:7005/users/login',
       data,
+    );
+    return response;
+  } catch (error) {
+    throw error;
+  }
+};
+
+/**
+ * API all user expenses
+ *
+ * @param {string} userId
+ * @param {string} token
+ * @returns {AxiosResponse}
+ * @throws {AxiosError}
+ */
+export const allExpensesRequest = async (
+  user: UserInfo,
+): Promise<AxiosResponse<AllExpensesResponse>> => {
+  try {
+    const response: AxiosResponse = await axios.get(
+      `http://localhost:7005/users/${user.userId}/expenses`,
+      {
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+        },
+      },
     );
     return response;
   } catch (error) {

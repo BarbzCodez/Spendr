@@ -2,7 +2,6 @@ import { GridActionsCellItem } from '@mui/x-data-grid';
 import { styled, Box } from '@mui/system';
 import { DataGrid } from '@mui/x-data-grid';
 import { theme } from '../../../assets/styles';
-import { Stack } from '@mui/material';
 
 export const GridActionsCellItemStyled = styled(GridActionsCellItem)(
   ({ theme }) => ({
@@ -12,23 +11,15 @@ export const GridActionsCellItemStyled = styled(GridActionsCellItem)(
   }),
 );
 
-export const ExpensesStack = styled(Stack)({
-  background: `${theme.palette.secondary.main} 0%`,
-  display: 'flex',
-  margin: '0rem',
-  flexDirection: 'column',
-  color: 'white',
-  alignItems: 'center',
-  borderRadius: '15px',
-  padding: '2rem',
-});
-
 export const BackgroundBox = styled(Box)({
-  maxHeight: '80vh',
-  margin: '1px',
+  width: '90%',
+  height: '70vh',
   display: 'flex',
-  flexDirection: 'column',
-  alignItems: 'center',
+  justifyContent: 'center',
+  alignContent: 'center',
+  padding: '2rem',
+  backgroundColor: `${theme.palette.secondary.main}80`,
+  borderRadius: '16px',
 });
 
 export const ExpensesDataGrid = styled(DataGrid)({

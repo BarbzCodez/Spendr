@@ -31,13 +31,15 @@ export interface LoginResponse {
   token: string;
 }
 
-export interface ExpenseData {
+export interface ExpenseUIVals {
   title: string;
   amount: number;
   category: string;
 }
 
 export interface ExpenseVals {
+  id: number;
+  userId: number;
   title: string;
   amount: number;
   category: string;
@@ -47,11 +49,28 @@ export interface ExpenseVals {
 export interface ExpenseDialogProps {
   open: boolean;
   onClose: () => void;
-  onSave: (expenseData: ExpenseData) => void;
-  expenseData?: ExpenseData | null;
+  onSave: (expenseData: ExpenseUIVals) => void;
+  expenseData?: ExpenseVals | null;
 }
 
 export interface ExpenseTableProps {
-  expenses: ExpenseData[];
-  setExpenses: React.Dispatch<React.SetStateAction<ExpenseData[]>>;
+  expenses: ExpenseVals[];
+  setExpenses: React.Dispatch<React.SetStateAction<ExpenseVals[]>>;
+}
+
+export interface AllExpensesResponse {
+  success: boolean;
+  data: [ExpenseVals];
+}
+
+export interface UserInfo {
+  userId: number;
+  token: string;
+}
+
+export interface AddExpenseResponse {
+  message: string;
+  expense: {
+    newExpense: ExpenseVals;
+  };
 }
