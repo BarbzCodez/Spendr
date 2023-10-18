@@ -2,7 +2,7 @@ import { Stack, Typography } from '@mui/material';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import React from 'react';
 import {
-  DangerZoneStack,
+  SettingStack,
   DangerZoneStackElements,
   DeleteButton,
   ErrorBox,
@@ -36,8 +36,8 @@ const DangerZone = (): JSX.Element => {
   );
 
   return (
-    <DangerZoneStack>
-      <Typography variant="h5" component="h3" noWrap>
+    <SettingStack>
+      <Typography variant="h5" component="h3" p="1rem" noWrap>
         {'Danger Zone'}
       </Typography>
       <ErrorBox
@@ -51,7 +51,7 @@ const DangerZone = (): JSX.Element => {
           {deleteButton()}
         </DangerZoneStackElements>
       </ErrorBox>
-    </DangerZoneStack>
+    </SettingStack>
   );
 };
 export default DangerZone;

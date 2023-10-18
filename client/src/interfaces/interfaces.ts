@@ -27,6 +27,27 @@ export interface LoginResponse {
   user: {
     id: number;
     username: string;
+    password: string;
+    securityQuestion: string;
+    securityAnswer: string;
   };
   token: string;
+}
+
+export interface UpdateUsernameVals {
+  username: string;
+}
+
+export interface UpdatePasswordVals {
+  password: string;
+}
+
+export interface ResetPasswordVals {
+  username: string;
+  securityAnswer: string;
+  newPassword: string;
+}
+
+export interface MessageResponse {
+  message: string;
 }
