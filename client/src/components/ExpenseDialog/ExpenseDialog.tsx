@@ -72,11 +72,9 @@ const ExpenseDialog: React.FC<ExpenseDialogProps> = ({
           <TextField
             id="title"
             label="Title"
+            variant="filled"
             value={formik.values.title}
             onChange={formik.handleChange}
-            style={{ width: 550 }}
-            fullWidth
-            variant="filled"
             onBlur={formik.handleBlur}
             error={formik.touched.title && Boolean(formik.errors.title)}
             helperText={
@@ -90,15 +88,22 @@ const ExpenseDialog: React.FC<ExpenseDialogProps> = ({
             InputLabelProps={{
               style: { color: theme.palette.primary.contrastText },
             }}
+            style={{ width: 550 }}
           />
           <TextField
             id="amount"
             label="Amount"
-            value={formik.values.amount}
-            onChange={formik.handleChange}
-            fullWidth
             variant="filled"
             type="number"
+            value={formik.values.amount}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            error={formik.touched.amount && Boolean(formik.errors.amount)}
+            helperText={
+              formik.touched.amount && Boolean(formik.errors.amount)
+                ? formik.errors.amount
+                : ' '
+            }
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">$</InputAdornment>
@@ -111,31 +116,17 @@ const ExpenseDialog: React.FC<ExpenseDialogProps> = ({
               style: { color: theme.palette.primary.contrastText },
             }}
             style={{ width: 550 }}
-            onBlur={formik.handleBlur}
-            error={formik.touched.amount && Boolean(formik.errors.amount)}
-            helperText={
-              formik.touched.amount && Boolean(formik.errors.amount)
-                ? formik.errors.amount
-                : ' '
-            }
           />
           <TextField
             select
             id="category"
             label="Category"
+            variant="filled"
             value={formik.values.category}
             onChange={(event) => {
               event.target.name = 'category';
               formik.handleChange(event);
             }}
-            inputProps={{
-              style: { color: theme.palette.primary.contrastText },
-            }}
-            InputLabelProps={{
-              style: { color: theme.palette.primary.contrastText },
-            }}
-            variant="filled"
-            style={{ width: 550 }}
             onBlur={formik.handleBlur}
             error={formik.touched.category && Boolean(formik.errors.category)}
             helperText={
@@ -143,6 +134,13 @@ const ExpenseDialog: React.FC<ExpenseDialogProps> = ({
                 ? formik.errors.category
                 : ' '
             }
+            inputProps={{
+              style: { color: theme.palette.primary.contrastText },
+            }}
+            InputLabelProps={{
+              style: { color: theme.palette.primary.contrastText },
+            }}
+            style={{ width: 550 }}
           >
             <MenuItem value="GROCERIES" key="GROCERIES">
               GROCERIES
