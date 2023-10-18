@@ -3,10 +3,12 @@ import {
   Divider,
   IconButton,
   Snackbar,
+  Stack,
   TextField,
   Typography,
 } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
+import ClearIcon from '@mui/icons-material/Clear';
 import React from 'react';
 import { SettingStack, SecondaryText } from './styles';
 import { useFormik } from 'formik';
@@ -45,7 +47,7 @@ export const SettingsListComponent = (): JSX.Element => {
 
   const [editUsername, setEditUsername] = React.useState(false);
   const [editPassword, setEditPassword] = React.useState(false);
-  const [usernameError, setUsernameError] = React.useState(' '); // initial state is space to reserve the vertical space for the error
+  const [usernameError, setUsernameError] = React.useState(' ');
   const [generalError, setGeneralError] = React.useState(' ');
 
   const [openSnackbar, setOpenSnackbar] = React.useState(false);
@@ -53,11 +55,9 @@ export const SettingsListComponent = (): JSX.Element => {
   const handleUpdateUsername = async (values: UpdateUsernameVals) => {
     try {
       const { username } = values;
-      console.log(username);
       const response = await updateUsername({
         username,
       });
-      console.log(response);
       if (response.status === 200) {
         setOpenSnackbar(true);
         setCurrUsername(username);
@@ -92,11 +92,9 @@ export const SettingsListComponent = (): JSX.Element => {
   const handleUpdatePassword = async (values: UpdatePasswordVals) => {
     try {
       const { password } = values;
-      console.log(password);
       const response = await updatePassword({
         password,
       });
-      console.log(response);
       if (response.status === 200) {
         setOpenSnackbar(true);
         setEditPassword(false);
@@ -207,14 +205,25 @@ export const SettingsListComponent = (): JSX.Element => {
             }}
             type="text"
           ></TextField>
-          <IconButton type="submit">
-            <SaveAltIcon />
-          </IconButton>
+          <Stack direction={'row'} justifyContent={'center'}>
+            <IconButton style={{ color: 'white' }}>
+              <ClearIcon
+                onClick={() => {
+                  setEditUsername(false);
+                }}
+              />
+            </IconButton>
+            <IconButton style={{ color: 'white' }} type="submit">
+              <SaveAltIcon />
+            </IconButton>
+          </Stack>
         </SettingStack>
       ) : (
         <SettingStack direction="row" style={{ paddingBottom: '1rem' }}>
           <SecondaryText variant={'subtitle2'}>{currUsername}</SecondaryText>
           <IconButton
+            disabled={editPassword}
+            style={{ opacity: editPassword ? 0 : 1, color: 'white' }}
             onClick={() => {
               editPassword ? setEditUsername(false) : setEditUsername(true);
             }}
@@ -254,14 +263,25 @@ export const SettingsListComponent = (): JSX.Element => {
             }}
             type="text"
           ></TextField>
-          <IconButton type="submit">
-            <SaveAltIcon />
-          </IconButton>
+          <Stack direction={'row'} justifyContent={'center'}>
+            <IconButton style={{ color: 'white' }}>
+              <ClearIcon
+                onClick={() => {
+                  setEditPassword(false);
+                }}
+              />
+            </IconButton>
+            <IconButton style={{ color: 'white' }} type="submit">
+              <SaveAltIcon />
+            </IconButton>
+          </Stack>
         </SettingStack>
       ) : (
         <SettingStack direction="row">
           <SecondaryText variant={'subtitle2'}>{'********'}</SecondaryText>
           <IconButton
+            disabled={editUsername}
+            style={{ opacity: editUsername ? 0 : 1, color: 'white' }}
             onClick={() => {
               editUsername ? setEditPassword(false) : setEditPassword(true);
             }}

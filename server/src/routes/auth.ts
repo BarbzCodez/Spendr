@@ -407,7 +407,7 @@ router.post(
  *
  * This route delete the user given that it exists
  *
- * @route DELETE /delete
+ * @route DELETE /users/delete
  * @group auth - Operations about authentication
  * @returns {object} 200 - User successfully deleted
  * @returns {Error}  500 - Server error
@@ -437,7 +437,7 @@ router.delete('/delete', authenticate, async (req: Request, res: Response) => {
  * This route will return all expenses for a user, including individual expenses and group expenses where the user has a split.
  * The user must be authenticated to make this request.
  *
- * @route GET /users/expenses
+ * @route GET /users/:userId/expenses
  * @group users - Operations about users
  * @param {string} userId.path.required - User ID
  * @returns {object} 200 - All expenses for the user
