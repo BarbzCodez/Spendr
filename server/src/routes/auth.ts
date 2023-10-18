@@ -291,7 +291,7 @@ router.post(
 );
 
 /**
- * Update an user's username
+ * Update a user's username
  *
  * This route will update a user's username.
  *
@@ -350,7 +350,7 @@ router.post(
 );
 
 /**
- * Update an user's password
+ * Update a user's password
  *
  * This route will update a user's password.
  *
