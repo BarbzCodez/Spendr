@@ -3,6 +3,11 @@ import { Box, styled } from '@mui/system';
 import { theme } from '../../../assets/styles';
 
 export const SecondaryText = styled(Typography)({
+  fontSize: 'medium',
+  color: theme.palette.secondary.contrastText,
+});
+
+export const SecondaryTextDangerZone = styled(Typography)({
   color: theme.palette.secondary.contrastText,
 });
 

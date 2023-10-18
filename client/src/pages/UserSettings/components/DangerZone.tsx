@@ -6,7 +6,7 @@ import {
   DangerZoneStackElements,
   DeleteButton,
   ErrorBox,
-  SecondaryText,
+  SecondaryTextDangerZone,
 } from './styles';
 import { theme } from '../../../assets/styles';
 
@@ -29,9 +29,9 @@ const DangerZone = (): JSX.Element => {
   const deleteText = () => (
     <Stack>
       <Typography variant="subtitle1">Delete Account</Typography>
-      <SecondaryText variant="subtitle2">
+      <SecondaryTextDangerZone variant="subtitle2">
         Once deleted, there will be no way of retrieving this account
-      </SecondaryText>
+      </SecondaryTextDangerZone>
     </Stack>
   );
 
@@ -46,7 +46,7 @@ const DangerZone = (): JSX.Element => {
           borderColor: theme.palette.error.main,
         }}
       >
-        <DangerZoneStackElements>
+        <DangerZoneStackElements spacing={2}>
           {deleteText()}
           {deleteButton()}
         </DangerZoneStackElements>
