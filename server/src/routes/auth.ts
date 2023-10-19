@@ -112,7 +112,7 @@ router.post(
         where: { username },
       });
 
-      if (!user) {
+      if (!user || user.userDeleted) {
         return res.status(400).json({ message: 'Invalid credentials' });
       }
 
@@ -177,7 +177,7 @@ router.post(
         where: { username },
       });
 
-      if (!user) {
+      if (!user || user.userDeleted) {
         return res.status(400).json({ message: 'Invalid credentials' });
       }
 
@@ -255,7 +255,7 @@ router.post(
         where: { id: userId },
       });
 
-      if (!user) {
+      if (!user || user.userDeleted) {
         return res.status(400).json({ message: 'Invalid credentials' });
       }
 
@@ -381,7 +381,7 @@ router.post(
         where: { id: userId },
       });
 
-      if (!user) {
+      if (!user || user.userDeleted) {
         return res.status(400).json({ message: 'Invalid credentials' });
       }
 
