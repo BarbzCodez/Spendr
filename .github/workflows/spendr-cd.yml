@@ -92,7 +92,7 @@ jobs:
         tags: ${{ steps.meta.outputs.tags }}
         labels: ${{ steps.meta.outputs.labels }}
     
-  publish-to-docker-server:
+  publish-to-docker-client:
     name: 'spendr client continuous deployment - publish'
     needs: build-client
     runs-on: ubuntu-latest
