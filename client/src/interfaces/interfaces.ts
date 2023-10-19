@@ -1,7 +1,3 @@
-export interface LoggedInProps {
-  isLoggedIn: boolean;
-}
-
 export interface SignupData {
   username: string;
   password: string;
