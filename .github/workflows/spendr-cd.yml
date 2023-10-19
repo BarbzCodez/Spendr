@@ -1,4 +1,4 @@
-name: 'Spendr Continuous Integration'
+name: 'Spendr Continuous Deployment'
 
 on:
   push:
@@ -70,7 +70,7 @@ jobs:
     - name: Download artifact
       uses: actions/download-artifact@v2
       with:
-        spendr-server-static
+        name: spendr-server-static
         path: ./spendr-server/build
 
     - name: Log on to docker hub
@@ -108,7 +108,7 @@ jobs:
     - name: Download artifact
       uses: actions/download-artifact@v2
       with:
-        spendr-client-static
+        name: spendr-client-static
         path: ./spendr-client/build
 
     - name: Log on to docker hub
