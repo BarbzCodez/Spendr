@@ -164,7 +164,6 @@ router.put(
  *
  * @route DELETE /expenses/:expenseId
  * @param expenseId Id of the expense
- * @returns {object} An object containing the expense
  * @throws {object} 404 - If the expense is not found
  * @throws {object} 500 - If there is a server error
  */

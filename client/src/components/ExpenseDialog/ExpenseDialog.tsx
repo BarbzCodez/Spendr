@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useEffect } from 'react';
 import {
   Dialog,
   DialogActions,
@@ -7,11 +7,12 @@ import {
   TextField,
   InputAdornment,
   MenuItem,
+  Typography,
 } from '@mui/material';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 
-import { ExpenseUIVals, ExpenseDialogProps } from '../../interfaces/interfaces';
+import { ExpenseUIData, ExpenseDialogProps } from '../../interfaces/interfaces';
 import { theme } from '../../assets/styles';
 import { PrimaryButton } from '../../assets/styles/styles';
 
@@ -37,7 +38,8 @@ const validationSchema = yup.object().shape({
 const ExpenseDialog: React.FC<ExpenseDialogProps> = ({
   open,
   onClose,
-  onSave,
+  onAdd,
+  onEdit,
   expenseData,
 }) => {
   const formik = useFormik({
@@ -47,18 +49,33 @@ const ExpenseDialog: React.FC<ExpenseDialogProps> = ({
       category: expenseData?.category || '',
     },
     validationSchema: validationSchema,
-    onSubmit: (values: ExpenseUIVals) => {
-      onSave(values);
+    onSubmit: (values: ExpenseUIData) => {
+      if (expenseData) {
+        onEdit({
+          id: expenseData.id,
+          userId: expenseData.userId,
+          title: values.title,
+          amount: values.amount,
+          category: values.category,
+          createdAt: expenseData.createdAt,
+        });
+      } else {
+        onAdd(values);
+      }
     },
   });
 
-  const resetFormFields = () => {
-    formik.resetForm();
-  };
+  useEffect(() => {
+    if (expenseData) {
+      formik.setFieldValue('title', expenseData.title);
+      formik.setFieldValue('amount', expenseData.amount);
+      formik.setFieldValue('category', expenseData.category);
+    }
+  }, [expenseData]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (!open) {
-      resetFormFields();
+      formik.resetForm();
     }
   }, [open]);
 
@@ -106,7 +123,9 @@ const ExpenseDialog: React.FC<ExpenseDialogProps> = ({
             }
             InputProps={{
               startAdornment: (
-                <InputAdornment position="start">$</InputAdornment>
+                <InputAdornment position="start" style={{ color: '#FFFFFF' }}>
+                  <Typography variant="body1">$</Typography>
+                </InputAdornment>
               ),
             }}
             inputProps={{
@@ -142,7 +161,7 @@ const ExpenseDialog: React.FC<ExpenseDialogProps> = ({
             }}
             style={{ width: 550 }}
           >
-            <MenuItem value="GROCERIES" key="GROCERIES">
+            <MenuItem value="GROCERIES" key="GROCERIES" color="#FFFFFF">
               GROCERIES
             </MenuItem>
             <MenuItem value="TRANSPORT" key="TRANSPORT">

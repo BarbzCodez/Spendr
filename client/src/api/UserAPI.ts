@@ -1,8 +1,8 @@
 import axios, { AxiosResponse } from 'axios';
 import {
-  SignupVals,
+  SignupData,
   SignupResponse,
-  LoginVals,
+  LoginData,
   LoginResponse,
   AllExpensesResponse,
   UserInfo,
@@ -11,12 +11,12 @@ import {
 /**
  * API signup request
  *
- * @param {SignupVals} data - signup values from UI
+ * @param {SignupData} data - signup values from UI
  * @returns {AxiosResponse<SignupResponse>} - response
  * @throws {AxiosError}
  */
 export const signupRequest = async (
-  data: SignupVals,
+  data: SignupData,
 ): Promise<AxiosResponse<SignupResponse>> => {
   const response: AxiosResponse = await axios.post<SignupResponse>(
     'http://localhost:7005/users/register',
@@ -28,12 +28,12 @@ export const signupRequest = async (
 /**
  * API login request
  *
- * @param {LoginVals} data - login values from UI
+ * @param {LoginData} data - login values from UI
  * @returns {AxiosResponse<LoginResponse>} - response
  * @throws {AxiosError}
  */
 export const loginRequest = async (
-  data: LoginVals,
+  data: LoginData,
 ): Promise<AxiosResponse<LoginResponse>> => {
   const response = await axios.post<LoginResponse>(
     'http://localhost:7005/users/login',

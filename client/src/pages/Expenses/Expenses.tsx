@@ -3,17 +3,21 @@ import AddIcon from '@mui/icons-material/Add';
 import { Alert, Snackbar } from '@mui/material';
 
 import { PrimaryDiv } from '../../assets/styles/styles';
-import ExpensesTable from './Components/ExpenseTable';
-import Header from '../../components/Header';
 import { Stack } from '@mui/material';
 import { PrimaryButton } from '../../assets/styles/styles';
-import ExpenseDialog from '../../components/ExpenseDialog';
-import { ExpenseUIVals, ExpenseVals } from '../../interfaces/interfaces';
+import { ExpenseUIData, ExpenseData } from '../../interfaces/interfaces';
 import { allExpensesRequest } from '../../api/UserAPI';
-import { addExpenseRequest } from '../../api/ExpenseAPI';
+import {
+  addExpenseRequest,
+  deleteExpenseRequest,
+  editExpenseRequest,
+} from '../../api/ExpenseAPI';
 import { theme } from '../../assets/styles';
 import { useUser } from '../../context/UserContext';
 import { TableBox } from './styles';
+import ExpensesTable from './Components/ExpenseTable';
+import ExpenseDialog from '../../components/ExpenseDialog';
+import Header from '../../components/Header';
 
 /**
  * Expenses page component
@@ -22,11 +26,12 @@ import { TableBox } from './styles';
  */
 const Expenses = (): JSX.Element => {
   const [isDialogOpen, setIsDialogOpen] = React.useState(false);
-  const [editingExpense, setEditingExpense] =
-    React.useState<ExpenseVals | null>(null);
-  const [expenses, setExpenses] = React.useState<ExpenseVals[]>([]);
-  const [openSnackbar, setOpenSnackbar] = React.useState(false);
+  const [expenses, setExpenses] = React.useState<ExpenseData[]>([]);
+  const [isSnackbarOpen, setIsSnackbarOpen] = React.useState(false);
   const { userId, token } = useUser();
+  const [expenseToEdit, setExpenseToEdit] = React.useState<ExpenseData | null>(
+    null,
+  );
 
   React.useEffect(() => {
     fetchExpenses();
@@ -43,47 +48,17 @@ const Expenses = (): JSX.Element => {
         }
       }
     } catch (error) {
-      console.log(error);
-      setOpenSnackbar(true);
+      setIsSnackbarOpen(true);
     }
   };
 
-  const openForm = () => {
+  const openDialog = () => {
     setIsDialogOpen(true);
   };
 
-  const closeForm = () => {
+  const closeDialog = () => {
     setIsDialogOpen(false);
-    setEditingExpense(null);
-  };
-
-  const handleSaveExpense = (expenseData: ExpenseUIVals) => {
-    addExpense(expenseData);
-  };
-
-  const addExpense = async (expenseData: ExpenseUIVals) => {
-    try {
-      if (userId != null && token != null) {
-        const response = await addExpenseRequest(expenseData, {
-          userId,
-          token,
-        });
-
-        if (response.status === 201) {
-          const newExpense: ExpenseVals = response.data.expense.newExpense;
-          setExpenses([newExpense, ...expenses]);
-          setIsDialogOpen(false);
-        }
-      }
-    } catch (error) {
-      console.log(error);
-      setOpenSnackbar(true);
-    }
-  };
-
-  const handleEditExpense = (expenseData: ExpenseVals) => {
-    setEditingExpense(expenseData);
-    openForm();
+    setExpenseToEdit(null);
   };
 
   const handleSnackbarClose = (
@@ -94,19 +69,112 @@ const Expenses = (): JSX.Element => {
       return;
     }
 
-    setOpenSnackbar(false);
+    setIsSnackbarOpen(false);
+  };
+
+  const handleAddExpense = (expenseData: ExpenseUIData) => {
+    addExpense(expenseData);
+    closeDialog();
+  };
+
+  const addExpense = async (expenseData: ExpenseUIData) => {
+    try {
+      if (userId != null && token != null) {
+        const response = await addExpenseRequest(expenseData, {
+          userId,
+          token,
+        });
+
+        if (response.status === 201) {
+          const newExpense: ExpenseData = response.data.expense.newExpense;
+          setExpenses([newExpense, ...expenses]);
+          setIsDialogOpen(false);
+        }
+      }
+    } catch (error) {
+      setIsSnackbarOpen(true);
+    }
+  };
+
+  const handleEditDialog = (expenseData: ExpenseData) => {
+    setExpenseToEdit(expenseData);
+    openDialog();
+  };
+
+  const handleEditExpense = (expenseData: ExpenseData) => {
+    editExpense(expenseData);
+    closeDialog();
+  };
+
+  const editExpense = async (expenseData: ExpenseData) => {
+    try {
+      if (userId != null && token != null) {
+        const response = await editExpenseRequest(expenseData, {
+          userId,
+          token,
+        });
+
+        if (response.status === 200) {
+          const edittedExpense: ExpenseData = response.data.data;
+          const index = expenses.findIndex(
+            (expense) => expense.id === edittedExpense.id,
+          );
+
+          if (index != -1) {
+            const updatedExpenses = [...expenses];
+            updatedExpenses[index] = edittedExpense;
+            setExpenses(updatedExpenses);
+          }
+          setIsDialogOpen(false);
+        }
+      }
+    } catch (error) {
+      setIsSnackbarOpen(true);
+    }
+  };
+
+  const handleDeleteExpense = (expenseData: ExpenseData) => {
+    deleteExpense(expenseData);
+    closeDialog();
+  };
+
+  const deleteExpense = async (expenseData: ExpenseData) => {
+    try {
+      if (userId != null && token != null) {
+        const response = await deleteExpenseRequest(expenseData, {
+          userId,
+          token,
+        });
+
+        if (response.status === 200) {
+          const index = expenses.findIndex(
+            (expense) => expense.id === expenseData.id,
+          );
+
+          if (index != -1) {
+            const updatedExpenses = [...expenses];
+            updatedExpenses.splice(index, 1);
+            setExpenses(updatedExpenses);
+          }
+          setIsDialogOpen(false);
+        }
+      }
+    } catch (error) {
+      setIsSnackbarOpen(true);
+    }
   };
 
   return (
     <PrimaryDiv>
       <ExpenseDialog
         open={isDialogOpen}
-        onClose={closeForm}
-        onSave={handleSaveExpense}
-        expenseData={editingExpense}
+        onClose={closeDialog}
+        onAdd={handleAddExpense}
+        onEdit={handleEditExpense}
+        expenseData={expenseToEdit}
       />
       <Snackbar
-        open={openSnackbar}
+        open={isSnackbarOpen}
         autoHideDuration={6000}
         onClose={handleSnackbarClose}
         anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
@@ -132,13 +200,17 @@ const Expenses = (): JSX.Element => {
         <PrimaryButton
           startIcon={<AddIcon style={{ color: theme.palette.info.main }} />}
           style={{ width: '180px' }}
-          onClick={openForm}
+          onClick={openDialog}
         >
           Add Expense
         </PrimaryButton>
       </Stack>
       <TableBox>
-        <ExpensesTable expenses={expenses} setExpenses={setExpenses} />
+        <ExpensesTable
+          expenses={expenses}
+          handleEditDialog={handleEditDialog}
+          handleDeleteExpense={handleDeleteExpense}
+        />
       </TableBox>
     </PrimaryDiv>
   );

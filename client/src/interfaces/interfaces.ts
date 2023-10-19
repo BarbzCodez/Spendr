@@ -2,7 +2,7 @@ export interface LoggedInProps {
   isLoggedIn: boolean;
 }
 
-export interface SignupVals {
+export interface SignupData {
   username: string;
   password: string;
   securityQuestion: string;
@@ -17,7 +17,7 @@ export interface SignupResponse {
   };
 }
 
-export interface LoginVals {
+export interface LoginData {
   username: string;
   password: string;
 }
@@ -31,13 +31,13 @@ export interface LoginResponse {
   token: string;
 }
 
-export interface ExpenseUIVals {
+export interface ExpenseUIData {
   title: string;
   amount: number;
   category: string;
 }
 
-export interface ExpenseVals {
+export interface ExpenseData {
   id: number;
   userId: number;
   title: string;
@@ -49,18 +49,20 @@ export interface ExpenseVals {
 export interface ExpenseDialogProps {
   open: boolean;
   onClose: () => void;
-  onSave: (expenseData: ExpenseUIVals) => void;
-  expenseData?: ExpenseVals | null;
+  onAdd: (expenseData: ExpenseUIData) => void;
+  onEdit: (expenseData: ExpenseData) => void;
+  expenseData?: ExpenseData | null;
 }
 
 export interface ExpenseTableProps {
-  expenses: ExpenseVals[];
-  setExpenses: React.Dispatch<React.SetStateAction<ExpenseVals[]>>;
+  expenses: ExpenseData[];
+  handleEditDialog: (expenseData: ExpenseData) => void;
+  handleDeleteExpense: (expenseData: ExpenseData) => void;
 }
 
 export interface AllExpensesResponse {
   success: boolean;
-  data: [ExpenseVals];
+  data: [ExpenseData];
 }
 
 export interface UserInfo {
@@ -71,6 +73,14 @@ export interface UserInfo {
 export interface AddExpenseResponse {
   message: string;
   expense: {
-    newExpense: ExpenseVals;
+    newExpense: ExpenseData;
   };
+}
+
+export interface EditExpenseResponse {
+  data: ExpenseData;
+}
+
+export interface DeleteExpenseResponse {
+  message: string;
 }
