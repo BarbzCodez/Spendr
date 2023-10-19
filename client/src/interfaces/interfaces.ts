@@ -1,5 +1,4 @@
 export interface SignupData {
-
   username: string;
   password: string;
   securityQuestion: string;
@@ -31,7 +30,6 @@ export interface LoginResponse {
   token: string;
 }
 
-
 export interface UpdateUsernameData {
   username: string;
 }
@@ -41,7 +39,7 @@ export interface UpdatePasswordData {
 }
 
 export interface MessageResponse {
-    message: string;
+  message: string;
 }
 
 export interface ExpenseUIData {
