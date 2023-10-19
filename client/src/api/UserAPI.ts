@@ -1,6 +1,7 @@
 import axios, { AxiosResponse } from 'axios';
 
 import {
+  UserInfo,
   SignupVals,
   SignupResponse,
   LoginVals,
@@ -74,10 +75,16 @@ export const resetPassword = async (
  */
 export const updateUsername = async (
   data: UpdateUsernameVals,
+  user: UserInfo,
 ): Promise<AxiosResponse<MessageResponse>> => {
   const response = await axios.post<MessageResponse>(
     'http://localhost:7005/users/update-username',
     data,
+    {
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
+    },
   );
   return response;
 };
@@ -90,10 +97,16 @@ export const updateUsername = async (
  */
 export const updatePassword = async (
   data: UpdatePasswordVals,
+  user: UserInfo,
 ): Promise<AxiosResponse<MessageResponse>> => {
   const response = await axios.post<MessageResponse>(
     'http://localhost:7005/users/update-password',
     data,
+    {
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
+    },
   );
   return response;
 };
@@ -103,9 +116,16 @@ export const updatePassword = async (
  *
  * @returns {AxiosResponse}
  */
-export const deleteUser = async (): Promise<AxiosResponse<MessageResponse>> => {
+export const deleteUser = async (
+  user: UserInfo,
+): Promise<AxiosResponse<MessageResponse>> => {
   const response = await axios.delete<MessageResponse>(
     'http://localhost:7005/users/delete',
+    {
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
+    },
   );
   return response;
 };

@@ -42,7 +42,7 @@ function delay(ms: number) {
  * @returns {JSX.Element} - List of settings component
  */
 export const SettingsListComponent = (): JSX.Element => {
-  const { username } = useUser();
+  const { userId, username, token } = useUser();
   const [currUsername, setCurrUsername] = React.useState(username);
 
   const [editUsername, setEditUsername] = React.useState(false);
@@ -55,17 +55,25 @@ export const SettingsListComponent = (): JSX.Element => {
   const handleUpdateUsername = async (values: UpdateUsernameVals) => {
     try {
       const { username } = values;
-      const response = await updateUsername({
-        username,
-      });
-      console.log(response);
-      if (response.status === 200) {
-        setOpenSnackbar(true);
-        setCurrUsername(username);
-        setEditUsername(false);
-        await delay(3000);
-      } else {
-        setGeneralError('An error occurred, please try again');
+      if (userId != null && token != null) {
+        const response = await updateUsername(
+          {
+            username,
+          },
+          {
+            userId,
+            token,
+          },
+        );
+        console.log(response);
+        if (response.status === 200) {
+          setOpenSnackbar(true);
+          setCurrUsername(username);
+          setEditUsername(false);
+          await delay(3000);
+        } else {
+          setGeneralError('An error occurred, please try again');
+        }
       }
     } catch (error) {
       if (axios.isAxiosError(error)) {
@@ -93,15 +101,23 @@ export const SettingsListComponent = (): JSX.Element => {
   const handleUpdatePassword = async (values: UpdatePasswordVals) => {
     try {
       const { password } = values;
-      const response = await updatePassword({
-        password,
-      });
-      if (response.status === 200) {
-        setOpenSnackbar(true);
-        setEditPassword(false);
-        await delay(3000);
-      } else {
-        setGeneralError('An error occurred, please try again');
+      if (userId != null && token != null) {
+        const response = await updatePassword(
+          {
+            password,
+          },
+          {
+            userId,
+            token,
+          },
+        );
+        if (response.status === 200) {
+          setOpenSnackbar(true);
+          setEditPassword(false);
+          await delay(3000);
+        } else {
+          setGeneralError('An error occurred, please try again');
+        }
       }
     } catch (error) {
       if (axios.isAxiosError(error)) {

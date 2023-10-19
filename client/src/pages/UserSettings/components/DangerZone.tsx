@@ -10,6 +10,7 @@ import {
 } from './styles';
 import { theme } from '../../../assets/styles';
 import { deleteUser } from '../../../api/UserAPI';
+import { useUser } from '../../../context/UserContext';
 
 import axios, { AxiosError } from 'axios';
 
@@ -26,6 +27,7 @@ function delay(ms: number) {
  */
 const DangerZone = (): JSX.Element => {
   const navigate = useNavigate();
+  const { userId, token } = useUser();
 
   const [generalError, setGeneralError] = React.useState(' ');
 
@@ -33,15 +35,20 @@ const DangerZone = (): JSX.Element => {
 
   const handleDeleteUser = async () => {
     try {
-      const response = await deleteUser();
-      console.log(response);
-      if (response.status === 200) {
-        setOpenSnackbar(true);
+      if (userId != null && token != null) {
+        const response = await deleteUser({
+          userId,
+          token,
+        });
+        console.log(response);
+        if (response.status === 200) {
+          setOpenSnackbar(true);
 
-        await delay(3000);
-        navigate('/');
-      } else {
-        setGeneralError('An error occurred, please try again');
+          await delay(3000);
+          navigate('/');
+        } else {
+          setGeneralError('An error occurred, please try again');
+        }
       }
     } catch (error) {
       if (axios.isAxiosError(error)) {

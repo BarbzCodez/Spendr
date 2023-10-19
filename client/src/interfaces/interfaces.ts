@@ -2,6 +2,11 @@ export interface LoggedInProps {
   isLoggedIn: boolean;
 }
 
+export interface UserInfo {
+  userId: number;
+  token: string;
+}
+
 export interface SignupVals {
   username: string;
   password: string;
