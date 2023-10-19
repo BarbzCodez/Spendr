@@ -42,6 +42,10 @@ export const ExpensesTable: React.FC<ExpenseTableProps> = ({
       type: 'string',
       flex: 1,
       minWidth: 200,
+      valueGetter: (params) => {
+        const date = new Date(params.value as string);
+        return date.toISOString().split('T')[0];
+      },
     },
     {
       field: 'amount',
@@ -51,6 +55,10 @@ export const ExpensesTable: React.FC<ExpenseTableProps> = ({
       type: 'number',
       flex: 1,
       minWidth: 125,
+      valueGetter: (params) => {
+        const amount = '$' + params.value;
+        return amount;
+      },
     },
     {
       field: 'category',
@@ -125,6 +133,7 @@ export const ExpensesTable: React.FC<ExpenseTableProps> = ({
             sortModel: [{ field: 'createdAt', sort: 'desc' }],
           },
         }}
+        pageSizeOptions={[10, 15, 20]}
       />
     </BackgroundBox>
   );
