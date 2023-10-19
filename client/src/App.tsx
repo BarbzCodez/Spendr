@@ -1,15 +1,27 @@
 import React from 'react';
 import { ThemeProvider } from '@mui/material/styles';
-import { Routes, Route, BrowserRouter } from 'react-router-dom';
+import { Routes, Route, BrowserRouter, Navigate } from 'react-router-dom';
 import CssBaseline from '@mui/material/CssBaseline';
 
 import { theme } from './assets/styles';
+import { UserProvider, useUser } from './context/UserContext';
 import Greetings from './pages/Greetings';
 import UserSettings from './pages/UserSettings';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
 import Home from './pages/Home';
-import { UserProvider } from './context/UserContext';
+
+const RequireAuth: React.FC<{ children: React.ReactElement }> = ({
+  children,
+}) => {
+  const { userId, token } = useUser();
+
+  if (!userId || !token) {
+    return <Navigate to="/" />;
+  }
+
+  return children;
+};
 
 /**
  * main App component
@@ -25,8 +37,30 @@ function App() {
             <Route path="/" element={<Greetings />} />
             <Route path="/signup" element={<Signup />} />
             <Route path="/login" element={<Login />} />
-            <Route path="/home" element={<Home />} />
-            <Route path="/user-settings" element={<UserSettings />} />
+            <Route
+              path="/home"
+              element={
+                <RequireAuth>
+                  <Home />
+                </RequireAuth>
+              }
+            />
+            {/* <Route
+              path="/expenses"
+              element={
+                <RequireAuth>
+                  <Expenses />
+                </RequireAuth>
+              }
+            /> */}
+            <Route
+              path="/user-settings"
+              element={
+                <RequireAuth>
+                  <UserSettings />
+                </RequireAuth>
+              }
+            />
           </Routes>
         </BrowserRouter>
       </UserProvider>
