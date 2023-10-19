@@ -71,16 +71,22 @@ const Header: React.FC<LoggedInProps> = ({ isLoggedIn }) => {
           </Link>
           {isLoggedIn && (
             <TabsBox>
-              <TabButton key={'Expenses'} href="/expenses">
+              <TabButton key={'Expenses'} onClick={() => navigate('/expenses')}>
                 Expenses
               </TabButton>
-              <TabButton key={'Budgets'} href="/budgets">
+              <TabButton key={'Budgets'} onClick={() => navigate('/budgets')}>
                 Budgets
               </TabButton>
-              <TabButton key={'Analytics'} href="/analytics">
+              <TabButton
+                key={'Analytics'}
+                onClick={() => navigate('/analytics')}
+              >
                 Analytics
               </TabButton>
-              <TabButton key={'Group Expenses'} href="/group-expenses">
+              <TabButton
+                key={'Group Expenses'}
+                onClick={() => navigate('/group-expenses')}
+              >
                 Group Expenses
               </TabButton>
             </TabsBox>
@@ -113,20 +119,10 @@ const Header: React.FC<LoggedInProps> = ({ isLoggedIn }) => {
                 onClose={handleCloseUserMenu}
               >
                 <MenuItem key={'Settings'} onClick={handleNavSettings}>
-                  <Typography
-                    textAlign="center"
-                    style={{ color: `${theme.palette.info.light}` }}
-                  >
-                    Settings
-                  </Typography>
+                  <Typography textAlign="center">Settings</Typography>
                 </MenuItem>
                 <MenuItem key={'Log Out'} onClick={handleLogOut}>
-                  <Typography
-                    textAlign="center"
-                    style={{ color: `${theme.palette.info.light}` }}
-                  >
-                    Log Out
-                  </Typography>
+                  <Typography textAlign="center">Log Out</Typography>
                 </MenuItem>
               </Menu>
             </Box>

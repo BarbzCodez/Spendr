@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { Divider } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 
 import { PrimaryButton } from '../../assets/styles/styles';
 import logo from '../../assets/images/spendr_1.png';
@@ -18,6 +19,8 @@ import {
  * @returns {JSX.Element} - greetings page
  */
 const Greetings = (): JSX.Element => {
+  const navigate = useNavigate();
+
   return (
     <GreetingsDiv>
       <LeftStack spacing={'3vh'} alignItems="center">
@@ -38,7 +41,7 @@ const Greetings = (): JSX.Element => {
         </BodyText>
         <PrimaryButton
           variant="contained"
-          href="/signup"
+          onClick={() => navigate('/signup')}
           style={{ width: '200px' }}
         >
           Get Started
@@ -51,7 +54,7 @@ const Greetings = (): JSX.Element => {
         </Divider>
         <PrimaryButton
           variant="contained"
-          href="/login"
+          onClick={() => navigate('/login')}
           style={{ width: '200px', margin: '0' }}
         >
           Log In
