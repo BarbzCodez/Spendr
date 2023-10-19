@@ -16,6 +16,7 @@ import { PrimaryBar, TabsBox, TabButton } from './styles';
 import { LoggedInProps } from '../../interfaces/interfaces';
 import logo from '../../assets/images/spendr_1.png';
 import { theme } from '../../assets/styles';
+import { useUser } from '../../context/UserContext';
 
 /**
  * Top header component
@@ -25,6 +26,7 @@ import { theme } from '../../assets/styles';
  */
 const Header: React.FC<LoggedInProps> = ({ isLoggedIn }) => {
   const navigate = useNavigate();
+  const { logout } = useUser();
 
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
     null,
@@ -45,7 +47,8 @@ const Header: React.FC<LoggedInProps> = ({ isLoggedIn }) => {
 
   const handleLogOut = () => {
     handleCloseUserMenu();
-    // do log out
+    logout();
+    navigate('/');
   };
 
   return (

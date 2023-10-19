@@ -359,6 +359,166 @@ describe('POST /users/update-user', () => {
   });
 });
 
+describe('POST /users/update-username', () => {
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+
+  it('returns 400 for validation errors', async () => {
+    const response = await request(app).post('/users/update-username').send({
+      // missing username
+    });
+
+    expect(response.status).toBe(400);
+    expect(response.body.errors).toBeDefined();
+  });
+
+  it('returns 400 if user does not exist', async () => {
+    // Mocking the user check based on ID
+    prismaMock.user.findUnique.mockResolvedValueOnce(null);
+
+    const response = await request(app).post('/users/update-username').send({
+      username: 'newUsername',
+    });
+
+    expect(response.status).toBe(400);
+  });
+
+  it('returns 400 if new username already exists', async () => {
+    // Mocking the user check based on ID
+    prismaMock.user.findUnique.mockResolvedValueOnce({
+      id: 1,
+      username: 'oldUsername',
+      password: 'oldpassword',
+      securityQuestion: 'Your old favorite color?',
+      securityAnswer: 'OldBlue',
+      userDeleted: false,
+    });
+
+    // Mocking the user check based on new username
+    prismaMock.user.findUnique.mockResolvedValueOnce({
+      id: 1,
+      username: 'existingUsername',
+      password: 'existingPassword',
+      securityQuestion: 'Your old favorite color?',
+      securityAnswer: 'OldBlue',
+      userDeleted: false,
+    });
+
+    const response = await request(app).post('/users/update-username').send({
+      username: 'existingUsername',
+    });
+
+    expect(response.status).toBe(400);
+    expect(response.body.message).toBe('Username already exists');
+  });
+
+  it('returns 200 if username is updated', async () => {
+    // Mocking the user check based on ID
+    prismaMock.user.findUnique.mockResolvedValueOnce({
+      id: 1,
+      username: 'oldUsername',
+      password: 'oldPassword',
+      securityQuestion: 'Your old favorite color?',
+      securityAnswer: 'OldBlue',
+      userDeleted: false,
+    });
+
+    // Mocking the user check based on new username
+    prismaMock.user.findUnique.mockResolvedValueOnce(null); // Indicates new username doesn't exist
+
+    prismaMock.user.update.mockResolvedValue({
+      id: 1,
+      username: 'newUsername',
+      password: 'testpassword',
+      securityQuestion: 'Your favorite color?',
+      securityAnswer: 'Blue',
+      userDeleted: false,
+    });
+
+    const response = await request(app).post('/users/update-username').send({
+      username: 'newUsername',
+    });
+
+    expect(response.status).toBe(200);
+  });
+
+  it('returns 500 when there is a server error', async () => {
+    prismaMock.user.findUnique.mockRejectedValue(new Error()); // Mocking database error
+
+    const response = await request(app).post('/users/update-username').send({
+      username: 'newUsername',
+    });
+
+    expect(response.status).toBe(500);
+    expect(response.body.message).toBe('Server error');
+  });
+});
+
+describe('POST /users/update-password', () => {
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+
+  it('returns 400 for validation errors', async () => {
+    const response = await request(app).post('/users/update-password').send({
+      // missing password
+    });
+
+    expect(response.status).toBe(400);
+    expect(response.body.errors).toBeDefined();
+  });
+
+  it('returns 400 if user does not exist', async () => {
+    // Mocking the user check based on ID
+    prismaMock.user.findUnique.mockResolvedValueOnce(null);
+
+    const response = await request(app).post('/users/update-password').send({
+      password: 'newPassword',
+    });
+
+    expect(response.status).toBe(400);
+  });
+
+  it('returns 200 if password is updated', async () => {
+    // Mocking the user check based on ID
+    prismaMock.user.findUnique.mockResolvedValueOnce({
+      id: 1,
+      username: 'testUsername',
+      password: 'oldPassword',
+      securityQuestion: 'Your old favorite color?',
+      securityAnswer: 'OldBlue',
+      userDeleted: false,
+    });
+
+    prismaMock.user.update.mockResolvedValue({
+      id: 1,
+      username: 'testUsername',
+      password: 'newPassword',
+      securityQuestion: 'Your favorite color?',
+      securityAnswer: 'Blue',
+      userDeleted: false,
+    });
+
+    const response = await request(app).post('/users/update-password').send({
+      password: 'newPassword',
+    });
+
+    expect(response.status).toBe(200);
+  });
+
+  it('returns 500 when there is a server error', async () => {
+    prismaMock.user.findUnique.mockRejectedValue(new Error()); // Mocking database error
+
+    const response = await request(app).post('/users/update-password').send({
+      password: 'newPassword',
+    });
+
+    expect(response.status).toBe(500);
+    expect(response.body.message).toBe('Server error');
+  });
+});
+
 describe('DELETE /users/delete', () => {
   afterEach(() => {
     jest.clearAllMocks();
