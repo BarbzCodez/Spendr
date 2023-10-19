@@ -113,7 +113,7 @@ export const updatePassword = async (
 
 /**
  * API Delete User
- *
+ * @param {UserInfo} user - user info
  * @returns {AxiosResponse}
  */
 export const deleteUser = async (
