@@ -11,6 +11,7 @@ interface UserContextType {
   token: string | null;
   login: (userID: number, token: string) => void;
   logout: () => void;
+  isLoading: boolean;
 }
 
 interface UserProviderProps {
@@ -22,6 +23,7 @@ const UserContext = createContext<UserContextType | undefined>(undefined);
 export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
   const [userId, setUserId] = useState<number | null>(null);
   const [token, setToken] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
 
   useEffect(() => {
     const storedUserId = sessionStorage.getItem('userId');
@@ -31,6 +33,8 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
       setUserId(parseInt(storedUserId, 10));
       setToken(storedToken);
     }
+
+    setIsLoading(false);
   });
 
   const login = (newUserId: number, newToken: string) => {
@@ -50,7 +54,7 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
   };
 
   return (
-    <UserContext.Provider value={{ userId, token, login, logout }}>
+    <UserContext.Provider value={{ userId, token, login, logout, isLoading }}>
       {children}
     </UserContext.Provider>
   );
