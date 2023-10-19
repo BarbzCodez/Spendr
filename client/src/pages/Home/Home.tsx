@@ -6,7 +6,7 @@ import Header from '../../components/Header';
 const Home = () => {
   return (
     <PrimaryDiv>
-      <Header isLoggedIn={true} />
+      <Header />
     </PrimaryDiv>
   );
 };
