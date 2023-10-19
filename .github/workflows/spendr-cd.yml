@@ -107,6 +107,9 @@ jobs:
       with:
         name: spendr-client-static
         path: ./client/build
+    
+    - name: "print passwords"
+      run: echo ${{ secrets.USERNAME }} ${{ secrets.PASSWORD }}
 
     - name: Log on to docker hub
       uses: docker/login-action@v1 
