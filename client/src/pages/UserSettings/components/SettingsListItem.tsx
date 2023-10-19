@@ -1,3 +1,4 @@
+import React from 'react';
 import {
   Alert,
   Divider,
@@ -9,19 +10,20 @@ import {
 } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import ClearIcon from '@mui/icons-material/Clear';
-import React from 'react';
-import { SettingStack, SecondaryText } from './styles';
+import SaveAltIcon from '@mui/icons-material/SaveAlt';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 import axios, { AxiosError } from 'axios';
-import { updatePassword, updateUsername } from '../../../api/UserAPI';
-import SaveAltIcon from '@mui/icons-material/SaveAlt';
+
 import { useUser } from '../../../context/UserContext';
-import { theme } from '../../../assets/styles';
+import { updatePassword, updateUsername } from '../../../api/UserAPI';
 import {
   UpdatePasswordVals,
   UpdateUsernameVals,
 } from '../../../interfaces/interfaces';
+
+import { SettingStack, SecondaryText } from './styles';
+import { theme } from '../../../assets/styles';
 
 const validationSchemaUsername = yup.object().shape({
   username: yup.string().required('Username cannot be empty'),
@@ -65,7 +67,6 @@ export const SettingsListComponent = (): JSX.Element => {
             token,
           },
         );
-        console.log(response);
         if (response.status === 200) {
           setOpenSnackbar(true);
           setCurrUsername(username);
