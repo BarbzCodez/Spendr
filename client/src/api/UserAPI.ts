@@ -15,7 +15,7 @@ import {
 /**
  * API signup request
  *
- * @param {dict} data - Username
+ * @param {SignupVals} data - Username
  *                    - Password
  *                    - Security Question
  *                    - Security Answer
@@ -34,8 +34,8 @@ export const signupRequest = async (
 /**
  * API login request
  *
- * @param {dict} data - Username
- *                    - Password
+ * @param {LoginVals} data  - Username
+ *                          - Password
  * @returns {AxiosResponse}
  */
 export const loginRequest = async (
@@ -51,10 +51,10 @@ export const loginRequest = async (
 /**
  * API Reset Password
  *
- * @param {dict} data - Username
- *                    - Password
- *                    - Security Question
- *                    - Security Answer
+ * @param {ResetPasswordVals} data  - Username
+ *                                  - Password
+ *                                  - Security Question
+ *                                  - Security Answer
  * @returns {AxiosResponse}
  */
 export const resetPassword = async (
@@ -70,7 +70,8 @@ export const resetPassword = async (
 /**
  * API Update an user's username
  *
- * @param {dict} data - Username
+ * @param {UpdateUsernameVals} data - Username
+ * @param {UserInfo} user - user info
  * @returns {AxiosResponse}
  */
 export const updateUsername = async (
@@ -92,7 +93,8 @@ export const updateUsername = async (
 /**
  * API Update an user's password
  *
- * @param {string} data - Password
+ * @param {UpdatePasswordVals} data - Password
+ * @param {UserInfo} user - user info
  * @returns {AxiosResponse}
  */
 export const updatePassword = async (
@@ -113,7 +115,7 @@ export const updatePassword = async (
 
 /**
  * API Delete User
- *
+ * @param {UserInfo} user - user info
  * @returns {AxiosResponse}
  */
 export const deleteUser = async (

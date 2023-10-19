@@ -1,6 +1,14 @@
 import React from 'react';
 import { Alert, Snackbar, Stack, Typography } from '@mui/material';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
+import axios, { AxiosError } from 'axios';
+import { useNavigate } from 'react-router-dom';
+import { useFormik } from 'formik';
+
+import { theme } from '../../../assets/styles';
+import { deleteUser } from '../../../api/UserAPI';
+import { useUser } from '../../../context/UserContext';
+
 import {
   SettingStack,
   DangerZoneStackElements,
@@ -8,14 +16,6 @@ import {
   ErrorBox,
   SecondaryTextDangerZone,
 } from './styles';
-import { theme } from '../../../assets/styles';
-import { deleteUser } from '../../../api/UserAPI';
-import { useUser } from '../../../context/UserContext';
-
-import axios, { AxiosError } from 'axios';
-
-import { useNavigate } from 'react-router-dom';
-import { useFormik } from 'formik';
 
 function delay(ms: number) {
   return new Promise((resolve) => setTimeout(resolve, ms));
@@ -40,7 +40,6 @@ const DangerZone = (): JSX.Element => {
           userId,
           token,
         });
-        console.log(response);
         if (response.status === 200) {
           setOpenSnackbar(true);
 
