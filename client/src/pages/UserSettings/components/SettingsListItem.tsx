@@ -18,8 +18,8 @@ import axios, { AxiosError } from 'axios';
 import { useUser } from '../../../context/UserContext';
 import { updatePassword, updateUsername } from '../../../api/UserAPI';
 import {
-  UpdatePasswordVals,
-  UpdateUsernameVals,
+  UpdatePasswordData,
+  UpdateUsernameData,
 } from '../../../interfaces/interfaces';
 
 import { SettingStack, SecondaryText } from './styles';
@@ -54,7 +54,7 @@ export const SettingsListComponent = (): JSX.Element => {
 
   const [openSnackbar, setOpenSnackbar] = React.useState(false);
 
-  const handleUpdateUsername = async (values: UpdateUsernameVals) => {
+  const handleUpdateUsername = async (values: UpdateUsernameData) => {
     try {
       const { username } = values;
       if (userId != null && token != null) {
@@ -99,7 +99,7 @@ export const SettingsListComponent = (): JSX.Element => {
     }
   };
 
-  const handleUpdatePassword = async (values: UpdatePasswordVals) => {
+  const handleUpdatePassword = async (values: UpdatePasswordData) => {
     try {
       const { password } = values;
       if (userId != null && token != null) {
@@ -157,7 +157,7 @@ export const SettingsListComponent = (): JSX.Element => {
       username: username ?? '',
     },
     validationSchema: validationSchemaUsername,
-    onSubmit: (values: UpdateUsernameVals) => {
+    onSubmit: (values: UpdateUsernameData) => {
       setGeneralError(' ');
       handleUpdateUsername(values);
     },
@@ -168,7 +168,7 @@ export const SettingsListComponent = (): JSX.Element => {
       password: '',
     },
     validationSchema: validationSchemaPassword,
-    onSubmit: (values: UpdatePasswordVals) => {
+    onSubmit: (values: UpdatePasswordData) => {
       setGeneralError(' ');
       handleUpdatePassword(values);
     },

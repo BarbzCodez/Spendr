@@ -4,7 +4,6 @@ import {
   SignupResponse,
   LoginData,
   LoginResponse,
-  ResetPasswordData,
   MessageResponse,
   UpdateUsernameData,
   UpdatePasswordData,
@@ -102,7 +101,16 @@ export const deleteUser = async (
 ): Promise<AxiosResponse<MessageResponse>> => {
   const response = await axios.delete<MessageResponse>(
     'http://localhost:7005/users/delete',
+    {
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
+    },
+  );
+  return response;
+};
 
+/**
  * API all user expenses
  *
  * @param {UserInfo} user - user info
