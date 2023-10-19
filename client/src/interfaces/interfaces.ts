@@ -1,13 +1,5 @@
-export interface LoggedInProps {
-  isLoggedIn: boolean;
-}
+export interface SignupData {
 
-export interface UserInfo {
-  userId: number;
-  token: string;
-}
-
-export interface SignupVals {
   username: string;
   password: string;
   securityQuestion: string;
@@ -22,7 +14,7 @@ export interface SignupResponse {
   };
 }
 
-export interface LoginVals {
+export interface LoginData {
   username: string;
   password: string;
 }
@@ -39,20 +31,69 @@ export interface LoginResponse {
   token: string;
 }
 
-export interface UpdateUsernameVals {
+
+export interface UpdateUsernameData {
   username: string;
 }
 
-export interface UpdatePasswordVals {
+export interface UpdatePasswordData {
   password: string;
 }
 
-export interface ResetPasswordVals {
-  username: string;
-  securityAnswer: string;
-  newPassword: string;
+export interface MessageResponse {
+    message: string;
 }
 
-export interface MessageResponse {
+export interface ExpenseUIData {
+  title: string;
+  amount: number;
+  category: string;
+}
+
+export interface ExpenseData {
+  id: number;
+  userId: number;
+  title: string;
+  amount: number;
+  category: string;
+  createdAt: string;
+}
+
+export interface ExpenseDialogProps {
+  open: boolean;
+  onClose: () => void;
+  onAdd: (expenseData: ExpenseUIData) => void;
+  onEdit: (expenseData: ExpenseData) => void;
+  expenseData?: ExpenseData | null;
+}
+
+export interface ExpenseTableProps {
+  expenses: ExpenseData[];
+  handleEditDialog: (expenseData: ExpenseData) => void;
+  handleDeleteExpense: (expenseData: ExpenseData) => void;
+}
+
+export interface AllExpensesResponse {
+  success: boolean;
+  data: [ExpenseData];
+}
+
+export interface UserInfo {
+  userId: number;
+  token: string;
+}
+
+export interface AddExpenseResponse {
+  message: string;
+  expense: {
+    newExpense: ExpenseData;
+  };
+}
+
+export interface EditExpenseResponse {
+  data: ExpenseData;
+}
+
+export interface DeleteExpenseResponse {
   message: string;
 }

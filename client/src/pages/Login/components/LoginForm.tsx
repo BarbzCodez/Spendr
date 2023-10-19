@@ -8,7 +8,7 @@ import { Typography, TextField } from '@mui/material';
 import { PrimaryButton } from '../../../assets/styles/styles';
 import { theme } from '../../../assets/styles';
 import { loginRequest } from '../../../api/UserAPI';
-import { LoginVals, LoginResponse } from '../../../interfaces/interfaces';
+import { LoginData, LoginResponse } from '../../../interfaces/interfaces';
 import { useUser } from '../../../context/UserContext';
 
 const validationSchema = yup.object().shape({
@@ -21,7 +21,7 @@ const LoginForm = (): JSX.Element => {
   const [error, setError] = React.useState(' ');
   const { login } = useUser();
 
-  const handleLogin = async (values: LoginVals) => {
+  const handleLogin = async (values: LoginData) => {
     try {
       const response: AxiosResponse<LoginResponse> = await loginRequest(values);
       if (response.status === 200) {
@@ -54,7 +54,7 @@ const LoginForm = (): JSX.Element => {
       password: '',
     },
     validationSchema: validationSchema,
-    onSubmit: (values: LoginVals) => {
+    onSubmit: (values: LoginData) => {
       setError(' ');
       handleLogin(values);
     },

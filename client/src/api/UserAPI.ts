@@ -1,28 +1,26 @@
 import axios, { AxiosResponse } from 'axios';
-
 import {
-  UserInfo,
-  SignupVals,
+  SignupData,
   SignupResponse,
-  LoginVals,
+  LoginData,
   LoginResponse,
-  ResetPasswordVals,
+  ResetPasswordData,
   MessageResponse,
-  UpdateUsernameVals,
-  UpdatePasswordVals,
+  UpdateUsernameData,
+  UpdatePasswordData,
+  AllExpensesResponse,
+  UserInfo,
 } from '../interfaces/interfaces';
 
 /**
  * API signup request
  *
- * @param {SignupVals} data - Username
- *                    - Password
- *                    - Security Question
- *                    - Security Answer
- * @returns {AxiosResponse}
+ * @param {SignupData} data - signup values from UI
+ * @returns {AxiosResponse<SignupResponse>} - response
+ * @throws {AxiosError}
  */
 export const signupRequest = async (
-  data: SignupVals,
+  data: SignupData,
 ): Promise<AxiosResponse<SignupResponse>> => {
   const response: AxiosResponse = await axios.post<SignupResponse>(
     'http://localhost:7005/users/register',
@@ -34,12 +32,12 @@ export const signupRequest = async (
 /**
  * API login request
  *
- * @param {LoginVals} data  - Username
- *                          - Password
- * @returns {AxiosResponse}
+ * @param {LoginData} data - login values from UI
+ * @returns {AxiosResponse<LoginResponse>} - response
+ * @throws {AxiosError}
  */
 export const loginRequest = async (
-  data: LoginVals,
+  data: LoginData,
 ): Promise<AxiosResponse<LoginResponse>> => {
   const response = await axios.post<LoginResponse>(
     'http://localhost:7005/users/login',
@@ -49,33 +47,14 @@ export const loginRequest = async (
 };
 
 /**
- * API Reset Password
- *
- * @param {ResetPasswordVals} data  - Username
- *                                  - Password
- *                                  - Security Question
- *                                  - Security Answer
- * @returns {AxiosResponse}
- */
-export const resetPassword = async (
-  data: ResetPasswordVals,
-): Promise<AxiosResponse<MessageResponse>> => {
-  const response = await axios.post<MessageResponse>(
-    'http://localhost:7005/users/reset-password',
-    data,
-  );
-  return response;
-};
-
-/**
  * API Update an user's username
  *
- * @param {UpdateUsernameVals} data - Username
+ * @param {UpdateUsernameData} data - Username
  * @param {UserInfo} user - user info
  * @returns {AxiosResponse}
  */
 export const updateUsername = async (
-  data: UpdateUsernameVals,
+  data: UpdateUsernameData,
   user: UserInfo,
 ): Promise<AxiosResponse<MessageResponse>> => {
   const response = await axios.post<MessageResponse>(
@@ -93,12 +72,12 @@ export const updateUsername = async (
 /**
  * API Update an user's password
  *
- * @param {UpdatePasswordVals} data - Password
+ * @param {UpdatePasswordData} data - Password
  * @param {UserInfo} user - user info
  * @returns {AxiosResponse}
  */
 export const updatePassword = async (
-  data: UpdatePasswordVals,
+  data: UpdatePasswordData,
   user: UserInfo,
 ): Promise<AxiosResponse<MessageResponse>> => {
   const response = await axios.post<MessageResponse>(
@@ -123,6 +102,19 @@ export const deleteUser = async (
 ): Promise<AxiosResponse<MessageResponse>> => {
   const response = await axios.delete<MessageResponse>(
     'http://localhost:7005/users/delete',
+
+ * API all user expenses
+ *
+ * @param {UserInfo} user - user info
+ * @returns {AxiosResponse<AllExpensesResponse>} - response
+ * @throws {AxiosError}
+ */
+export const allExpensesRequest = async (
+  user: UserInfo,
+): Promise<AxiosResponse<AllExpensesResponse>> => {
+  const response: AxiosResponse = await axios.get(
+    `http://localhost:7005/users/${user.userId}/expenses`,
+
     {
       headers: {
         Authorization: `Bearer ${user.token}`,
