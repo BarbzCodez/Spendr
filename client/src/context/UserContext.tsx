@@ -37,6 +37,16 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
     setIsLoading(false);
   });
 
+  useEffect(() => {
+    const storedUserId = sessionStorage.getItem('userId');
+    const storedToken = sessionStorage.getItem('token');
+
+    if (storedUserId && storedToken) {
+      setUserId(parseInt(storedUserId, 10));
+      setToken(storedToken);
+    }
+  });
+
   const login = (newUserId: number, newToken: string) => {
     setUserId(newUserId);
     setToken(newToken);

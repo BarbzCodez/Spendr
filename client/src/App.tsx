@@ -10,6 +10,7 @@ import Greetings from './pages/Greetings';
 import UserSettings from './pages/UserSettings';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
+import Expenses from './pages/Expenses';
 import Home from './pages/Home';
 
 const RequireAuth: React.FC<{ children: React.ReactElement }> = ({
@@ -53,14 +54,14 @@ function App() {
                 </RequireAuth>
               }
             />
-            {/* <Route
+            <Route
               path="/expenses"
               element={
                 <RequireAuth>
                   <Expenses />
                 </RequireAuth>
               }
-            /> */}
+            />
             <Route
               path="/user-settings"
               element={
