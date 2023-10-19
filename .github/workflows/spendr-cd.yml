@@ -31,7 +31,6 @@ jobs:
         name: spendr-server-static
         path: ./spendr-server/build
 
-
   build-client:
     name: 'spendr client continuous deployment build'
     runs-on: ubuntu-latest
@@ -55,7 +54,6 @@ jobs:
       with:
         name: spendr-client-static
         path: ./spendr-client/build
-
 
   publish-to-docker-server:
     name: 'spendr server continuous deployment - publish'
@@ -94,7 +92,6 @@ jobs:
         tags: ${{ steps.meta.outputs.tags }}
         labels: ${{ steps.meta.outputs.labels }}
     
-
   publish-to-docker-server:
     name: 'spendr client continuous deployment - publish'
     needs: build-client
