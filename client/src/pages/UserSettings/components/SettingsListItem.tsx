@@ -58,6 +58,7 @@ export const SettingsListComponent = (): JSX.Element => {
       const response = await updateUsername({
         username,
       });
+      console.log(response);
       if (response.status === 200) {
         setOpenSnackbar(true);
         setCurrUsername(username);
@@ -206,14 +207,15 @@ export const SettingsListComponent = (): JSX.Element => {
             type="text"
           ></TextField>
           <Stack direction={'row'} justifyContent={'center'}>
-            <IconButton style={{ color: 'white' }}>
-              <ClearIcon
-                onClick={() => {
-                  setEditUsername(false);
-                }}
-              />
+            <IconButton
+              onClick={() => {
+                setEditUsername(false);
+              }}
+              style={{ color: 'white' }}
+            >
+              <ClearIcon />
             </IconButton>
-            <IconButton style={{ color: 'white' }} type="submit">
+            <IconButton type="submit" style={{ color: 'white' }}>
               <SaveAltIcon />
             </IconButton>
           </Stack>
@@ -264,12 +266,13 @@ export const SettingsListComponent = (): JSX.Element => {
             type="text"
           ></TextField>
           <Stack direction={'row'} justifyContent={'center'}>
-            <IconButton style={{ color: 'white' }}>
-              <ClearIcon
-                onClick={() => {
-                  setEditPassword(false);
-                }}
-              />
+            <IconButton
+              onClick={() => {
+                setEditPassword(false);
+              }}
+              style={{ color: 'white' }}
+            >
+              <ClearIcon />
             </IconButton>
             <IconButton style={{ color: 'white' }} type="submit">
               <SaveAltIcon />

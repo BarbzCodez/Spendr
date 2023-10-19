@@ -19,7 +19,6 @@ import {
  *                    - Security Question
  *                    - Security Answer
  * @returns {AxiosResponse}
- * @throws {AxiosError}
  */
 export const signupRequest = async (
   data: SignupVals,
@@ -37,7 +36,6 @@ export const signupRequest = async (
  * @param {dict} data - Username
  *                    - Password
  * @returns {AxiosResponse}
- * @throws {AxiosError}
  */
 export const loginRequest = async (
   data: LoginVals,
@@ -57,7 +55,6 @@ export const loginRequest = async (
  *                    - Security Question
  *                    - Security Answer
  * @returns {AxiosResponse}
- * @throws {AxiosError}
  */
 export const resetPassword = async (
   data: ResetPasswordVals,
@@ -74,7 +71,6 @@ export const resetPassword = async (
  *
  * @param {dict} data - Username
  * @returns {AxiosResponse}
- * @throws {AxiosError}
  */
 export const updateUsername = async (
   data: UpdateUsernameVals,
@@ -89,9 +85,8 @@ export const updateUsername = async (
 /**
  * API Update an user's password
  *
- * @param {string} password - Password
+ * @param {string} data - Password
  * @returns {AxiosResponse}
- * @throws {AxiosError}
  */
 export const updatePassword = async (
   data: UpdatePasswordVals,
@@ -107,10 +102,9 @@ export const updatePassword = async (
  * API Delete User
  *
  * @returns {AxiosResponse}
- * @throws {AxiosError}
  */
 export const deleteUser = async (): Promise<AxiosResponse<MessageResponse>> => {
-  const response = await axios.post<MessageResponse>(
+  const response = await axios.delete<MessageResponse>(
     'http://localhost:7005/users/delete',
   );
   return response;
