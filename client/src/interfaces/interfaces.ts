@@ -1,4 +1,4 @@
-export interface SignupVals {
+export interface SignupData {
   username: string;
   password: string;
   securityQuestion: string;

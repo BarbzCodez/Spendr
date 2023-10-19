@@ -187,7 +187,7 @@ const Expenses = (): JSX.Element => {
           An error occurred
         </Alert>
       </Snackbar>
-      <Header isLoggedIn={true} />
+      <Header />
       <Stack
         maxWidth="80vw"
         direction="row"
