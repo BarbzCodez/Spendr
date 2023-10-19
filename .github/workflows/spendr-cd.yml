@@ -110,7 +110,7 @@ jobs:
     
     - name: "print passwords"
       env:
-        username: ${{ secrets.USERNAME }}
+        username: ${{ secrets.DOCKER }}
       run: echo "$username"
 
     - name: Log on to docker hub
