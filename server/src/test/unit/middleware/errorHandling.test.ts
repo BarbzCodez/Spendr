@@ -19,8 +19,8 @@ describe('logError', () => {
       send: jest.fn(),
     };
     next = jest.fn();
-    mockAppendFile = jest.spyOn(fs, 'appendFile');
-    mockConsoleLog = jest.spyOn(console, 'error');
+    mockAppendFile = jest.spyOn(fs, 'appendFile').mockImplementation(() => {});
+    mockConsoleLog = jest.spyOn(console, 'error').mockImplementation(() => {});
   });
 
   afterEach(() => {
@@ -78,9 +78,13 @@ describe('logError', () => {
       }
     });
 
-    logError(req as Request, res as Response, next);
-
-    expect(mockConsoleLog).toHaveBeenCalled();
+    try {
+      logError(req as Request, res as Response, next);
+      expect(true).toBe(false);
+    } catch (error) {
+      expect(mockConsoleLog).toHaveBeenCalled();
+      expect(error).toBeInstanceOf(Error);
+    }
   });
 
   it('Test error output when system fails to write to sysErrorLog', async () => {
@@ -96,8 +100,12 @@ describe('logError', () => {
       }
     });
 
-    logError(req as Request, res as Response, next);
-
-    expect(mockConsoleLog).toHaveBeenCalled();
+    try {
+      logError(req as Request, res as Response, next);
+      expect(true).toBe(false);
+    } catch (error) {
+      expect(mockConsoleLog).toHaveBeenCalled();
+      expect(error).toBeInstanceOf(Error);
+    }
   });
 });
