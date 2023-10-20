@@ -72,7 +72,6 @@ router.post(
         user: { id: newUser.id, username: newUser.username },
       });
     } catch (error: unknown) {
-      res.locals.error = error;
       res.status(500).json({ message: 'Server error', err: error });
     }
   },
@@ -132,7 +131,6 @@ router.post(
         token,
       });
     } catch (error: unknown) {
-      res.locals.error = error;
       res.status(500).json({ message: 'Server error' });
     }
   },
@@ -202,7 +200,6 @@ router.post(
 
       res.status(200).json({ message: 'Password successfully updated' });
     } catch (error: unknown) {
-      res.locals.error = error;
       res.status(500).json({ message: 'Server error' });
     }
   },
@@ -284,7 +281,6 @@ router.post(
 
       res.status(200).json({ message: 'User successfully updated' });
     } catch (error: unknown) {
-      res.locals.error = error;
       res.status(500).json({ message: 'Server error' });
     }
   },
@@ -426,7 +422,6 @@ router.delete('/delete', authenticate, async (req: Request, res: Response) => {
 
     res.status(200).json({ message: 'User successfully deleted' });
   } catch (error: unknown) {
-    res.locals.error = error;
     res.status(500).json({ message: 'Server error' });
   }
 });
@@ -464,7 +459,6 @@ router.get(
 
       res.status(200).json({ success: true, data: allExpenses });
     } catch (error) {
-      res.locals.error = error;
       res.status(500).json({ message: 'Server error' });
     }
   },
