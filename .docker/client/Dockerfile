@@ -1,4 +1,6 @@
-vi Dockerfile
-FROM httpd:2.4
-COPY ./public-html/ /usr/local/apache2/htdocs/
+# create web docker image from artifacts
+FROM steebchen/nginx-spa:stable
+LABEL org.opencontainers.image.source="https://github.com/BarbzCodez/Spendr"
+COPY ./.docker/client/static /app
 EXPOSE 80
+CMD ["nginx"]
