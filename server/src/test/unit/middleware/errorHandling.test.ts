@@ -1,52 +1,62 @@
 import { NextFunction, Request, Response } from 'express';
 import { logError } from '../../../middleware/errorHandling';
-
-// '../../../../Logs/sysErrorLog.txt'
-// ../../../../Logs/userErrorLog.txt
+import fs from 'fs';
 
 jest.mock('fs');
-const fsMock = require('fs');
+jest.mock('console');
 
-describe('authenticate middleware', () => {
-  let req: Request;
-  let res: Response;
+describe('logError', () => {
+  let req: Partial<Request>;
+  let res: Partial<Response>;
   let next: NextFunction;
+  let mockAppendFile: jest.SpyInstance;
+  let mockConsoleLog: jest.SpyInstance;
 
   beforeEach(() => {
-    fsMock.appendFile.mockClear();
+    req = {};
+    res = {
+      status: jest.fn().mockReturnThis(),
+      send: jest.fn(),
+    };
     next = jest.fn();
+    mockAppendFile = jest.spyOn(fs, 'appendFile');
+    mockConsoleLog = jest.spyOn(console, 'error');
   });
 
-  it('Req is added to userErrorLog with Stack Trace', () => {
-    // Mock the Response object with a 400 status code
-    res.statusCode = 400;
+  afterEach(() => {
+    mockAppendFile.mockRestore();
+    mockConsoleLog.mockRestore();
+  });
 
-    // Call the logError function with the mock objects
-    logError(req, res, next);
+  it('Logs user errors with status code in the 4xx range', async () => {
+    res.statusCode = 404;
+    req.url = '/example-url';
+    req.headers = { 'Content-Type': 'application/json' };
+    req.body = { key: 'value' };
 
-    // Check if fs.appendFile was called with the expected log message
-    expect(fsMock.appendFile).toHaveBeenCalled();
-    const [logFilePath, logMessage, callback] = fsMock.appendFile.mock.calls[0];
+    logError(req as Request, res as Response, next);
+
+    expect(mockAppendFile).toHaveBeenCalled();
+    const [logFilePath, logMessage, callback] = mockAppendFile.mock.calls[0];
     expect(logFilePath).toBe('../../../../Logs/userErrorLog.txt');
-    expect(logMessage).toContain('Error status code: 400');
+    expect(logMessage).toContain('Error status code: 404');
     expect(logMessage).toContain('Request causing error');
     expect(logMessage).toContain('Request headers');
     expect(logMessage).toContain('Request Body');
     expect(callback).toBeInstanceOf(Function);
   });
 
-  it('Req is added to sysErrorLog with Stack Trace', () => {
+  it('Logs server errors with status code in the 5xx range and error details', async () => {
     res.statusCode = 500;
-    res.locals = {
-      error: new Error('Test error'),
-    };
+    req.url = '/example-url';
+    req.headers = { 'Content-Type': 'application/json' };
+    req.body = { key: 'value' };
+    res.locals = { error: new Error('Sample error message') };
 
-    // Call the logError function with the mock objects
-    logError(req, res, next);
+    await logError(req as Request, res as Response, next);
 
-    // Check if fs.appendFile was called with the expected log message
-    expect(fsMock.appendFile).toHaveBeenCalled();
-    const [logFilePath, logMessage, callback] = fsMock.appendFile.mock.calls[0];
+    expect(mockAppendFile).toHaveBeenCalled();
+    const [logFilePath, logMessage, callback] = mockAppendFile.mock.calls[0];
     expect(logFilePath).toBe('../../../../Logs/sysErrorLog.txt');
     expect(logMessage).toContain('Error status code: 500');
     expect(logMessage).toContain('Request causing error');
@@ -56,12 +66,38 @@ describe('authenticate middleware', () => {
     expect(callback).toBeInstanceOf(Function);
   });
 
-  it('should call next middleware', () => {
-    logError(req, res, next);
-    expect(next).toHaveBeenCalled();
-  });
-});
+  it('Test error output when system fails to write to userErrorLog', async () => {
+    res.statusCode = 404;
+    req.url = '/example-url';
+    req.headers = { 'Content-Type': 'application/json' };
+    req.body = { key: 'value' };
 
-afterAll(() => {
-  jest.restoreAllMocks();
+    mockAppendFile.mockImplementation((path, data, callback) => {
+      if (path === '../../../../Logs/userErrorLog.txt') {
+        callback(new Error('Simulated error'));
+      }
+    });
+
+    logError(req as Request, res as Response, next);
+
+    expect(mockConsoleLog).toHaveBeenCalled();
+  });
+
+  it('Test error output when system fails to write to sysErrorLog', async () => {
+    res.statusCode = 500;
+    req.url = '/example-url';
+    req.headers = { 'Content-Type': 'application/json' };
+    req.body = { key: 'value' };
+    res.locals = { error: new Error('Sample error message') };
+
+    mockAppendFile.mockImplementation((path, data, callback) => {
+      if (path === '../../../../Logs/sysErrorLog.txt') {
+        callback(new Error('Simulated error'));
+      }
+    });
+
+    logError(req as Request, res as Response, next);
+
+    expect(mockConsoleLog).toHaveBeenCalled();
+  });
 });

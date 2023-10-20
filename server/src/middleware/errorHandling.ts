@@ -10,9 +10,9 @@ export function logError(req: Request, res: Response, next: NextFunction) {
     Request headers: ${JSON.stringify(req.headers)}
     Request Body:${JSON.stringify(req.body)}\n\n`;
 
-    fs.appendFile('./Logs/userErrorLog.txt', logMessage, (err) => {
+    fs.appendFile('../../../../Logs/userErrorLog.txt', logMessage, (err) => {
       if (err) {
-        console.error('Error writing to userErrorLogs.txt:', err);
+        console.error('Error writing to userErrorLogs.txt', err);
       }
     });
 
@@ -26,9 +26,9 @@ export function logError(req: Request, res: Response, next: NextFunction) {
     Request Body:${JSON.stringify(req.body)}
     Error stack trace: ${error.stack}\n\n`;
 
-    fs.appendFile('./Logs/sysErrorLog.txt', logMessage, (err) => {
+    fs.appendFile('../../../../Logs/sysErrorLog.txt', logMessage, (err) => {
       if (err) {
-        console.error('Error writing to sysErrorLog.txt.txt:', err);
+        console.error('Error writing to sysErrorLog.txt', err);
       }
     });
   }
