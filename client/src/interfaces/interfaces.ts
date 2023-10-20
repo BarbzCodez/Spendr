@@ -23,9 +23,6 @@ export interface LoginResponse {
   user: {
     id: number;
     username: string;
-    password: string;
-    securityQuestion: string;
-    securityAnswer: string;
   };
   token: string;
 }

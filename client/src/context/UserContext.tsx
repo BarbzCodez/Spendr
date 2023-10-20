@@ -30,10 +30,12 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
 
   useEffect(() => {
     const storedUserId = sessionStorage.getItem('userId');
+    const storedUsername = sessionStorage.getItem('username');
     const storedToken = sessionStorage.getItem('token');
 
     if (storedUserId && storedToken) {
       setUserId(parseInt(storedUserId, 10));
+      setUsername(storedUsername);
       setToken(storedToken);
     }
 
@@ -56,19 +58,24 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
     setToken(newToken);
 
     sessionStorage.setItem('userId', newUserId.toString());
+    sessionStorage.setItem('username', newUsername.toString());
     sessionStorage.setItem('token', newToken);
   };
 
   const logout = () => {
     setUserId(null);
+    setUsername(null);
     setToken(null);
 
     sessionStorage.removeItem('userId');
+    sessionStorage.removeItem('username');
     sessionStorage.removeItem('token');
   };
 
   return (
-    <UserContext.Provider value={{ userId, token, login, logout, isLoading }}>
+    <UserContext.Provider
+      value={{ userId, username, token, login, logout, isLoading }}
+    >
       {children}
     </UserContext.Provider>
   );
