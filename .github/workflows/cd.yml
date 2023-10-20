@@ -74,7 +74,7 @@ jobs:
     - name: Log on to docker hub
       uses: docker/login-action@v1 
       with:
-        username: ${{ secrets.DOCKER_USERNAME }}
+        username: ${{ secrets.DOCKER_EMAIL }}
         password: ${{ secrets.DOCKER_PASSWORD }}
 
     - name: Extract metadata (tags, labels) for Docker
@@ -112,14 +112,14 @@ jobs:
       run: |
         export username=$(echo ${{ secrets.DOCKER_USERNAME }} | sed 's/"//g')
         echo $username
-        export password=$(echo ${{ secrets.DOCKER_PASSWORD }} | sed 's/"//g')
+        export password=$(echo ${{ secrets.DOCKER_USERNAME }} | sed 's/"//g')
         echo $password
 
     - name: Log on to docker hub
-      uses: docker/login-action@v3
+      uses: docker/login-action@v1 
       with:
-        username: $username
-        password: $password
+        username: lysackm
+        password: Jade21.Apple
 
     - name: Extract metadata (tags, labels) for Docker
       id: meta
