@@ -109,13 +109,13 @@ jobs:
         path: ./client/build
 
     - name: Log on to docker hub
-      uses: docker/login-action@v1 
       run: |
         export username=$(echo ${{ secrets.DOCKER_USERNAME }} | sed '"')
         echo $username
       run: |
         export password=$(echo ${{ secrets.DOCKER_USERNAME }} | sed '"')
         echo $password
+      uses: docker/login-action@v1 
       with:
         username: $username
         password: $password
