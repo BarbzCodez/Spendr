@@ -112,7 +112,7 @@ router.post(
         where: { username },
       });
 
-      if (!user) {
+      if (!user || user.userDeleted) {
         return res.status(400).json({ message: 'Invalid credentials' });
       }
 
@@ -177,7 +177,7 @@ router.post(
         where: { username },
       });
 
-      if (!user) {
+      if (!user || user.userDeleted) {
         return res.status(400).json({ message: 'Invalid credentials' });
       }
 
@@ -255,7 +255,7 @@ router.post(
         where: { id: userId },
       });
 
-      if (!user) {
+      if (!user || user.userDeleted) {
         return res.status(400).json({ message: 'Invalid credentials' });
       }
 
@@ -381,7 +381,7 @@ router.post(
         where: { id: userId },
       });
 
-      if (!user) {
+      if (!user || user.userDeleted) {
         return res.status(400).json({ message: 'Invalid credentials' });
       }
 
@@ -402,6 +402,16 @@ router.post(
   },
 );
 
+/**
+ * Delete a user
+ *
+ * This route delete the user given that it exists
+ *
+ * @route DELETE /users/delete
+ * @group auth - Operations about authentication
+ * @returns {object} 200 - User successfully deleted
+ * @returns {Error}  500 - Server error
+ */
 router.delete('/delete', authenticate, async (req: Request, res: Response) => {
   try {
     // Get user from token

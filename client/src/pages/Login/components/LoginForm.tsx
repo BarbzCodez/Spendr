@@ -25,7 +25,11 @@ const LoginForm = (): JSX.Element => {
     try {
       const response: AxiosResponse<LoginResponse> = await loginRequest(values);
       if (response.status === 200) {
-        login(response.data.user.id, response.data.token);
+        login(
+          response.data.user.id,
+          response.data.user.username,
+          response.data.token,
+        );
         navigate('/home');
       } else {
         setError('An error occurred, try again');
