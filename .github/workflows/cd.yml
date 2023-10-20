@@ -84,7 +84,7 @@ jobs:
         images: BarbzCodez/Spendr
 
     - name: Build and push
-      uses: docker/build-push-action@v2
+      uses: docker/build-push-action@v3
       with:
         file: ./.docker/server/Dockerfile
         context: ./server
@@ -106,7 +106,7 @@ jobs:
       uses: actions/download-artifact@v2
       with:
         name: spendr-client-static
-        path: ./client/build
+        path: ./client/client/static
 
     - name: remove quotes
       run: |
