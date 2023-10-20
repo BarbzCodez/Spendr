@@ -38,7 +38,7 @@ describe('logError', () => {
 
     expect(mockAppendFile).toHaveBeenCalled();
     const [logFilePath, logMessage, callback] = mockAppendFile.mock.calls[0];
-    expect(logFilePath).toBe('../../../../Logs/userErrorLog.txt');
+    expect(logFilePath).toBe('../../../../server/Logs/userErrorLog.txt');
     expect(logMessage).toContain('Error status code: 404');
     expect(logMessage).toContain('Request causing error');
     expect(logMessage).toContain('Request headers');
@@ -57,7 +57,7 @@ describe('logError', () => {
 
     expect(mockAppendFile).toHaveBeenCalled();
     const [logFilePath, logMessage, callback] = mockAppendFile.mock.calls[0];
-    expect(logFilePath).toBe('../../../../Logs/sysErrorLog.txt');
+    expect(logFilePath).toBe('../../../../server/Logs/sysErrorLog.txt');
     expect(logMessage).toContain('Error status code: 500');
     expect(logMessage).toContain('Request causing error');
     expect(logMessage).toContain('Request headers');
@@ -73,7 +73,7 @@ describe('logError', () => {
     req.body = { key: 'value' };
 
     mockAppendFile.mockImplementation((path, data, callback) => {
-      if (path === '../../../../Logs/userErrorLog.txt') {
+      if (path === '../../../../server/Logs/userErrorLog.txt') {
         callback(new Error('Simulated error'));
       }
     });
@@ -95,7 +95,7 @@ describe('logError', () => {
     res.locals = { error: new Error('Sample error message') };
 
     mockAppendFile.mockImplementation((path, data, callback) => {
-      if (path === '../../../../Logs/sysErrorLog.txt') {
+      if (path === '../../../../server/Logs/sysErrorLog.txt') {
         callback(new Error('Simulated error'));
       }
     });

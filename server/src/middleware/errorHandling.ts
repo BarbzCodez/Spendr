@@ -10,11 +10,15 @@ export function logError(req: Request, res: Response, next: NextFunction) {
     Request headers: ${JSON.stringify(req.headers)}
     Request Body:${JSON.stringify(req.body)}\n\n`;
 
-    fs.appendFile('../../../../Logs/userErrorLog.txt', logMessage, (err) => {
-      if (err) {
-        console.error('Error writing to userErrorLogs.txt', err);
-      }
-    });
+    fs.appendFile(
+      '../../../../server/Logs/userErrorLog.txt',
+      logMessage,
+      (err) => {
+        if (err) {
+          console.error('Error writing to userErrorLogs.txt', err);
+        }
+      },
+    );
 
     //If the response status code is 500 a server error occurred log the request and the stack trace of the error
   } else if (res.statusCode >= 500 && res.locals.error) {
@@ -26,11 +30,15 @@ export function logError(req: Request, res: Response, next: NextFunction) {
     Request Body:${JSON.stringify(req.body)}
     Error stack trace: ${error.stack}\n\n`;
 
-    fs.appendFile('../../../../Logs/sysErrorLog.txt', logMessage, (err) => {
-      if (err) {
-        console.error('Error writing to sysErrorLog.txt', err);
-      }
-    });
+    fs.appendFile(
+      '../../../../server/Logs/sysErrorLog.txt',
+      logMessage,
+      (err) => {
+        if (err) {
+          console.error('Error writing to sysErrorLog.txt', err);
+        }
+      },
+    );
   }
   next();
 }
