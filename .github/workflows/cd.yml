@@ -126,12 +126,15 @@ jobs:
       uses: docker/metadata-action@v3
       with:
         images: BarbzCodez/Spendr
+        tags: |
+            type=raw,value=latest
+            type=sha
 
     - name: Build and push
       uses: docker/build-push-action@v2
       with:
         file: ./.docker/client/Dockerfile
-        context: ./client
+        context: .
         push: true
         tags: ${{ steps.meta.outputs.tags }}
         labels: ${{ steps.meta.outputs.labels }}
