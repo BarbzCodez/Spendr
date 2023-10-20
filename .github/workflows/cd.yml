@@ -102,12 +102,6 @@ jobs:
     - name: checkout code
       uses: actions/checkout@v2
 
-    - name: Download artifact
-      uses: actions/download-artifact@v2
-      with:
-        name: spendr-client-static
-        path: ./.docker/client/static
-
     - name: remove quotes
       run: |
         export username=$(echo ${{ secrets.DOCKER_USERNAME }} | sed 's/"//g')
