@@ -108,13 +108,15 @@ jobs:
         name: spendr-client-static
         path: ./client/build
 
-    - name: Log on to docker hub
+    - name: remove quotes
       run: |
         export username=$(echo ${{ secrets.DOCKER_USERNAME }} | sed '"')
         echo $username
       run: |
         export password=$(echo ${{ secrets.DOCKER_USERNAME }} | sed '"')
         echo $password
+
+    - name: Log on to docker hub
       uses: docker/login-action@v1 
       with:
         username: $username
