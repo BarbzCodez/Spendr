@@ -43,9 +43,7 @@ const validationSchema = yup.object().shape({
     .oneOf([yup.ref('password'), ''], 'Passwords must match')
     .required('Confirm password cannot be empty'),
   securityQuestion: yup.string().required('Security question cannot be empty'),
-  securityAnswer: yup
-    .string()
-    .required('Security answer answer cannot be empty'),
+  securityAnswer: yup.string().required('Security answer cannot be empty'),
 });
 
 const SignupTextField: React.FC<SignupTextFieldProps> = ({
