@@ -110,9 +110,9 @@ jobs:
 
     - name: remove quotes
       run: |
-        export username=$(echo ${{ secrets.DOCKER_USERNAME }} | sed '"')
+        export username=$(echo ${{ secrets.DOCKER_USERNAME }} | sed 's/"//g')
         echo $username
-        export password=$(echo ${{ secrets.DOCKER_USERNAME }} | sed '"')
+        export password=$(echo ${{ secrets.DOCKER_USERNAME }} | sed 's/"//g')
         echo $password
 
     - name: Log on to docker hub
