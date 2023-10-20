@@ -112,7 +112,6 @@ jobs:
       run: |
         export username=$(echo ${{ secrets.DOCKER_USERNAME }} | sed '"')
         echo $username
-      run: |
         export password=$(echo ${{ secrets.DOCKER_USERNAME }} | sed '"')
         echo $password
 
