@@ -112,11 +112,11 @@ jobs:
       run: |
         export username=$(echo ${{ secrets.DOCKER_USERNAME }} | sed 's/"//g')
         echo $username
-        export password=$(echo ${{ secrets.DOCKER_USERNAME }} | sed 's/"//g')
+        export password=$(echo ${{ secrets.DOCKER_PASSWORD }} | sed 's/"//g')
         echo $password
 
     - name: Log on to docker hub
-      uses: docker/login-action@v1 
+      uses: docker/login-action@v3
       with:
         username: $username
         password: $password
