@@ -2,9 +2,7 @@ name: 'Spendr Continuous Deployment'
 
 on:
   push:
-    branches: ['ci-cd-configurations']
-  pull_request:
-    branches: ['ci-cd-configurations']
+    branches: [main]
 
 jobs:
   build-server:
