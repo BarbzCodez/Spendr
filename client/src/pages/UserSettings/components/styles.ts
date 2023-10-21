@@ -1,8 +1,13 @@
-import { Button, List, Stack, Typography } from '@mui/material';
+import { Button, Stack, Typography } from '@mui/material';
 import { Box, styled } from '@mui/system';
 import { theme } from '../../../assets/styles';
 
 export const SecondaryText = styled(Typography)({
+  fontSize: 'medium',
+  color: theme.palette.secondary.contrastText,
+});
+
+export const SecondaryTextDangerZone = styled(Typography)({
   color: theme.palette.secondary.contrastText,
 });
 
@@ -46,16 +51,10 @@ export const DangerZoneStackElements = styled(Stack)({
   paddingRight: '0.5rem',
 });
 
-export const DangerZoneStack = styled(Stack)({
+export const SettingStack = styled(Stack)({
   width: '55vw',
   minWidth: '350px',
   maxWidth: '600px',
+  alignItems: 'center',
   justifyContent: 'space-between',
-});
-
-export const SettingsList = styled(List)({
-  width: '55vw',
-  minWidth: '350px',
-  maxWidth: '600px',
-  padding: '4',
 });
