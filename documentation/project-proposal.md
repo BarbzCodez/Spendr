@@ -113,11 +113,11 @@ Then I should be able to filter the expenses by category and the list would upda
 
 ### Budget Management
 
-1. As a user, I want to define weekly, monthly, and annual budgets so that I can set spending limits for different time frames.\
+1. As a user, I want to define weekly, monthly, and annual budgets for specific categories so that I can set spending limits for different time frames.\
 **Acceptance Criteria:**\
 Given I am a logged-in user,\
 When I access the app's "Set Budget" feature,\
-Then I should be able to set a weekly/monthly/annual budget amount.
+Then I should be able to set a weekly/monthly/annual amount and category in the budget.
 
 2. As a user, I want to modify my budgets so that I can adjust them based on changing financial circumstances.\
 **Acceptance Criteria:**\
@@ -131,13 +131,7 @@ Given I am a logged-in user,\
 When I select to remove an existing budget,\
 Then the budget should be successfully removed and not show on the budget tab.
 
-4. As a user, I want to set budgets for specific categories like food and travel so that I can allocate funds to different areas of my life.\
-**Acceptance Criteria:**\
-Given I am a logged-in user,\
-When I set a budget for a specific category,\
-Then I should see the correct budget set for each category.
-
-5. As a user, I want to see how much of my budget I have used so that I can adjust my spending habits.\
+4. As a user, I want to see how much of my budget I have used so that I can adjust my spending habits.\
 **Acceptance Criteria:**\
 Given I am a logged-in user,\
 When I navigate to the budget tab,\
@@ -145,35 +139,29 @@ Then I should see already existing budget and their progress.
 
 ### Expense Analytics
 
-1. As a user, I want visual insights into my expenses so that I can quickly understand my spending habits.\
+1. As a user, I want visual insights into my expenses from the first day of the month to the current day of the month so that I can quickly understand my spending habits.\
 **Acceptance Criteria:**\
 Given I am a logged-in user,\
 When I access the app's analytics dashboard,\
 Then I should be able to see spending trends and patterns displayed through graphs and charts.
 
-2. As a user, I want to analyze my expenses for specific time frames so that I can review my spending over set periods.\
-**Acceptance Criteria:**\
-Given I am a logged-in user,\
-When I set a time interval on the analytics board,\
-Then the analytics should correctly update and show the appropriate data.
-
-3. As a user, I want to compare expenses over different time frames so that I can identify trends or changes in my spending.\
+2. As a user, I want to compare expenses over two separate past months so that I can identify trends or changes in my spending.\
 **Acceptance Criteria:**\
 Given I am a logged-in user,\
 When I choose the "Compare" option in the analytics dashboard,\
-Then I should be able to see spending trends and habits of different time frames side by side.
+Then I should be able to see spending trends and habits of two past months side by side.
 
-4. As a user, I want to see spending patterns for each category so that I can gain insights into where most of my money goes.\
+3. As a user, I want to see spending patterns for the current month each category so that I can gain insights into where most of my money goes.\
 **Acceptance Criteria:**\
 Given I am a logged-in user,\
 When I chose to filter the analytics dashboard by category,\
 Then then analytics dashboard should correctly update and I should be able to see the spending patterns for the chosen category.
 
-5. As a user, I want visual alerts for changes in my spending patterns so that I can be promptly informed of significant variations in my spending habits.\
+4. As a user, I want a text summary for changes while comparing expenses so that I can be promptly informed of significant variations in my spending habits.\
 **Acceptance Criteria:**\
 Given I am a logged-in user,\
-When I change my spending habits,\
-Then I should be able to see an alert in my inbox informing me about the change.
+When Im comparing month expenses,\
+Then I should be able to see an text informing me about the change.
 
 ### Group Expense Splitting
 
@@ -200,9 +188,3 @@ Then I should be able to see the "paid" status of other people who participated 
 Given I am a logged-in user,\
 When I input a group expense and set even contributions or custom percentages,\
 Then the expense amount of everyone involved should be updated appropriately.
-
-5. As a user, I want to remove myself from a group expense so that I no longer participate in its tracking or payment.\
-**Acceptance Criteria:**\
-Given I am a logged-in user,\
-When I remove myself from a group expense,\
-Then I should no longer participate in its tracking or payment.
