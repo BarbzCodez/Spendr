@@ -1,17 +1,16 @@
 import { Button, Stack, Typography } from '@mui/material';
 import { Box, styled } from '@mui/system';
-import { theme } from '../../../assets/styles';
 
-export const SecondaryText = styled(Typography)({
+export const SecondaryText = styled(Typography)(({ theme }) => ({
   fontSize: 'medium',
   color: theme.palette.secondary.contrastText,
-});
+}));
 
-export const SecondaryTextDangerZone = styled(Typography)({
+export const SecondaryTextDangerZone = styled(Typography)(({ theme }) => ({
   color: theme.palette.secondary.contrastText,
-});
+}));
 
-export const DeleteButton = styled(Button)({
+export const DeleteButton = styled(Button)(({ theme }) => ({
   width: '130px',
   height: '40px',
   display: 'flex',
@@ -22,7 +21,7 @@ export const DeleteButton = styled(Button)({
   textTransform: 'none',
   color: theme.palette.error.main,
   borderColor: theme.palette.error.main,
-});
+}));
 
 export const ErrorBox = styled(Box)({
   width: '55vw',
