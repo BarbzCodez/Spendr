@@ -139,7 +139,7 @@ Then I should see already existing budgets and their progress.
 
 ### Expense Analytics
 
-1. As a user, I want visual insights into my expenses from the first day of the month to the current day of the month so that I can quickly understand my spending habits.\
+1. As a user, I want visual insights into my daily expenses for the current month so that I can quickly understand my spending habits.\
 **Acceptance Criteria:**\
 Given I am a logged-in user,\
 When I access the app's analytics dashboard,\
