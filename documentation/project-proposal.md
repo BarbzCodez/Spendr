@@ -135,7 +135,7 @@ Then the budget should be successfully removed and not show on the budget tab.
 **Acceptance Criteria:**\
 Given I am a logged-in user,\
 When I navigate to the budget tab,\
-Then I should see already existing budget and their progress.
+Then I should see already existing budgets and their progress.
 
 ### Expense Analytics
 
