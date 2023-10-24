@@ -115,6 +115,7 @@ export const ExpensesTable: React.FC<ExpenseTableProps> = ({
   return (
     <BackgroundBox>
       <ExpensesDataGrid
+        disableColumnSelector
         rows={expenses}
         columns={columns}
         getRowId={(row) => row.id}
