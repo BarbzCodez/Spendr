@@ -113,7 +113,7 @@ Then I should be able to filter the expenses by category and the list would upda
 
 ### Budget Management
 
-1. As a user, I want to define weekly, monthly, and annual budgets for specific categories so that I can set spending limits for different time frames.\
+1. As a user, I want to define a budget with frequency (weekly/monthly/annual) and a category so that I can set spending limits for different time frames and categories.\
 **Acceptance Criteria:**\
 Given I am a logged-in user,\
 When I access the app's "Set Budget" feature,\
