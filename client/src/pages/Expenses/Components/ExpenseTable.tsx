@@ -1,16 +1,12 @@
 import * as React from 'react';
-import { GridColDef } from '@mui/x-data-grid';
+import { GridColDef, GridActionsCellItem } from '@mui/x-data-grid';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import EditIcon from '@mui/icons-material/Edit';
 
 import { theme } from '../../../assets/styles';
 import { ExpenseTableProps, ExpenseData } from '../../../interfaces/interfaces';
 
-import {
-  BackgroundBox,
-  GridActionsCellItemStyled,
-  ExpensesDataGrid,
-} from './styles';
+import { BackgroundBox, ExpensesDataGrid } from './styles';
 
 /**
  * Expenses table component
@@ -78,17 +74,13 @@ export const ExpensesTable: React.FC<ExpenseTableProps> = ({
       type: 'actions',
       width: 75,
       getActions: (params: { row: ExpenseData }) => [
-        <GridActionsCellItemStyled
+        <GridActionsCellItem
           key="edit"
           label="Edit"
           onClick={() => handleEditClick(params)}
-          icon={
-            <EditIcon
-              style={{ color: `${theme.palette.primary.contrastText}` }}
-            />
-          }
+          icon={<EditIcon />}
         />,
-        <GridActionsCellItemStyled
+        <GridActionsCellItem
           key="delete"
           label="Delete"
           onClick={() => handleDeleteClick(params)}

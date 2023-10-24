@@ -6,7 +6,6 @@ import { Typography, TextField, Alert, Snackbar } from '@mui/material';
 import axios, { AxiosError } from 'axios';
 
 import { PrimaryButton } from '../../../assets/styles/styles';
-import { theme } from '../../../assets/styles';
 import { signupRequest } from '../../../api/UserAPI';
 
 interface SignupFields {
@@ -64,12 +63,6 @@ const SignupTextField: React.FC<SignupTextFieldProps> = ({
       variant="filled"
       size="small"
       type={type}
-      inputProps={{
-        style: { color: theme.palette.primary.contrastText },
-      }}
-      InputLabelProps={{
-        style: { color: theme.palette.primary.contrastText },
-      }}
       style={{ width: 300 }}
       value={value}
       onChange={onChange}

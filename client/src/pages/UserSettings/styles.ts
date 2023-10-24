@@ -1,7 +1,6 @@
 import { styled, Stack, Box } from '@mui/system';
-import { theme } from '../../assets/styles';
 
-export const SettingsStack = styled(Stack)({
+export const SettingsStack = styled(Stack)(({ theme }) => ({
   background: `${theme.palette.secondary.main} 0%`,
   width: '60vw',
   minWidth: '450px',
@@ -14,7 +13,7 @@ export const SettingsStack = styled(Stack)({
   borderRadius: '15px',
   paddingTop: '2vh',
   paddingBottom: '2vh',
-});
+}));
 
 export const PopupDiv = styled(Box)({
   maxHeight: '100vh',
