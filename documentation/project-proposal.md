@@ -160,7 +160,7 @@ Then then analytics dashboard should correctly update and I should be able to se
 4. As a user, I want a text summary for changes while comparing expenses so that I can be promptly informed of significant variations in my spending habits.\
 **Acceptance Criteria:**\
 Given I am a logged-in user,\
-When Im comparing month expenses,\
+When I am comparing expenses of 2 past months,\
 Then I should be able to see a text informing me about the change.
 
 ### Group Expense Splitting
