@@ -145,7 +145,7 @@ Given I am a logged-in user,\
 When I access the app's analytics dashboard,\
 Then I should be able to see spending trends and patterns displayed through graphs and charts.
 
-2. As a user, I want to compare expenses over two separate past months so that I can identify trends or changes in my spending.\
+2. As a user, I want to visually compare expenses over two separate past months so that I can identify trends or changes in my spending.\
 **Acceptance Criteria:**\
 Given I am a logged-in user,\
 When I choose the "Compare" option in the analytics dashboard,\
