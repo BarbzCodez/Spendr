@@ -12,6 +12,15 @@ import {
   ExpensesDataGrid,
 } from './styles';
 
+const isoToFormattedDate = (isoDateString: string): string => {
+  const date = new Date(isoDateString);
+  const day = date.getDate().toString().padStart(2, '0');
+  const month = (date.getMonth() + 1).toString().padStart(2, '0');
+  const year = date.getFullYear().toString();
+
+  return `${year}/${month}/${day}`;
+};
+
 /**
  * Expenses table component
  *
@@ -43,8 +52,7 @@ export const ExpensesTable: React.FC<ExpenseTableProps> = ({
       flex: 1,
       minWidth: 200,
       valueGetter: (params) => {
-        const date = new Date(params.value as string);
-        return date.toISOString().split('T')[0];
+        return isoToFormattedDate(params.value as string);
       },
     },
     {
