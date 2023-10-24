@@ -65,7 +65,8 @@ Access links:
 ### Running the frontend locally with hot reload
 
 1. Make sure the backend and db containers are running.
-2. Use the following command to start the frontend:
+2. Enter the client directory `cd client`.
+3. Use the following command to start the frontend:
 ```bash
 npm start
 ```
