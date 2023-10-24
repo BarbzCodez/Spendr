@@ -63,10 +63,6 @@ export const ExpensesTable: React.FC<ExpenseTableProps> = ({
       type: 'number',
       flex: 1,
       minWidth: 125,
-      valueGetter: (params) => {
-        const amount = '$' + params.value;
-        return amount;
-      },
     },
     {
       field: 'category',

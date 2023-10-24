@@ -27,6 +27,18 @@ export interface LoginResponse {
   token: string;
 }
 
+export interface UpdateUsernameData {
+  username: string;
+}
+
+export interface UpdatePasswordData {
+  password: string;
+}
+
+export interface MessageResponse {
+  message: string;
+}
+
 export interface ExpenseUIData {
   title: string;
   amount: number;
