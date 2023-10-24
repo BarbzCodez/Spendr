@@ -161,7 +161,7 @@ Then then analytics dashboard should correctly update and I should be able to se
 **Acceptance Criteria:**\
 Given I am a logged-in user,\
 When Im comparing month expenses,\
-Then I should be able to see an text informing me about the change.
+Then I should be able to see a text informing me about the change.
 
 ### Group Expense Splitting
 
