@@ -9,6 +9,19 @@ dotenv.config();
 
 const router = express.Router();
 
+/**
+ * Create a new budget
+ *
+ * This route creates a new budget for the authenticated user.
+ *
+ * @route POST /budgets
+ * @param amount Amount of the budget
+ * @param duration Duration of the budget, either weekly, monthly, or yearly
+ * @param category Category of the budget, must be a valid category in Prisma model, or null
+ * @returns {object} An object containing the newly created budget
+ * @throws {object} 400 - If the request body is invalid
+ * @throws {object} 500 - If there is a server error
+ */
 router.post(
   '/',
   authenticate,
