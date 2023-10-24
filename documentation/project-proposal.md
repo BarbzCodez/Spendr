@@ -151,7 +151,7 @@ Given I am a logged-in user,\
 When I choose the "Compare" option in the analytics dashboard,\
 Then I should be able to see spending trends and habits of two past months side by side.
 
-3. As a user, I want to see spending patterns for the current month each category so that I can gain insights into where most of my money goes.\
+3. As a user, I want to see spending patterns of each category in the current month so that I can gain insights into where most of my money goes.\
 **Acceptance Criteria:**\
 Given I am a logged-in user,\
 When I chose to filter the analytics dashboard by category,\
