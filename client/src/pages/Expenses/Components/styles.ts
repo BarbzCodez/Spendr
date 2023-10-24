@@ -1,4 +1,3 @@
-import { GridActionsCellItem } from '@mui/x-data-grid';
 import { styled, Box } from '@mui/system';
 import { DataGrid } from '@mui/x-data-grid';
 import { theme } from '../../../assets/styles';
