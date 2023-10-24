@@ -2,9 +2,7 @@ name: 'Spendr Continuous Deployment'
 
 on:
   push:
-    branches: ['ci-cd-configurations']
-  pull_request:
-    branches: ['ci-cd-configurations']
+    branches: [main]
 
 jobs:
   build-server:
@@ -12,8 +10,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Check out code
-      uses: actions/checkout@v3
+    - uses: actions/checkout@v3
 
     - name: Set up Node.js
       uses: actions/setup-node@v3
@@ -54,7 +51,7 @@ jobs:
     name: 'spendr server continuous deployment - publish'
     needs: build-server
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/ci-cd-configurations'
+    if: github.ref == 'refs/heads/main'
 
     steps:
     - name: checkout code
@@ -85,7 +82,7 @@ jobs:
     name: 'spendr client continuous deployment - publish'
     needs: build-client
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/ci-cd-configurations'
+    if: github.ref == 'refs/heads/main'
 
     steps:
     - name: checkout code
