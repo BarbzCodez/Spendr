@@ -2,7 +2,7 @@ name: 'Spendr Continuous Deployment'
 
 on:
   push:
-    branches: [CD-local-docker-files]
+    branches: [main]
 
 jobs:
   build-server:
@@ -51,7 +51,7 @@ jobs:
     name: 'spendr server continuous deployment - publish'
     needs: build-server
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/CD-local-docker-files'
+    if: github.ref == 'refs/heads/main'
 
     steps:
     - name: checkout code
@@ -82,7 +82,7 @@ jobs:
     name: 'spendr client continuous deployment - publish'
     needs: build-client
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/CD-local-docker-files'
+    if: github.ref == 'refs/heads/main'
 
     steps:
     - name: checkout code
