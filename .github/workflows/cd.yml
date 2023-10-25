@@ -67,12 +67,12 @@ jobs:
       id: meta
       uses: docker/metadata-action@v3
       with:
-        images: lysackm/spendr
+        images: lysackm/spendr-server
 
     - name: Build and push
       uses: docker/build-push-action@v3
       with:
-        file: ./.docker/server/Dockerfile
+        file: ./server/Dockerfile
         context: ./server
         push: true
         tags: ${{ steps.meta.outputs.tags }}
@@ -104,7 +104,7 @@ jobs:
       id: meta
       uses: docker/metadata-action@v3
       with:
-        images: lysackm/spendr
+        images: lysackm/spendr-client
         tags: |
             type=raw,value=latest
             type=sha
@@ -112,7 +112,7 @@ jobs:
     - name: Build and push
       uses: docker/build-push-action@v3
       with:
-        file: ./.docker/client/Dockerfile
+        file: ./client/Dockerfile
         context: .
         push: true
         tags: ${{ steps.meta.outputs.tags }}
