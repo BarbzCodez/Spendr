@@ -175,9 +175,6 @@ const ExpenseDialog: React.FC<ExpenseDialogProps> = ({
                   ? formik.errors.amount
                   : ' '
               }
-              InputLabelProps={{
-                style: { color: theme.palette.primary.contrastText },
-              }}
               style={{ width: 300 }}
             />
             <TextField
