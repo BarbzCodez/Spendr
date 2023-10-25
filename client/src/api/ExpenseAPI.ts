@@ -21,11 +21,9 @@ export const addExpenseRequest = async (
   data: ExpenseUIData,
   user: UserInfo,
 ): Promise<AxiosResponse<AddExpenseResponse>> => {
-  const expenseWithTime = { ...data, createdAt: new Date().toISOString() };
-
   const response = await axios.post<AddExpenseResponse>(
     'http://localhost:7005/expenses',
-    expenseWithTime,
+    data,
     {
       headers: {
         Authorization: `Bearer ${user.token}`,

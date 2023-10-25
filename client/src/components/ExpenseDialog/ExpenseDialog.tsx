@@ -8,6 +8,7 @@ import {
   InputAdornment,
   MenuItem,
   Typography,
+  Box,
 } from '@mui/material';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
@@ -23,7 +24,32 @@ const validationSchema = yup.object().shape({
     .positive('Amount must be greater than 0')
     .required('Amount cannot be empty'),
   category: yup.string().required('Category cannot be empty'),
+  createdAt: yup
+    .string()
+    .matches(
+      /^(?:20\d{2}|19\d{2})\/(0[1-9]|1[0-2])\/(0[1-9]|[12]\d|3[01])$/,
+      'Date must be in valid YYYY/MM/DD format',
+    )
+    .required('Date cannot be empty'),
 });
+
+const categories = [
+  'GROCERIES',
+  'TRANSPORT',
+  'ENTERTAINMENT',
+  'HEALTH',
+  'UTILITIES',
+  'OTHER',
+];
+
+const isoToFormattedDate = (isoDateString: string): string => {
+  const date = new Date(isoDateString);
+  const day = date.getDate().toString().padStart(2, '0');
+  const month = (date.getMonth() + 1).toString().padStart(2, '0');
+  const year = date.getFullYear().toString();
+
+  return `${year}/${month}/${day}`;
+};
 
 /**
  * Expense dialog component
@@ -46,9 +72,15 @@ const ExpenseDialog: React.FC<ExpenseDialogProps> = ({
       title: expenseData?.title || '',
       amount: expenseData?.amount || 0,
       category: expenseData?.category || '',
+      createdAt: expenseData
+        ? isoToFormattedDate(expenseData.createdAt)
+        : isoToFormattedDate(new Date().toISOString()),
     },
     validationSchema: validationSchema,
     onSubmit: (values: ExpenseUIData) => {
+      const [year, month, day] = values.createdAt.split('/');
+      const date = new Date(Number(year), Number(month) - 1, Number(day));
+
       if (expenseData) {
         onEdit({
           id: expenseData.id,
@@ -56,10 +88,15 @@ const ExpenseDialog: React.FC<ExpenseDialogProps> = ({
           title: values.title,
           amount: values.amount,
           category: values.category,
-          createdAt: expenseData.createdAt,
+          createdAt: date.toISOString(),
         });
       } else {
-        onAdd(values);
+        onAdd({
+          title: values.title,
+          amount: values.amount,
+          category: values.category,
+          createdAt: date.toISOString(),
+        });
       }
     },
   });
@@ -69,6 +106,10 @@ const ExpenseDialog: React.FC<ExpenseDialogProps> = ({
       formik.setFieldValue('title', expenseData.title);
       formik.setFieldValue('amount', expenseData.amount);
       formik.setFieldValue('category', expenseData.category);
+      formik.setFieldValue(
+        'createdAt',
+        isoToFormattedDate(expenseData.createdAt),
+      );
     }
   }, [expenseData]);
 
@@ -85,82 +126,86 @@ const ExpenseDialog: React.FC<ExpenseDialogProps> = ({
           {expenseData ? 'Edit Expense' : 'Add Expense'}
         </DialogTitle>
         <DialogContent>
-          <TextField
-            id="title"
-            label="Title"
-            variant="filled"
-            value={formik.values.title}
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            error={formik.touched.title && Boolean(formik.errors.title)}
-            helperText={
-              formik.touched.title && Boolean(formik.errors.title)
-                ? formik.errors.title
-                : ' '
-            }
-            style={{ width: 550 }}
-          />
-          <TextField
-            id="amount"
-            label="Amount"
-            variant="filled"
-            type="number"
-            value={formik.values.amount}
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            error={formik.touched.amount && Boolean(formik.errors.amount)}
-            helperText={
-              formik.touched.amount && Boolean(formik.errors.amount)
-                ? formik.errors.amount
-                : ' '
-            }
-            InputProps={{
-              startAdornment: (
-                <InputAdornment position="start">
-                  <Typography variant="body1">$</Typography>
-                </InputAdornment>
-              ),
-            }}
-            style={{ width: 550 }}
-          />
-          <TextField
-            select
-            id="category"
-            label="Category"
-            variant="filled"
-            value={formik.values.category}
-            onChange={(event) => {
-              event.target.name = 'category';
-              formik.handleChange(event);
-            }}
-            onBlur={formik.handleBlur}
-            error={formik.touched.category && Boolean(formik.errors.category)}
-            helperText={
-              formik.touched.category && Boolean(formik.errors.category)
-                ? formik.errors.category
-                : ' '
-            }
-            style={{ width: 550 }}
-          >
-            <MenuItem value="GROCERIES" key="GROCERIES" color="#FFFFFF">
-              GROCERIES
-            </MenuItem>
-            <MenuItem value="TRANSPORT" key="TRANSPORT">
-              TRANSPORT
-            </MenuItem>
-            <MenuItem value="ENTERTAINMENT" key="ENTERTAINMENT">
-              ENTERTAINMENT
-            </MenuItem>
-            <MenuItem value="HEALTH" key="HEALTH">
-              HEALTH
-            </MenuItem>
-            <MenuItem value="UTILITIES" key="UTILITIES">
-              UTILITIES
-            </MenuItem>
-            <MenuItem value="OTHER" key="OTHER">
-              OTHER
-            </MenuItem>
-          </TextField>
+          <Box sx={{ display: 'flex', flexDirection: 'row', gap: '10px' }}>
+            <TextField
+              id="title"
+              label="Title"
+              variant="filled"
+              value={formik.values.title}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              error={formik.touched.title && Boolean(formik.errors.title)}
+              helperText={
+                formik.touched.title && Boolean(formik.errors.title)
+                  ? formik.errors.title
+                  : ' '
+              }
+              style={{ width: 300 }}
+            />
+            <TextField
+              id="createdAt"
+              label="Date"
+              variant="filled"
+              value={formik.values.createdAt}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              error={
+                formik.touched.createdAt && Boolean(formik.errors.createdAt)
+              }
+              helperText={
+                formik.touched.createdAt && Boolean(formik.errors.createdAt)
+                  ? formik.errors.createdAt
+                  : ' '
+              }
+              style={{ width: 300 }}
+            />
+          </Box>
+          <Box sx={{ display: 'flex', flexDirection: 'row', gap: '10px' }}>
+            <TextField
+              id="amount"
+              label="Amount"
+              variant="filled"
+              type="number"
+              value={formik.values.amount}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              error={formik.touched.amount && Boolean(formik.errors.amount)}
+              helperText={
+                formik.touched.amount && Boolean(formik.errors.amount)
+                  ? formik.errors.amount
+                  : ' '
+              }
+              InputLabelProps={{
+                style: { color: theme.palette.primary.contrastText },
+              }}
+              style={{ width: 300 }}
+            />
+            <TextField
+              select
+              id="category"
+              label="Category"
+              variant="filled"
+              value={formik.values.category}
+              onChange={(event) => {
+                event.target.name = 'category';
+                formik.handleChange(event);
+              }}
+              onBlur={formik.handleBlur}
+              error={formik.touched.category && Boolean(formik.errors.category)}
+              helperText={
+                formik.touched.category && Boolean(formik.errors.category)
+                  ? formik.errors.category
+                  : ' '
+              }
+              style={{ width: 300 }}
+            >
+              {categories.map((category) => (
+                <MenuItem key={category} value={category}>
+                  {category}
+                </MenuItem>
+              ))}
+            </TextField>
+          </Box>
         </DialogContent>
         <DialogActions>
           <PrimaryButton onClick={onClose}>Cancel</PrimaryButton>

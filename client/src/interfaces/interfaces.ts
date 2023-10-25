@@ -43,6 +43,7 @@ export interface ExpenseUIData {
   title: string;
   amount: number;
   category: string;
+  createdAt: string;
 }
 
 export interface ExpenseData {
