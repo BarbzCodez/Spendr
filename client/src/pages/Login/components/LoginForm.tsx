@@ -6,7 +6,6 @@ import axios, { AxiosResponse, AxiosError } from 'axios';
 import { Typography, TextField } from '@mui/material';
 
 import { PrimaryButton } from '../../../assets/styles/styles';
-import { theme } from '../../../assets/styles';
 import { loginRequest } from '../../../api/UserAPI';
 import { LoginData, LoginResponse } from '../../../interfaces/interfaces';
 import { useUser } from '../../../context/UserContext';
@@ -71,12 +70,6 @@ const LoginForm = (): JSX.Element => {
         label="Username"
         variant="filled"
         size="small"
-        inputProps={{
-          style: { color: theme.palette.primary.contrastText },
-        }}
-        InputLabelProps={{
-          style: { color: theme.palette.primary.contrastText },
-        }}
         style={{ width: 300 }}
         value={formik.values.username}
         onChange={formik.handleChange}
@@ -95,12 +88,6 @@ const LoginForm = (): JSX.Element => {
         variant="filled"
         size="small"
         type="password"
-        inputProps={{
-          style: { color: theme.palette.primary.contrastText },
-        }}
-        InputLabelProps={{
-          style: { color: theme.palette.primary.contrastText },
-        }}
         style={{ width: 300 }}
         value={formik.values.password}
         onChange={formik.handleChange}

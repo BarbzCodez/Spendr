@@ -14,7 +14,6 @@ import { Link, useNavigate } from 'react-router-dom';
 
 import { PrimaryBar, TabsBox, TabButton } from './styles';
 import logo from '../../assets/images/spendr_1.png';
-import { theme } from '../../assets/styles';
 import { useUser } from '../../context/UserContext';
 
 /**
@@ -86,10 +85,7 @@ const Header: React.FC = () => {
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <AccountCircleIcon
-                  fontSize="large"
-                  style={{ color: `${theme.palette.primary.contrastText}` }}
-                />
+                <AccountCircleIcon fontSize="large" />
               </IconButton>
             </Tooltip>
             <Menu
@@ -109,20 +105,10 @@ const Header: React.FC = () => {
               onClose={handleCloseUserMenu}
             >
               <MenuItem key={'Settings'} onClick={handleNavSettings}>
-                <Typography
-                  textAlign="center"
-                  style={{ color: `${theme.palette.info.light}` }}
-                >
-                  Settings
-                </Typography>
+                <Typography textAlign="center">Settings</Typography>
               </MenuItem>
               <MenuItem key={'Log Out'} onClick={handleLogOut}>
-                <Typography
-                  textAlign="center"
-                  style={{ color: `${theme.palette.info.light}` }}
-                >
-                  Log Out
-                </Typography>
+                <Typography textAlign="center">Log Out</Typography>
               </MenuItem>
             </Menu>
           </Box>

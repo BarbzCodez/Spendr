@@ -5,16 +5,13 @@ import {
   DialogContent,
   DialogTitle,
   TextField,
-  InputAdornment,
   MenuItem,
-  Typography,
   Box,
 } from '@mui/material';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 
 import { ExpenseUIData, ExpenseDialogProps } from '../../interfaces/interfaces';
-import { theme } from '../../assets/styles';
 import { PrimaryButton } from '../../assets/styles/styles';
 
 const validationSchema = yup.object().shape({
@@ -141,14 +138,6 @@ const ExpenseDialog: React.FC<ExpenseDialogProps> = ({
                   ? formik.errors.title
                   : ' '
               }
-              inputProps={{
-                style: {
-                  color: theme.palette.primary.contrastText,
-                },
-              }}
-              InputLabelProps={{
-                style: { color: theme.palette.primary.contrastText },
-              }}
               style={{ width: 300 }}
             />
             <TextField
@@ -166,12 +155,6 @@ const ExpenseDialog: React.FC<ExpenseDialogProps> = ({
                   ? formik.errors.createdAt
                   : ' '
               }
-              inputProps={{
-                style: { color: theme.palette.primary.contrastText },
-              }}
-              InputLabelProps={{
-                style: { color: theme.palette.primary.contrastText },
-              }}
               style={{ width: 300 }}
             />
           </Box>
@@ -190,19 +173,6 @@ const ExpenseDialog: React.FC<ExpenseDialogProps> = ({
                   ? formik.errors.amount
                   : ' '
               }
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment position="start" style={{ color: '#FFFFFF' }}>
-                    <Typography variant="body1">$</Typography>
-                  </InputAdornment>
-                ),
-              }}
-              inputProps={{
-                style: { color: theme.palette.primary.contrastText },
-              }}
-              InputLabelProps={{
-                style: { color: theme.palette.primary.contrastText },
-              }}
               style={{ width: 300 }}
             />
             <TextField
@@ -222,12 +192,6 @@ const ExpenseDialog: React.FC<ExpenseDialogProps> = ({
                   ? formik.errors.category
                   : ' '
               }
-              inputProps={{
-                style: { color: theme.palette.primary.contrastText },
-              }}
-              InputLabelProps={{
-                style: { color: theme.palette.primary.contrastText },
-              }}
               style={{ width: 300 }}
             >
               {categories.map((category) => (
