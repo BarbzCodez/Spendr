@@ -20,13 +20,17 @@ async function calculateTotalExpenseForBudget(budget: Budget): Promise<number> {
   let startDate: Date;
   switch (budget.duration) {
     case BudgetDuration.WEEKLY:
-      startDate = new Date(now.setDate(now.getDate() - 7));
+      // Set the start date to the previous Sunday
+      startDate = new Date(now);
+      startDate.setDate(now.getDate() - now.getDay());
       break;
     case BudgetDuration.MONTHLY:
-      startDate = new Date(now.setMonth(now.getMonth() - 1));
+      // Set the start date to the first day of the month
+      startDate = new Date(now.getFullYear(), now.getMonth(), 1);
       break;
     case BudgetDuration.YEARLY:
-      startDate = new Date(now.setFullYear(now.getFullYear() - 1));
+      // Set the start date to the first day of the year
+      startDate = new Date(now.getFullYear(), 0, 1);
       break;
   }
 
