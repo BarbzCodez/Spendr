@@ -2,7 +2,7 @@ name: 'Spendr Continuous Deployment'
 
 on:
   push:
-    branches: [main]
+    branches: [CD-local-docker-files]
 
 jobs:
   build-server:
@@ -72,7 +72,7 @@ jobs:
     - name: Build and push
       uses: docker/build-push-action@v3
       with:
-        file: ./.docker/server/Dockerfile
+        file: ./server/Dockerfile
         context: ./server
         push: true
         tags: ${{ steps.meta.outputs.tags }}
@@ -112,7 +112,7 @@ jobs:
     - name: Build and push
       uses: docker/build-push-action@v3
       with:
-        file: ./.docker/client/Dockerfile
+        file: ./client/Dockerfile
         context: .
         push: true
         tags: ${{ steps.meta.outputs.tags }}
