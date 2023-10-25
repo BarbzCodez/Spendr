@@ -3,6 +3,7 @@ import app from '../../../app';
 import bcrypt from 'bcrypt';
 import { prismaMock } from '../../../singleton';
 import { Request, Response, NextFunction } from 'express';
+import { ExpenseCategory } from '@prisma/client';
 
 jest.mock('../../../middleware/authenticate', () => ({
   authenticate: (req: Request, res: Response, next: NextFunction) => {
@@ -570,6 +571,143 @@ describe('GET /users/:userId/expenses', () => {
     prismaMock.expense.findMany.mockRejectedValue(new Error());
 
     const response = await request(app).get('/users/1/expenses').send();
+
+    expect(response.status).toBe(500);
+    expect(response.body.message).toBe('Server error');
+  });
+});
+
+describe('GET /users/:userId/budgets', () => {
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+
+  it('returns 200 with budgets and expenses if budgets are found', async () => {
+    const now = new Date();
+    prismaMock.user.findUnique.mockResolvedValue({
+      id: 1,
+      username: 'testuser',
+      password: 'testpassword',
+      securityQuestion: 'Your favorite color?',
+      securityAnswer: 'Blue',
+      userDeleted: false,
+    });
+    prismaMock.budget.findMany.mockResolvedValue([
+      {
+        id: 1,
+        userId: 1,
+        amount: 100,
+        duration: 'WEEKLY',
+        category: 'GROCERIES',
+      },
+      {
+        id: 2,
+        userId: 1,
+        amount: 500,
+        duration: 'MONTHLY',
+        category: null,
+      },
+      {
+        id: 3,
+        userId: 1,
+        amount: 3000,
+        duration: 'YEARLY',
+        category: 'TRANSPORT',
+      },
+    ]);
+
+    const mockExpenses = [
+      {
+        id: 1,
+        userId: 1,
+        title: 'Weekly Grocery Shopping',
+        amount: 50,
+        category: ExpenseCategory.GROCERIES,
+        createdAt: now,
+      },
+      {
+        id: 2,
+        userId: 1,
+        title: 'Monthly Metro Card Reload',
+        amount: 200,
+        category: ExpenseCategory.TRANSPORT,
+        createdAt: now,
+      },
+      {
+        id: 3,
+        userId: 1,
+        title: 'Monthly Metro Card Reload',
+        amount: 200,
+        category: ExpenseCategory.TRANSPORT,
+        createdAt: new Date(now.setDate(now.getMonth() - 1)), // Last month,
+      },
+    ];
+
+    prismaMock.expense.findMany.mockResolvedValueOnce([mockExpenses[0]]);
+    prismaMock.expense.findMany.mockResolvedValueOnce([
+      mockExpenses[0],
+      mockExpenses[1],
+    ]);
+    prismaMock.expense.findMany.mockResolvedValueOnce([
+      mockExpenses[1],
+      mockExpenses[2],
+    ]);
+
+    const response = await request(app).get('/users/1/budgets').send();
+
+    expect(response.status).toBe(200);
+    expect(response.body.success).toBe(true);
+    expect(response.body.data).toHaveLength(3); // Expecting 2 budgets in the response
+
+    const groceryBudget = response.body.data.find(
+      (budget: BudgetWithTotalExpense) => budget.id === 1,
+    );
+    const monthlyBudget = response.body.data.find(
+      (budget: BudgetWithTotalExpense) => budget.id === 2,
+    );
+    const yearlyTransportBudget = response.body.data.find(
+      (budget: BudgetWithTotalExpense) => budget.id === 3,
+    );
+
+    expect(groceryBudget).toBeDefined();
+    expect(monthlyBudget).toBeDefined();
+    expect(yearlyTransportBudget).toBeDefined();
+
+    expect(groceryBudget!.totalExpense).toBe(50);
+    expect(monthlyBudget!.totalExpense).toBe(250);
+    expect(yearlyTransportBudget!.totalExpense).toBe(400);
+  });
+
+  it('returns 200 with empty array if no budgets are found', async () => {
+    prismaMock.user.findUnique.mockResolvedValue({
+      id: 1,
+      username: 'testuser',
+      password: 'testpassword',
+      securityQuestion: 'Your favorite color?',
+      securityAnswer: 'Blue',
+      userDeleted: false,
+    });
+    prismaMock.budget.findMany.mockResolvedValue([]);
+
+    const response = await request(app).get('/users/1/budgets').send();
+
+    expect(response.status).toBe(200);
+    expect(response.body.data).toStrictEqual([]);
+  });
+
+  it('returns 400 if user does not exist or is deleted', async () => {
+    prismaMock.user.findUnique.mockResolvedValue(null); // Mocking no user
+
+    const response = await request(app).get('/users/1/budgets').send();
+
+    expect(response.status).toBe(400);
+    expect(response.body.message).toBe('Invalid Credentials');
+  });
+
+  it('returns 500 when there is a server error', async () => {
+    prismaMock.user.findUnique.mockRejectedValue(new Error());
+
+    const response = await request(app).get('/users/1/budgets').send();
 
     expect(response.status).toBe(500);
     expect(response.body.message).toBe('Server error');

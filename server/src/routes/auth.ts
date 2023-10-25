@@ -4,6 +4,7 @@ import { body, validationResult } from 'express-validator';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import { authenticate } from '../middleware/authenticate';
+import calculateTotalExpenseForBudget from '../utils/expenses';
 import dotenv from 'dotenv';
 dotenv.config();
 
@@ -458,6 +459,56 @@ router.get(
       const allExpenses = [...individualExpenses];
 
       res.status(200).json({ success: true, data: allExpenses });
+    } catch (error) {
+      res.status(500).json({ message: 'Server error' });
+    }
+  },
+);
+
+/**
+ * Get all budgets for a user
+ *
+ * This route will return all budgets for a user, including the total expense for each budget.
+ * The user must be authenticated to make this request.
+ *
+ * @route GET /users/:userId/budgets
+ * @group users - Operations about users
+ * @param {string} userId.path.required - User ID
+ * @returns {object} 200 - All budgets for the user
+ * @returns {Error}  500 - Server error
+ */
+router.get(
+  '/:userId/budgets',
+  authenticate,
+  async (req: Request, res: Response) => {
+    try {
+      const userId = parseInt(req.params.userId);
+
+      // Make sure the user exists
+      const user = await prisma.user.findUnique({
+        where: { id: userId },
+      });
+
+      if (!user || user.userDeleted) {
+        return res.status(400).json({ message: 'Invalid Credentials' });
+      }
+
+      // Fetch budgets for the user
+      const budgets = await prisma.budget.findMany({
+        where: {
+          userId: userId,
+        },
+      });
+
+      // Calculate the total expense for each budget
+      const budgetWithExpenses = await Promise.all(
+        budgets.map(async (budget) => {
+          const totalExpense = await calculateTotalExpenseForBudget(budget);
+          return { ...budget, totalExpense };
+        }),
+      );
+
+      res.status(200).json({ success: true, data: budgetWithExpenses });
     } catch (error) {
       res.status(500).json({ message: 'Server error' });
     }
