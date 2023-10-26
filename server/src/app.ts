@@ -26,7 +26,7 @@ const sysErrorLogStream = fs.createWriteStream(
 
 morgan.token('errorCode', (req, res) => {
   if (res.statusCode >= 400) {
-    return req + '\n' + res.statusMessage;
+    return res.statusMessage;
   }
   return 'N/A'; // If there's no error code
 });
@@ -37,16 +37,13 @@ app.use(express.json());
 
 app.use(
   morgan(logFormat, {
-    skip: function (req, res) {
-      return res.statusCode < 400;
-    },
     stream: userLogStream,
   }),
 );
 app.use(
   morgan(logFormat, {
     skip: function (req, res) {
-      return res.statusCode < 500 && res.statusCode >= 400;
+      return res.statusCode < 400 || res.statusCode > 499;
     },
     stream: userErrorLogStream,
   }),
@@ -55,7 +52,7 @@ app.use(
 app.use(
   morgan(logFormat, {
     skip: function (req, res) {
-      return res.statusCode >= 500;
+      return res.statusCode < 500;
     },
     stream: sysErrorLogStream,
   }),

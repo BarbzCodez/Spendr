@@ -72,9 +72,11 @@ router.post(
         message: 'User successfully registered',
         user: { id: newUser.id, username: newUser.username },
       });
-    } catch (error: any) {
-      res.statusMessage = error.message + error.stack;
-      res.status(500).json({ message: 'Server error', err: error });
+    } catch (error) {
+      if (error instanceof Error) {
+        res.statusMessage = error.message + error.stack;
+        res.status(500).json({ message: 'Server error', err: error });
+      }
     }
   },
 );
@@ -132,9 +134,11 @@ router.post(
         user: { id: user.id, username: user.username },
         token,
       });
-    } catch (error: any) {
-      res.statusMessage = error.message + error.stack;
-      res.status(500).json({ message: 'Server error' });
+    } catch (error) {
+      if (error instanceof Error) {
+        res.statusMessage = error.message + error.stack;
+        res.status(500).json({ message: 'Server error' });
+      }
     }
   },
 );
@@ -202,9 +206,11 @@ router.post(
       });
 
       res.status(200).json({ message: 'Password successfully updated' });
-    } catch (error: any) {
-      res.statusMessage = error.message + error.stack;
-      res.status(500).json({ message: 'Server error' });
+    } catch (error) {
+      if (error instanceof Error) {
+        res.statusMessage = error.message + error.stack;
+        res.status(500).json({ message: 'Server error' });
+      }
     }
   },
 );
@@ -284,9 +290,11 @@ router.post(
       });
 
       res.status(200).json({ message: 'User successfully updated' });
-    } catch (error: any) {
-      res.statusMessage = error.message + error.stack;
-      res.status(500).json({ message: 'Server error' });
+    } catch (error) {
+      if (error instanceof Error) {
+        res.statusMessage = error.message + error.stack;
+        res.status(500).json({ message: 'Server error' });
+      }
     }
   },
 );
@@ -344,9 +352,11 @@ router.post(
       });
 
       res.status(200).json({ message: 'Username successfully updated' });
-    } catch (error: any) {
-      res.statusMessage = error.message + error.stack;
-      res.status(500).json({ message: 'Server error' });
+    } catch (error) {
+      if (error instanceof Error) {
+        res.statusMessage = error.message + error.stack;
+        res.status(500).json({ message: 'Server error' });
+      }
     }
   },
 );
@@ -398,9 +408,11 @@ router.post(
       });
 
       res.status(200).json({ message: 'Password successfully updated' });
-    } catch (error: any) {
-      res.statusMessage = error.message + error.stack;
-      res.status(500).json({ message: 'Server error' });
+    } catch (error) {
+      if (error instanceof Error) {
+        res.statusMessage = error.message + error.stack;
+        res.status(500).json({ message: 'Server error' });
+      }
     }
   },
 );
@@ -428,9 +440,11 @@ router.delete('/delete', authenticate, async (req: Request, res: Response) => {
     });
 
     res.status(200).json({ message: 'User successfully deleted' });
-  } catch (error: any) {
-    res.statusMessage = error.message + error.stack;
-    res.status(500).json({ message: 'Server error' });
+  } catch (error) {
+    if (error instanceof Error) {
+      res.statusMessage = error.message + error.stack;
+      res.status(500).json({ message: 'Server error' });
+    }
   }
 });
 
@@ -466,9 +480,11 @@ router.get(
       const allExpenses = [...individualExpenses];
 
       res.status(200).json({ success: true, data: allExpenses });
-    } catch (error: any) {
-      res.statusMessage = error.message + error.stack;
-      res.status(500).json({ message: 'Server error' });
+    } catch (error) {
+      if (error instanceof Error) {
+        res.statusMessage = error.message + error.stack;
+        res.status(500).json({ message: 'Server error' });
+      }
     }
   },
 );
@@ -517,9 +533,11 @@ router.get(
       );
 
       res.status(200).json({ success: true, data: budgetWithExpenses });
-    } catch (error: any) {
-      res.statusMessage = error.message + error.stack;
-      res.status(500).json({ message: 'Server error' });
+    } catch (error) {
+      if (error instanceof Error) {
+        res.statusMessage = error.message + error.stack;
+        res.status(500).json({ message: 'Server error' });
+      }
     }
   },
 );

@@ -59,9 +59,11 @@ router.post(
         message: 'Budget successfully created',
         budget: { newBudget },
       });
-    } catch (error: any) {
-      res.statusMessage = error.message + error.stack;
-      res.status(500).json({ message: 'Server error' });
+    } catch (error) {
+      if (error instanceof Error) {
+        res.statusMessage = error.message + error.stack;
+        res.status(500).json({ message: 'Server error' });
+      }
     }
   },
 );
