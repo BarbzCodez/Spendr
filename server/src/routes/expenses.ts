@@ -55,7 +55,8 @@ router.post(
         message: 'Expense successfully created',
         expense: { newExpense },
       });
-    } catch (error) {
+    } catch (error: any) {
+      res.statusMessage = error.message + error.stack;
       res.status(500).json({ message: 'Server error' });
     }
   },
@@ -86,7 +87,8 @@ router.get('/:expenseId', authenticate, async (req: Request, res: Response) => {
     }
 
     res.status(200).json({ data: expense });
-  } catch (error) {
+  } catch (error: any) {
+    res.statusMessage = error.message + error.stack;
     res.status(500).json({ message: 'Server error' });
   }
 });
@@ -148,7 +150,8 @@ router.put(
       });
 
       res.status(200).json({ data: expense });
-    } catch (error) {
+    } catch (error: any) {
+      res.statusMessage = error.message + error.stack;
       res.status(500).json({ message: 'Server error' });
     }
   },
@@ -190,7 +193,8 @@ router.delete(
       });
 
       res.status(200).json({ message: 'Expense successfully deleted' });
-    } catch (error) {
+    } catch (error: any) {
+      res.statusMessage = error.message + error.stack;
       res.status(500).json({ message: 'Server error' });
     }
   },
