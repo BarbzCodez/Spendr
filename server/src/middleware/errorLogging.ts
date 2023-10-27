@@ -3,10 +3,11 @@ import morgan from 'morgan';
 import fs from 'fs';
 import path from 'path';
 
-//Initialize constants needed for express
-const logFormat = ':method :url :status :response-time ms :errorCode ';
+// Initialize constants needed for express
+const logFormat =
+  ':timestamp :method :url :status :response-time ms :errorCode ';
 
-//Create file stream for normal logs, user errors, and system errors
+// Create file stream for normal logs, user errors, and system errors
 const userLogStream = fs.createWriteStream(
   path.join(__dirname, '..', '..', 'Logs', 'userLog.txt'),
 );
@@ -19,12 +20,16 @@ const sysErrorLogStream = fs.createWriteStream(
 
 morgan.token('errorCode', (req: Request, res: Response) => {
   if (res.statusCode >= 500) {
-    const e = res.locals.error as Error;
-    return res.statusMessage + ' ' + e.stack;
+    const errorCode = res.locals.error as Error;
+    return res.statusMessage + ' ' + errorCode.stack;
   } else if (res.statusCode >= 400) {
     return res.statusMessage;
   }
   return 'N/A'; // If there's no error code
+});
+
+morgan.token('timestamp', () => {
+  return new Date().toISOString();
 });
 
 export const userLog = morgan(logFormat, {
