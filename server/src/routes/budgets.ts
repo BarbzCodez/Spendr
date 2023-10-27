@@ -60,10 +60,8 @@ router.post(
         budget: { newBudget },
       });
     } catch (error) {
-      if (error instanceof Error) {
-        res.statusMessage = error.message + error.stack;
-        res.status(500).json({ message: 'Server error' });
-      }
+      res.locals.error = error;
+      res.status(500).json({ message: 'Server error' });
     }
   },
 );
