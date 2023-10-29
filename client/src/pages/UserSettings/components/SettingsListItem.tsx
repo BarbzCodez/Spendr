@@ -21,9 +21,7 @@ import {
   UpdatePasswordData,
   UpdateUsernameData,
 } from '../../../interfaces/interfaces';
-
 import { SettingStack, SecondaryText } from './styles';
-import { theme } from '../../../assets/styles';
 
 const validationSchemaUsername = yup.object().shape({
   username: yup.string().required('Username cannot be empty'),
@@ -215,12 +213,6 @@ export const SettingsListComponent = (): JSX.Element => {
             }
             variant="standard"
             size="small"
-            inputProps={{
-              style: {
-                padding: '1rem',
-                color: theme.palette.primary.contrastText,
-              },
-            }}
             type="text"
           ></TextField>
           <Stack direction={'row'} justifyContent={'center'}>
@@ -274,12 +266,6 @@ export const SettingsListComponent = (): JSX.Element => {
             }
             variant="standard"
             size="small"
-            inputProps={{
-              style: {
-                padding: '1rem',
-                color: theme.palette.primary.contrastText,
-              },
-            }}
             type="text"
           ></TextField>
           <Stack direction={'row'} justifyContent={'center'}>

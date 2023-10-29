@@ -29,11 +29,9 @@ export const theme = createTheme({
       fontWeight: 'bold',
       fontSize: '18px',
     },
-    allVariants: {
-      color: '#FFFFFF',
-    },
   },
   palette: {
+    mode: 'dark',
     primary: {
       main: '#1a1a24',
       contrastText: '#FFFFFF',
@@ -50,8 +48,8 @@ export const theme = createTheme({
       main: '#EE5A5E',
     },
     background: {
-      default: '#353549',
-      paper: '#353549',
+      default: '#1a1a24',
+      paper: '#1a1a24',
     },
   },
 });

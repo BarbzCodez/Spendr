@@ -1,16 +1,21 @@
 import * as React from 'react';
-import { GridColDef } from '@mui/x-data-grid';
+import { GridColDef, GridActionsCellItem } from '@mui/x-data-grid';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import EditIcon from '@mui/icons-material/Edit';
 
 import { theme } from '../../../assets/styles';
 import { ExpenseTableProps, ExpenseData } from '../../../interfaces/interfaces';
 
-import {
-  BackgroundBox,
-  GridActionsCellItemStyled,
-  ExpensesDataGrid,
-} from './styles';
+import { BackgroundBox, ExpensesDataGrid } from './styles';
+
+const isoToFormattedDate = (isoDateString: string): string => {
+  const date = new Date(isoDateString);
+  const day = date.getDate().toString().padStart(2, '0');
+  const month = (date.getMonth() + 1).toString().padStart(2, '0');
+  const year = date.getFullYear().toString();
+
+  return `${year}/${month}/${day}`;
+};
 
 /**
  * Expenses table component
@@ -43,8 +48,7 @@ export const ExpensesTable: React.FC<ExpenseTableProps> = ({
       flex: 1,
       minWidth: 200,
       valueGetter: (params) => {
-        const date = new Date(params.value as string);
-        return date.toISOString().split('T')[0];
+        return isoToFormattedDate(params.value as string);
       },
     },
     {
@@ -78,17 +82,13 @@ export const ExpensesTable: React.FC<ExpenseTableProps> = ({
       type: 'actions',
       width: 75,
       getActions: (params: { row: ExpenseData }) => [
-        <GridActionsCellItemStyled
+        <GridActionsCellItem
           key="edit"
           label="Edit"
           onClick={() => handleEditClick(params)}
-          icon={
-            <EditIcon
-              style={{ color: `${theme.palette.primary.contrastText}` }}
-            />
-          }
+          icon={<EditIcon />}
         />,
-        <GridActionsCellItemStyled
+        <GridActionsCellItem
           key="delete"
           label="Delete"
           onClick={() => handleDeleteClick(params)}
@@ -115,6 +115,7 @@ export const ExpensesTable: React.FC<ExpenseTableProps> = ({
   return (
     <BackgroundBox>
       <ExpensesDataGrid
+        disableColumnSelector
         rows={expenses}
         columns={columns}
         getRowId={(row) => row.id}

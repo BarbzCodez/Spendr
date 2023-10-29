@@ -1,15 +1,6 @@
-import { GridActionsCellItem } from '@mui/x-data-grid';
 import { styled, Box } from '@mui/system';
 import { DataGrid } from '@mui/x-data-grid';
 import { theme } from '../../../assets/styles';
-
-export const GridActionsCellItemStyled = styled(GridActionsCellItem)(
-  ({ theme }) => ({
-    '& .MuiSvgIcon-root': {
-      color: theme.palette.primary.contrastText,
-    },
-  }),
-);
 
 export const BackgroundBox = styled(Box)({
   width: '90%',
@@ -24,16 +15,4 @@ export const BackgroundBox = styled(Box)({
 
 export const ExpensesDataGrid = styled(DataGrid)({
   padding: '1rem',
-  '& .MuiDataGrid-sortIcon': {
-    opacity: 1,
-    color: 'white',
-  },
-  '& .MuiDataGrid-menuIconButton': {
-    opacity: 1,
-    color: 'white',
-  },
-  '&.MuiListItemIcon': {
-    opacity: 1,
-    color: 'white',
-  },
 });
