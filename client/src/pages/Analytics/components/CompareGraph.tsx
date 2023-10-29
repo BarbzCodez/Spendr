@@ -193,7 +193,7 @@ export const CompareGraph: React.FC = () => {
 
     // TODO set data1 to be the response from fetchDailyExpenses
     setData1(dailyTotals1);
-    fetchDailyExpenses(newVal);
+    // fetchDailyExpenses(newVal);
   };
 
   const changeMonth2 = (newVal: number) => {
@@ -201,20 +201,20 @@ export const CompareGraph: React.FC = () => {
 
     // TODO set data2 to be the response from fetchDailyExpenses
     setData2(dailyTotals2);
-    fetchDailyExpenses(newVal);
+    // fetchDailyExpenses(newVal);
   };
 
-  const fetchDailyExpenses = async (index: number) => {
-    // const obj = monthsArray[index];
-    // const dateStart = new Date(obj.year, obj.month, 1, 0, 0, 0);
-    // const dateEnd =
-    //   obj.month == 11
-    //     ? new Date(obj.year, obj.month, 31, 23, 59, 59)
-    //     : new Date(obj.year, obj.month + 1, 0, 23, 59, 59);
+  // const fetchDailyExpenses = async (index: number) => {
+  //   // const obj = monthsArray[index];
+  //   // const dateStart = new Date(obj.year, obj.month, 1, 0, 0, 0);
+  //   // const dateEnd =
+  //   //   obj.month == 11
+  //   //     ? new Date(obj.year, obj.month, 31, 23, 59, 59)
+  //   //     : new Date(obj.year, obj.month + 1, 0, 23, 59, 59);
 
-    // TODO send a request and return the corresponding response
-    return;
-  };
+  //   // TODO send a request and return the corresponding response
+  //   return;
+  // };
 
   return (
     <BackgroundBox style={{ width: '100%' }}>
