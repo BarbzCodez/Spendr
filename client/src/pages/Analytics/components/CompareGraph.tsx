@@ -72,52 +72,52 @@ const dailyTotals2 = [
   { date: '2023-09-30', amount: 35.57 },
 ];
 
-function getMonthsArray() {
-  const currDate = new Date();
-  const currMonth = currDate.getMonth();
-  const currYear = currDate.getFullYear();
-  const monthCount = 12;
-  const result = [];
-
-  for (let i = 1; i <= monthCount; i++) {
-    const month = (currMonth - i + monthCount) % monthCount;
-    const year = month < currMonth ? currYear : currYear - 1;
-    const monthString = new Date(year, month).toLocaleString('default', {
-      month: 'short',
-    });
-
-    result.push({
-      month: month,
-      year: year,
-      text: `${monthString} ${year}`,
-    });
-  }
-
-  return result;
-}
-
 /**
  * Comparison graph component
  *
  * @returns {JSX.Element} - comparison graph
  */
 export const CompareGraph: React.FC = () => {
-  const monthsArray = getMonthsArray();
-  const [month1Index, setMonth1Index] = useState(0);
-  const [month2Index, setMonth2Index] = useState(1);
-  const [data1, setData1] = useState(dailyTotals1);
-  const [data2, setData2] = useState(dailyTotals2);
+  const [firstMonthIndex, setFirstMonthIndex] = useState(0);
+  const [secondMonthIndex, setSecondMonthIndex] = useState(1);
+  const [firstMonthData, setFirstMonthData] = useState(dailyTotals1);
+  const [secondMonthData, setSecondMonthData] = useState(dailyTotals2);
 
-  const maxLength = Math.max(data1.length, data2.length);
+  const getMonthsArray = () => {
+    const currDate = new Date();
+    const currMonth = currDate.getMonth();
+    const currYear = currDate.getFullYear();
+    const monthCount = 12;
+    const result = [];
+
+    for (let i = 1; i <= monthCount; i++) {
+      const month = (currMonth - i + monthCount) % monthCount;
+      const year = month < currMonth ? currYear : currYear - 1;
+      const monthString = new Date(year, month).toLocaleString('default', {
+        month: 'short',
+      });
+
+      result.push({
+        month: month,
+        year: year,
+        text: `${monthString} ${year}`,
+      });
+    }
+
+    return result;
+  };
+  const monthsArray = getMonthsArray();
+
+  const maxLength = Math.max(firstMonthData.length, secondMonthData.length);
   const combinedData = Array.from({ length: maxLength }, (_, index) => {
-    const entry1 = data1[index] || { amount: 0 };
-    const entry2 = data2[index] || { amount: 0 };
+    const firstEntry = firstMonthData[index] || { amount: 0 };
+    const secondEntry = secondMonthData[index] || { amount: 0 };
     const day = index + 1;
 
     return {
       day,
-      amount1: entry1.amount,
-      amount2: entry2.amount,
+      firstAmount: firstEntry.amount,
+      secondAmount: secondEntry.amount,
     };
   });
 
@@ -132,25 +132,26 @@ export const CompareGraph: React.FC = () => {
 
   const getComparisonInfo = () => {
     const month1String = new Date(
-      monthsArray[month1Index].year,
-      monthsArray[month1Index].month,
+      monthsArray[firstMonthIndex].year,
+      monthsArray[firstMonthIndex].month,
     ).toLocaleString('default', {
       month: 'short',
     });
     const month2String = new Date(
-      monthsArray[month2Index].year,
-      monthsArray[month2Index].month,
+      monthsArray[secondMonthIndex].year,
+      monthsArray[secondMonthIndex].month,
     ).toLocaleString('default', {
       month: 'short',
     });
 
-    const month1Avg = getAverage(data1);
-    const month2Avg = getAverage(data2);
+    const firstMonthAvg = getAverage(firstMonthData);
+    const secondMonthAvg = getAverage(secondMonthData);
     const percentageChange = (
-      ((Number(month2Avg) - Number(month1Avg)) / Number(month1Avg)) *
+      ((Number(secondMonthAvg) - Number(firstMonthAvg)) /
+        Number(firstMonthAvg)) *
       100
     ).toFixed(2);
-    const isDecrease = month1Avg > month2Avg;
+    const isDecrease = firstMonthAvg > secondMonthAvg;
 
     return (
       <CenteredBox
@@ -159,10 +160,10 @@ export const CompareGraph: React.FC = () => {
         }}
       >
         <Typography variant="body1" style={{ width: 157 }}>
-          {month1String} average: {month1Avg}
+          {month1String} average: {firstMonthAvg}
         </Typography>
         <Typography variant="body1" style={{ width: 157 }}>
-          {month2String} average: {month2Avg}
+          {month2String} average: {secondMonthAvg}
         </Typography>
 
         {isDecrease ? (
@@ -188,33 +189,19 @@ export const CompareGraph: React.FC = () => {
     );
   };
 
-  const changeMonth1 = (newVal: number) => {
-    setMonth1Index(newVal);
+  const changeFirstMonth = (newVal: number) => {
+    setFirstMonthIndex(newVal);
 
-    // TODO set data1 to be the response from fetchDailyExpenses
-    setData1(dailyTotals1);
-    // fetchDailyExpenses(newVal);
+    // TODO: set firstMonthData to be the response from API request
+    setFirstMonthData(dailyTotals1);
   };
 
-  const changeMonth2 = (newVal: number) => {
-    setMonth2Index(newVal);
+  const changeSecondMonth = (newVal: number) => {
+    setSecondMonthIndex(newVal);
 
-    // TODO set data2 to be the response from fetchDailyExpenses
-    setData2(dailyTotals2);
-    // fetchDailyExpenses(newVal);
+    // TODO: set secondMonthData to be the response from API request
+    setSecondMonthData(dailyTotals2);
   };
-
-  // const fetchDailyExpenses = async (index: number) => {
-  //   // const obj = monthsArray[index];
-  //   // const dateStart = new Date(obj.year, obj.month, 1, 0, 0, 0);
-  //   // const dateEnd =
-  //   //   obj.month == 11
-  //   //     ? new Date(obj.year, obj.month, 31, 23, 59, 59)
-  //   //     : new Date(obj.year, obj.month + 1, 0, 23, 59, 59);
-
-  //   // TODO send a request and return the corresponding response
-  //   return;
-  // };
 
   return (
     <BackgroundBox style={{ width: '100%' }}>
@@ -224,8 +211,10 @@ export const CompareGraph: React.FC = () => {
           id="month1"
           label="Month 1"
           size="small"
-          value={month1Index}
-          onChange={(e) => changeMonth1(e.target.value as unknown as number)}
+          value={firstMonthIndex}
+          onChange={(e) =>
+            changeFirstMonth(e.target.value as unknown as number)
+          }
           style={{ margin: '0 2vw', marginTop: '1vh' }}
           InputLabelProps={{
             style: { color: '#C353DB' },
@@ -242,8 +231,10 @@ export const CompareGraph: React.FC = () => {
           id="month2"
           label="Month 2"
           size="small"
-          value={month2Index}
-          onChange={(e) => changeMonth2(e.target.value as unknown as number)}
+          value={secondMonthIndex}
+          onChange={(e) =>
+            changeSecondMonth(e.target.value as unknown as number)
+          }
           style={{ margin: '0 2vw', marginTop: '1vh' }}
           InputLabelProps={{
             style: { color: '#F1E194' },
@@ -267,13 +258,13 @@ export const CompareGraph: React.FC = () => {
           ]}
           series={[
             {
-              dataKey: 'amount1',
+              dataKey: 'firstAmount',
               label: 'Month 1 Daily Total Expense',
               color: '#C353DB',
               showMark: true,
             },
             {
-              dataKey: 'amount2',
+              dataKey: 'secondAmount',
               label: 'Month 2 Daily Total Expense',
               color: '#F1E194',
               showMark: true,
