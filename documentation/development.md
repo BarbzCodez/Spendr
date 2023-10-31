@@ -4,18 +4,16 @@
 
 ### Requirements
 
-1. (Recommended) **VSCode extensions**:
-
-- Docker
-- ESLint
-- Prettier
-- Prisma
-- MarkdownLint
-- Code Spell Checker
-
-2. **API Testing**: [Postman](https://www.postman.com/)
-3. **Docker**: [Docker Desktop](https://www.docker.com/products/docker-desktop/)
-4. **Runtime Environment**: Node.js >= 19.4
+- (Recommended) **VSCode extensions**:
+  - Docker
+  - ESLint
+  - Prettier
+  - Prisma
+  - MarkdownLint
+  - Code Spell Checker
+- **API Testing**: [Postman](https://www.postman.com/)
+- **Docker**: [Docker Desktop](https://www.docker.com/products/docker-desktop/)
+- **Runtime Environment**: Node.js >= 19.4
 
 ### Installing Dependencies
 
@@ -30,6 +28,7 @@ cd ..
 ### Set environment variables
 
 Environment variables need to be set in `server/.env`:
+
 ```bash
 DATABASE_URL="postgresql://admin:admin@db:5432/spendr_database"
 PORT=7005
@@ -42,21 +41,25 @@ NODE_ENV="production"
 ### Running the application in Docker
 
 To start the application, run:
+
 ```bash
 docker-compose up
 ```
 
 If you make certain changes and need to re-build, run:
+
 ```bash
 docker-compose build --no-cache
 ```
 
 Or you can specifically build one of the containers, for example:
+
 ```bash
 docker-compose build server --no-cache
 ```
 
 Access links:
+
 - **pgadmin**: [localhost:5050](http://localhost:5050)
 - **client**: [localhost:3000](http://localhost:3000)
 - **backend**: [localhost:7005](http://localhost:7005)
@@ -67,6 +70,7 @@ Access links:
 1. Make sure the backend and db containers are running.
 2. Enter the client directory `cd client`.
 3. Use the following command to start the frontend:
+
 ```bash
 npm start
 ```
@@ -96,6 +100,7 @@ With the Postman Desktop Client, you can test the API by sending requests to `lo
 You can disable authentication in the backend to make testing easier.
 
 To do this, set the environment variable in `server/.env`:
+
 ```bash
 NODE_ENV='development'
 ```
