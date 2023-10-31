@@ -12,7 +12,7 @@ const categoryTotals = [
 ];
 
 /**
- * Categoru graph component
+ * Category graph component
  *
  * @returns {JSX.Element} - category graph
  */
