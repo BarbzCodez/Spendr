@@ -19,7 +19,7 @@ const router = express.Router();
  * @param amount Amount of the group expense
  * @param category Category of the group expense
  * @param createdAt Date the group expense was created
- * @param usernames Usernames of the users that are part of the group expense
+ * @param split Object containing the percent split shares for each user (e.g. {"user1": 0.5, "user2": 0.5})
  * @returns {object} An object containing the newly created group expense
  * @throws {object} 400 - If the request body is invalid
  * @throws {object} 401 - If the user is not authenticated
@@ -126,7 +126,7 @@ router.post(
 );
 
 /**
- * Mark a group expense as paid
+ * Mark a group expense as paid for the authenticated user
  *
  * This route marks a group expense as paid for the authenticated user.
  * The user must be part of the group expense.
