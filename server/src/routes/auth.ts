@@ -460,8 +460,6 @@ router.get(
         },
       });
 
-      // TODO: Fetch group expenses
-
       // Combine individual and group expenses into one list
       const allExpenses = [...individualExpenses];
 
