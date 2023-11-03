@@ -125,6 +125,20 @@ router.post(
   },
 );
 
+/**
+ * Mark a group expense as paid
+ *
+ * This route marks a group expense as paid for the authenticated user.
+ * The user must be part of the group expense.
+ * Once the group expense is marked as paid, a new expense is created for the user.
+ *
+ * @route PUT /group-expenses/:groupExpenseId/mark-as-paid
+ * @param groupExpenseId ID of the group expense
+ * @returns {object} An object containing the newly created group expense
+ * @throws {object} 401 - If the user is not authenticated
+ * @throws {object} 404 - If the group expense is not found
+ * @throws {object} 500 - If there is a server error
+ */
 router.put(
   '/:groupExpenseId/mark-as-paid',
   authenticate,
