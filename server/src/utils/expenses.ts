@@ -49,7 +49,6 @@ async function calculateTotalExpenseForBudget(budget: Budget): Promise<number> {
   }
 
   // Fetch expenses for the budget and return the total amount
-  // TODO: Fetch group expenses
   const expenses = await prisma.expense.findMany({ where: whereClause });
   return expenses.reduce((acc, expense) => acc + expense.amount, 0);
 }

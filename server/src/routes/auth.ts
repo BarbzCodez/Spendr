@@ -460,8 +460,6 @@ router.get(
         },
       });
 
-      // TODO: Fetch group expenses
-
       // Combine individual and group expenses into one list
       const allExpenses = [...individualExpenses];
 
@@ -517,6 +515,111 @@ router.get(
       );
 
       res.status(200).json({ success: true, data: budgetWithExpenses });
+    } catch (error) {
+      res.locals.error = error;
+      res.status(500).json({ message: 'Server error' });
+    }
+  },
+);
+
+/**
+ * Get all group expenses for a user
+ *
+ * This route will return all group expenses for a user, including the user's paid status and share amount for each group expense.
+ * The user must be authenticated to make this request.
+ *
+ * @route GET /users/:userId/group-expenses
+ * @group users - Operations about users
+ * @param {string} userId.path.required - User ID
+ * @returns {object} 200 - All group expenses for the user
+ * @returns {Error}  400 - Invalid credentials
+ * @returns {Error}  500 - Server error
+ *
+ * @example response - 200 - All group expenses for the user
+ * {
+ *  "success": true,
+ *  "data": [
+ *      {
+ *          "title": "Group Expense",
+ *          "totalAmount": 40,
+ *          "category": "GROCERIES",
+ *          "createdAt": "2023-10-12T10:20:30.000Z",
+ *          "split": [
+ *              {
+ *                  "userId": 2,
+ *                  "username": "Bob",
+ *                  "hasPaid": false,
+ *                  "shareAmount": 20
+ *              },
+ *              {
+ *                  "userId": 3,
+ *                  "username": "Alice",
+ *                  "hasPaid": false,
+ *                  "shareAmount": 20
+ *              },
+ *          ]
+ *      }
+ *   ]
+ * }
+ */
+router.get(
+  '/:userId/group-expenses',
+  authenticate,
+  async (req: Request, res: Response) => {
+    try {
+      const userId = parseInt(req.params.userId);
+
+      // Make sure the user exists
+      const user = await prisma.user.findUnique({
+        where: {
+          id: userId,
+        },
+      });
+
+      if (!user || user.userDeleted) {
+        return res.status(400).json({ message: 'Invalid Credentials' });
+      }
+
+      // Fetch all the group expenses for the user, and include each user's
+      // paid status and share amount for each group expense.
+      const groupExpensesWithUsers = await prisma.groupExpenseSplit.findMany({
+        where: {
+          userId: userId,
+        },
+        include: {
+          groupExpense: {
+            include: {
+              groupExpenseSplits: {
+                include: {
+                  user: true,
+                },
+              },
+            },
+          },
+        },
+      });
+
+      // Format the data to be returned
+      const groupExpenses = groupExpensesWithUsers.map((groupExpense) => {
+        const groupExpenseSplits = groupExpense.groupExpense.groupExpenseSplits;
+        const groupExpenseData = {
+          title: groupExpense.groupExpense.title,
+          totalAmount: groupExpense.groupExpense.totalAmount,
+          category: groupExpense.groupExpense.category,
+          createdAt: groupExpense.groupExpense.createdAt,
+          // All users usernames, hasPaid, and shareAmount
+          split: groupExpenseSplits.map((groupExpenseSplit) => ({
+            userId: groupExpenseSplit.userId,
+            username: groupExpenseSplit.user.username,
+            hasPaid: groupExpenseSplit.hasPaid,
+            shareAmount: groupExpenseSplit.shareAmount,
+          })),
+        };
+
+        return groupExpenseData;
+      });
+
+      res.status(200).json({ success: true, data: groupExpenses });
     } catch (error) {
       res.locals.error = error;
       res.status(500).json({ message: 'Server error' });
