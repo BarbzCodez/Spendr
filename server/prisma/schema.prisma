@@ -50,11 +50,12 @@ model Expense {
 
 // Group expenses (not associated with users)
 model GroupExpense {
-  id          Int                 @id @default(autoincrement())
-  title       String
-  totalAmount Float
-  category    ExpenseCategory // Assign category to each group expense
-  createdAt   DateTime            @default(now())
+  id                Int                 @id @default(autoincrement())
+  title             String
+  totalAmount       Float
+  category          ExpenseCategory // Assign category to each group expense
+  createdAt         DateTime            @default(now())
+  groupExpenseSplits GroupExpenseSplit[] // Easily query for groupExpenseSplits
 }
 
 // Individual splits of a Group expense (associated with users)
@@ -63,6 +64,7 @@ model GroupExpenseSplit {
   userId         Int
   user           User         @relation(fields: [userId], references: [id])
   groupExpenseId Int
+  groupExpense   GroupExpense @relation(fields: [groupExpenseId], references: [id])
   shareAmount    Float
   hasPaid        Boolean      @default(false) //Default payment status is user has not paid
 }
