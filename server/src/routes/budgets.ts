@@ -67,6 +67,49 @@ router.post(
 );
 
 /**
+ * Delete an budget by id
+ *
+ * This route deletes an budget by id for the authenticated user.
+ *
+ * @route DELETE /budgets/:budgetId
+ * @param budgetId Id of the budget
+ * @throws {object} 404 - If the budget is not found
+ * @throws {object} 500 - If there is a server error
+ */
+router.delete(
+  '/:budgetId',
+  authenticate,
+  async (req: Request, res: Response) => {
+    const { budgetId } = req.params;
+
+    try {
+      // Check if the budget exists
+      const budgetExists = await prisma.budget.findUnique({
+        where: {
+          id: parseInt(budgetId),
+        },
+      });
+
+      if (!budgetExists) {
+        return res.status(404).json({ message: 'budget not found' });
+      }
+
+      // Delete the budget
+      await prisma.budget.delete({
+        where: {
+          id: parseInt(budgetId),
+        },
+      });
+
+      res.status(200).json({ message: 'Budget successfully deleted' });
+    } catch (error) {
+      res.locals.error = error;
+      res.status(500).json({ message: 'Server error' });
+    }
+  },
+);
+
+/**
  * Update an budget by id
  *
  * This route updates an budget by id for the authenticated user.
