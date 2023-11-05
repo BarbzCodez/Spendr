@@ -173,4 +173,42 @@ describe('PUT /budgets/:budgetId', () => {
     expect(response.status).toBe(500);
     expect(response.body.message).toBe('Server error');
   });
+
+  it('should return 400 when incorrectly formatted parameters are given', async () => {
+    const budget = {
+      id: 2,
+      userId: 1,
+      category: null,
+      duration: BudgetDuration.WEEKLY,
+      amount: 100,
+    };
+    prismaMock.budget.findUnique.mockResolvedValue(budget);
+
+    const response = await request(app).put('/budgets/1').send({
+      duration: 'random',
+      amount: 'string',
+    });
+
+    const returnedErrors = {
+      errors: [
+        {
+          type: 'field',
+          value: 'string',
+          msg: 'Amount must be a number',
+          path: 'amount',
+          location: 'body',
+        },
+        {
+          type: 'field',
+          value: 'random',
+          msg: 'Duration must be a valid duration',
+          path: 'duration',
+          location: 'body',
+        },
+      ],
+    };
+
+    expect(response.status).toBe(400);
+    expect(response.body).toStrictEqual(returnedErrors);
+  });
 });
