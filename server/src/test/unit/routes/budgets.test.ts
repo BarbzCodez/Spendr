@@ -108,3 +108,43 @@ describe('POST /budgets', () => {
     expect(response.body.message).toEqual('Server error');
   });
 });
+
+describe('DELETE /budgets/:budgetId', () => {
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+
+  it('should return 200 if the budget is deleted', async () => {
+    const newBudget = {
+      id: 1,
+      userId: 1,
+      category: null,
+      duration: BudgetDuration.WEEKLY,
+      amount: 10,
+    };
+
+    prismaMock.budget.findUnique.mockResolvedValue(newBudget);
+    prismaMock.budget.delete.mockResolvedValue(newBudget);
+
+    const response = await request(app).delete('/budgets/1');
+
+    expect(response.status).toBe(200);
+  });
+
+  it('should return 404 is the expense is not found', async () => {
+    prismaMock.budget.findUnique.mockResolvedValue(null);
+
+    const response = await request(app).delete('/budgets/1');
+
+    expect(response.status).toBe(404);
+  });
+
+  it('should return 500 if there is a server error', async () => {
+    prismaMock.budget.findUnique.mockRejectedValue(new Error());
+
+    const response = await request(app).delete('/budgets/1');
+
+    expect(response.status).toBe(500);
+    expect(response.body.message).toBe('Server error');
+  });
+});
