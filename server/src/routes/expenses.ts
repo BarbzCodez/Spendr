@@ -56,6 +56,7 @@ router.post(
         expense: { newExpense },
       });
     } catch (error) {
+      res.locals.error = error;
       res.status(500).json({ message: 'Server error' });
     }
   },
@@ -87,6 +88,7 @@ router.get('/:expenseId', authenticate, async (req: Request, res: Response) => {
 
     res.status(200).json({ data: expense });
   } catch (error) {
+    res.locals.error = error;
     res.status(500).json({ message: 'Server error' });
   }
 });
@@ -118,6 +120,11 @@ router.put(
     .isIn(Object.values(ExpenseCategory))
     .withMessage('Category must be a valid category'),
   async (req: Request, res: Response) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+
     const { expenseId } = req.params;
 
     try {
@@ -149,6 +156,7 @@ router.put(
 
       res.status(200).json({ data: expense });
     } catch (error) {
+      res.locals.error = error;
       res.status(500).json({ message: 'Server error' });
     }
   },
@@ -191,6 +199,7 @@ router.delete(
 
       res.status(200).json({ message: 'Expense successfully deleted' });
     } catch (error) {
+      res.locals.error = error;
       res.status(500).json({ message: 'Server error' });
     }
   },

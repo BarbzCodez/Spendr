@@ -713,3 +713,130 @@ describe('GET /users/:userId/budgets', () => {
     expect(response.body.message).toBe('Server error');
   });
 });
+
+describe('GET /users/:userId/group-expenses', () => {
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+
+  it('returns 200 with group expenses if group expenses are found', async () => {
+    const groupExpenseDate = '2023-10-12T10:20:30.000Z';
+    const firstUser = {
+      id: 1,
+      username: 'testuser',
+      password: 'testpassword',
+      securityQuestion: 'Your favorite color?',
+      securityAnswer: 'Blue',
+      userDeleted: false,
+    };
+    const secondUser = {
+      id: 2,
+      username: 'testuser2',
+      password: 'testpassword',
+      securityQuestion: 'Your favorite color?',
+      securityAnswer: 'Blue',
+      userDeleted: false,
+    };
+    prismaMock.user.findUnique.mockResolvedValue(firstUser);
+
+    const mockedData = [
+      {
+        id: 1,
+        userId: 1,
+        groupExpenseId: 1,
+        shareAmount: 50,
+        hasPaid: true,
+        groupExpense: {
+          id: 1,
+          title: 'Sobeys',
+          totalAmount: 100,
+          category: ExpenseCategory.GROCERIES,
+          createdAt: new Date(groupExpenseDate),
+          groupExpenseSplits: [
+            {
+              id: 1,
+              userId: 1,
+              groupExpenseId: 1,
+              shareAmount: 50,
+              hasPaid: true,
+              user: firstUser,
+            },
+            {
+              id: 2,
+              userId: 2,
+              groupExpenseId: 1,
+              shareAmount: 50,
+              hasPaid: false,
+              user: secondUser,
+            },
+          ],
+        },
+      },
+    ];
+
+    prismaMock.groupExpenseSplit.findMany.mockResolvedValueOnce(mockedData);
+
+    const response = await request(app).get('/users/1/group-expenses').send();
+
+    expect(response.status).toBe(200);
+    expect(response.body.success).toBe(true);
+    expect(response.body.data).toStrictEqual([
+      {
+        title: 'Sobeys',
+        totalAmount: 100,
+        category: ExpenseCategory.GROCERIES,
+        createdAt: groupExpenseDate,
+        split: [
+          {
+            userId: firstUser.id,
+            username: firstUser.username,
+            hasPaid: true,
+            shareAmount: 50,
+          },
+          {
+            userId: secondUser.id,
+            username: secondUser.username,
+            hasPaid: false,
+            shareAmount: 50,
+          },
+        ],
+      },
+    ]);
+  });
+
+  it('returns 200 with empty array if no group expenses are found', async () => {
+    prismaMock.user.findUnique.mockResolvedValue({
+      id: 1,
+      username: 'testuser',
+      password: 'testpassword',
+      securityQuestion: 'Your favorite color?',
+      securityAnswer: 'Blue',
+      userDeleted: false,
+    });
+
+    prismaMock.groupExpenseSplit.findMany.mockResolvedValue([]);
+
+    const response = await request(app).get('/users/1/group-expenses').send();
+
+    expect(response.status).toBe(200);
+    expect(response.body.data).toStrictEqual([]);
+  });
+
+  it('returns 400 if user does not exist or is deleted', async () => {
+    prismaMock.user.findUnique.mockResolvedValue(null); // Mocking no user
+
+    const response = await request(app).get('/users/1/group-expenses').send();
+
+    expect(response.status).toBe(400);
+    expect(response.body.message).toBe('Invalid Credentials');
+  });
+
+  it('returns 500 when there is a server error', async () => {
+    prismaMock.user.findUnique.mockRejectedValue(new Error());
+
+    const response = await request(app).get('/users/1/group-expenses').send();
+
+    expect(response.status).toBe(500);
+    expect(response.body.message).toBe('Server error');
+  });
+});
