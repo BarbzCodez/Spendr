@@ -13,6 +13,7 @@ import Login from './pages/Login';
 import Signup from './pages/Signup';
 import Expenses from './pages/Expenses';
 import Home from './pages/Home';
+import Analytics from './pages/Analytics';
 
 const RequireAuth: React.FC<{ children: React.ReactElement }> = ({
   children,
@@ -76,6 +77,14 @@ function App(): JSX.Element {
               element={
                 <RequireAuth>
                   <UserSettings />
+                </RequireAuth>
+              }
+            />
+            <Route
+              path="/analytics"
+              element={
+                <RequireAuth>
+                  <Analytics />
                 </RequireAuth>
               }
             />

@@ -173,6 +173,17 @@ describe('PUT /expenses/:expenseId', () => {
     expect(response.status).toBe(200);
   });
 
+  it('should return 400 if the title is invalid', async () => {
+    const response = await request(app).put('/expenses/1').send({
+      title: 1234,
+      amount: 100,
+      createdAt: '2023-10-12T10:20:30Z',
+      category: 'GROCERIES',
+    });
+
+    expect(response.status).toBe(400);
+  });
+
   it('should return 404 is the expense is not found', async () => {
     prismaMock.expense.findUnique.mockResolvedValue(null);
 

@@ -108,3 +108,147 @@ describe('POST /budgets', () => {
     expect(response.body.message).toEqual('Server error');
   });
 });
+
+describe('DELETE /budgets/:budgetId', () => {
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+
+  it('should return 200 if the budget is deleted', async () => {
+    const newBudget = {
+      id: 1,
+      userId: 1,
+      category: null,
+      duration: BudgetDuration.WEEKLY,
+      amount: 10,
+    };
+
+    prismaMock.budget.findUnique.mockResolvedValue(newBudget);
+    prismaMock.budget.delete.mockResolvedValue(newBudget);
+
+    const response = await request(app).delete('/budgets/1');
+
+    expect(response.status).toBe(200);
+  });
+
+  it('should return 404 is the expense is not found', async () => {
+    prismaMock.budget.findUnique.mockResolvedValue(null);
+
+    const response = await request(app).delete('/budgets/1');
+
+    expect(response.status).toBe(404);
+  });
+
+  it('should return 500 if there is a server error', async () => {
+    prismaMock.budget.findUnique.mockRejectedValue(new Error());
+
+    const response = await request(app).delete('/budgets/1');
+
+    expect(response.status).toBe(500);
+    expect(response.body.message).toBe('Server error');
+  });
+});
+
+describe('PUT /budgets/:budgetId', () => {
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+
+  it('should return 200 if the budget is updated', async () => {
+    const oldBudget = {
+      id: 2,
+      userId: 1,
+      category: null,
+      duration: BudgetDuration.WEEKLY,
+      amount: 100,
+    };
+    prismaMock.budget.findUnique.mockResolvedValue(oldBudget);
+
+    const updatedBudget = {
+      id: 2,
+      userId: 1,
+      category: ExpenseCategory.ENTERTAINMENT,
+      duration: BudgetDuration.MONTHLY,
+      amount: 10,
+    };
+
+    prismaMock.budget.update.mockResolvedValue(updatedBudget);
+
+    const response = await request(app).put('/budgets/1').send({
+      category: ExpenseCategory.ENTERTAINMENT,
+      duration: BudgetDuration.MONTHLY,
+      amount: 10,
+    });
+
+    expect(response.body['data']['category']).toBe(
+      ExpenseCategory.ENTERTAINMENT,
+    );
+    expect(response.body['data']['duration']).toBe(BudgetDuration.MONTHLY);
+    expect(response.body['data']['amount']).toBe(10);
+
+    expect(response.status).toBe(200);
+  });
+
+  it('should return 404 is the budget is not found', async () => {
+    prismaMock.budget.findUnique.mockResolvedValue(null);
+
+    const response = await request(app).put('/budgets/1').send({
+      category: ExpenseCategory.ENTERTAINMENT,
+      duration: BudgetDuration.MONTHLY,
+      amount: 10,
+    });
+
+    expect(response.status).toBe(404);
+  });
+
+  it('should return 500 if there is a server error', async () => {
+    prismaMock.budget.findUnique.mockRejectedValue(new Error());
+
+    const response = await request(app).put('/budgets/1').send({
+      category: ExpenseCategory.ENTERTAINMENT,
+      duration: BudgetDuration.MONTHLY,
+      amount: 10,
+    });
+
+    expect(response.status).toBe(500);
+    expect(response.body.message).toBe('Server error');
+  });
+
+  it('should return 400 when incorrectly formatted parameters are given', async () => {
+    const budget = {
+      id: 2,
+      userId: 1,
+      category: null,
+      duration: BudgetDuration.WEEKLY,
+      amount: 100,
+    };
+    prismaMock.budget.findUnique.mockResolvedValue(budget);
+
+    const response = await request(app).put('/budgets/1').send({
+      duration: 'random',
+      amount: 'string',
+    });
+
+    const returnedErrors = {
+      errors: [
+        {
+          type: 'field',
+          value: 'string',
+          msg: 'Amount must be a number',
+          path: 'amount',
+          location: 'body',
+        },
+        {
+          type: 'field',
+          value: 'random',
+          msg: 'Duration must be a valid duration',
+          path: 'duration',
+          location: 'body',
+        },
+      ],
+    };
+
+    expect(response.status).toBe(400);
+    expect(response.body).toStrictEqual(returnedErrors);
+  });
+});
