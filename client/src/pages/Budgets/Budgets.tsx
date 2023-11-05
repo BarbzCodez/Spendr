@@ -86,7 +86,6 @@ const Budgets = (): JSX.Element => {
           token,
         });
 
-        console.log(response);
         if (response.status === 201) {
           fetchBudgets();
           setIsDialogOpen(false);
