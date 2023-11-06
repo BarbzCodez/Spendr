@@ -56,9 +56,9 @@ const BudgetDialog: React.FC<BudgetDialogProps> = ({
         onEdit({
           id: budgetData.id,
           userId: budgetData.userId,
-          amount: budgetData.amount,
-          duration: budgetData.duration,
-          category: budgetData.category,
+          amount: values.amount,
+          duration: values.duration,
+          category: values.category,
           totalExpense: budgetData.totalExpense,
         });
       } else {
@@ -139,6 +139,7 @@ const BudgetDialog: React.FC<BudgetDialogProps> = ({
               label="Category"
               variant="filled"
               value={formik.values.category}
+              defaultValue={budgetData?.category}
               onChange={(event) => {
                 event.target.name = 'category';
                 formik.handleChange(event);
