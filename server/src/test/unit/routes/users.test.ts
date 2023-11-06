@@ -4,7 +4,6 @@ import bcrypt from 'bcrypt';
 import { prismaMock } from '../../../singleton';
 import { Request, Response, NextFunction } from 'express';
 import { ExpenseCategory } from '@prisma/client';
-import prisma from '../../../prismaClient';
 
 jest.mock('../../../middleware/authenticate', () => ({
   authenticate: (req: Request, res: Response, next: NextFunction) => {
