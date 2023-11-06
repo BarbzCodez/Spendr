@@ -1,6 +1,6 @@
 import express from 'express';
 import cors from 'cors';
-import userRoutes from './routes/auth';
+import userRoutes from './routes/users';
 import expenseRoutes from './routes/expenses';
 import groupExpenseRoutes from './routes/groupExpenses';
 import budgetRoutes from './routes/budgets';

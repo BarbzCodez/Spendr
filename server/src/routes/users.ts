@@ -627,4 +627,84 @@ router.get(
   },
 );
 
+/**
+ * Get the expenses between the time of startDate and endDate
+ *
+ * @route GET /users/:userId/expenses/total-daily
+ * @param {string} userId.path.required - User ID
+ * @param startDate The start of the time frame returned (ISO8601 format)
+ * @param endDate The end of the time frame returned (ISO8601 format)
+ * @returns {object} 200 - An object of an array of objects
+ * @throws {object} 400 - If the request body is invalid or invalid credentials
+ * @throws {object} 500 - If there is a server error
+ * @example response - 200 - An object of an array of expenses on each day
+ */
+router.get(
+  '/:userId/expenses/total-daily',
+  authenticate,
+  body('startDate')
+    .isISO8601()
+    .withMessage('startDate must be a valid date in ISO 8601 format.'),
+  body('endDate')
+    .isISO8601()
+    .withMessage('startDate must be a valid date in ISO 8601 format.'),
+  async (req: Request, res: Response) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+
+    try {
+      const userId = parseInt(req.params.userId);
+      const { startDate, endDate } = req.body;
+
+      // Make sure the user exists
+      const user = await prisma.user.findUnique({
+        where: {
+          id: userId,
+        },
+      });
+
+      if (!user || user.userDeleted) {
+        return res.status(400).json({ message: 'Invalid Credentials' });
+      }
+
+      console.log(req.params.startDate, req.params.endDate, startDate, endDate);
+
+      const userExpenses = await prisma.expense.findMany({
+        where: {
+          userId: userId,
+          createdAt: {
+            gte: new Date(startDate),
+            lte: new Date(endDate),
+          },
+        },
+      });
+
+      const expensesByDay: { date: string; amount: number }[] = [];
+
+      userExpenses.forEach((expense) => {
+        // check if the expense's day already exists
+        const obj = expensesByDay.find(
+          (obj) => obj.date == expense.createdAt.toISOString().split('T')[0],
+        );
+
+        if (obj) {
+          obj.amount = obj.amount + expense.amount;
+        } else {
+          expensesByDay.push({
+            date: expense.createdAt.toISOString().split('T')[0],
+            amount: expense.amount,
+          });
+        }
+      });
+
+      res.status(200).json(expensesByDay);
+    } catch (error) {
+      res.locals.error = error;
+      res.status(500).json({ message: 'Server error', error: error });
+    }
+  },
+);
+
 export default router;
