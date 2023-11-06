@@ -669,8 +669,6 @@ router.get(
         return res.status(400).json({ message: 'Invalid Credentials' });
       }
 
-      console.log(req.params.startDate, req.params.endDate, startDate, endDate);
-
       const userExpenses = await prisma.expense.findMany({
         where: {
           userId: userId,
