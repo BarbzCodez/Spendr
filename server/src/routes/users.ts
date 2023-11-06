@@ -540,6 +540,7 @@ router.get(
  *  "success": true,
  *  "data": [
  *      {
+ *          "id": 1,
  *          "title": "Group Expense",
  *          "totalAmount": 40,
  *          "category": "GROCERIES",
