@@ -638,6 +638,17 @@ router.get(
  * @throws {object} 400 - If the request body is invalid or invalid credentials
  * @throws {object} 500 - If there is a server error
  * @example response - 200 - An object of an array of expenses on each day
+ *
+ * [
+ *    {
+ *        "date": "2023-11-01",
+ *        "amount": 135
+ *    },
+ *    {
+ *        "date": "2023-11-02",
+ *        "amount": 12
+ *    }
+ * ]
  */
 router.get(
   '/:userId/expenses/total-daily',
