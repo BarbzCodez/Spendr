@@ -635,8 +635,8 @@ router.get(
  * @param startDate The start of the time frame returned (ISO8601 format)
  * @param endDate The end of the time frame returned (ISO8601 format)
  * @returns {object} 200 - An object of an array of objects
- * @throws {object} 400 - If the request body is invalid or invalid credentials
- * @throws {object} 500 - If there is a server error
+ * @returns {object} 400 - If the request body is invalid or invalid credentials
+ * @returns {object} 500 - If there is a server error
  * @example response - 200 - An object of an array of expenses on each day
  *
  * [
@@ -658,7 +658,7 @@ router.get(
     .withMessage('startDate must be a valid date in ISO 8601 format.'),
   body('endDate')
     .isISO8601()
-    .withMessage('startDate must be a valid date in ISO 8601 format.'),
+    .withMessage('endDate must be a valid date in ISO 8601 format.'),
   async (req: Request, res: Response) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -711,7 +711,7 @@ router.get(
       res.status(200).json(expensesByDay);
     } catch (error) {
       res.locals.error = error;
-      res.status(500).json({ message: 'Server error', error: error });
+      res.status(500).json({ message: 'Server error' });
     }
   },
 );
