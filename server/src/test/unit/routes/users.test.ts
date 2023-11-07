@@ -782,6 +782,7 @@ describe('GET /users/:userId/group-expenses', () => {
     expect(response.body.success).toBe(true);
     expect(response.body.data).toStrictEqual([
       {
+        id: 1,
         title: 'Sobeys',
         totalAmount: 100,
         category: ExpenseCategory.GROCERIES,

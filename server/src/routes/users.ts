@@ -540,6 +540,7 @@ router.get(
  *  "success": true,
  *  "data": [
  *      {
+ *          "id": 1,
  *          "title": "Group Expense",
  *          "totalAmount": 40,
  *          "category": "GROCERIES",
@@ -603,6 +604,7 @@ router.get(
       const groupExpenses = groupExpensesWithUsers.map((groupExpense) => {
         const groupExpenseSplits = groupExpense.groupExpense.groupExpenseSplits;
         const groupExpenseData = {
+          id: groupExpense.groupExpense.id,
           title: groupExpense.groupExpense.title,
           totalAmount: groupExpense.groupExpense.totalAmount,
           category: groupExpense.groupExpense.category,
