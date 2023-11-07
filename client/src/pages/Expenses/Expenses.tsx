@@ -14,7 +14,7 @@ import {
 } from '../../api/ExpenseAPI';
 import { theme } from '../../assets/styles';
 import { useUser } from '../../context/UserContext';
-import { TableBox } from './styles';
+import { TableBox } from '../styles';
 import ExpensesTable from './Components/ExpenseTable';
 import ExpenseDialog from '../../components/ExpenseDialog';
 import Header from '../../components/Header';
