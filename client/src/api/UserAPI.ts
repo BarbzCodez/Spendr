@@ -8,6 +8,7 @@ import {
   UpdateUsernameData,
   UpdatePasswordData,
   AllExpensesResponse,
+  AllBudgetResponse,
   UserInfo,
 } from '../interfaces/interfaces';
 
@@ -122,6 +123,28 @@ export const allExpensesRequest = async (
 ): Promise<AxiosResponse<AllExpensesResponse>> => {
   const response: AxiosResponse = await axios.get(
     `http://localhost:7005/users/${user.userId}/expenses`,
+
+    {
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
+    },
+  );
+  return response;
+};
+
+/**
+ * API all user budgets
+ *
+ * @param {UserInfo} user - user info
+ * @returns {AxiosResponse<AllBudgetResponse>} - response
+ * @throws {AxiosError}
+ */
+export const allBudgetsRequest = async (
+  user: UserInfo,
+): Promise<AxiosResponse<AllBudgetResponse>> => {
+  const response: AxiosResponse = await axios.get(
+    `http://localhost:7005/users/${user.userId}/budgets`,
 
     {
       headers: {

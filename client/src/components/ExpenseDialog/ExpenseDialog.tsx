@@ -17,6 +17,7 @@ import {
   PrimaryLoadingButton,
 } from '../../assets/styles/styles';
 import { getReceiptData } from '../../api/EdenAPI';
+import { categories } from '../../constants/constants';
 
 const validationSchema = yup.object().shape({
   title: yup.string().required('Title cannot be empty'),
@@ -35,15 +36,6 @@ const validationSchema = yup.object().shape({
     .required('Date cannot be empty'),
 });
 
-const categories = [
-  'GROCERIES',
-  'TRANSPORT',
-  'ENTERTAINMENT',
-  'HEALTH',
-  'UTILITIES',
-  'OTHER',
-];
-
 const isoToFormattedDate = (isoDateString: string): string => {
   const date = new Date(isoDateString);
   const day = date.getDate().toString().padStart(2, '0');
@@ -59,7 +51,7 @@ const isoToFormattedDate = (isoDateString: string): string => {
  * @param {boolean} open - open/closed state of the dialog
  * @param {function} onClose - function when cancel is clicked
  * @param {function} onSave - function when save is clicked
- * @param {ExpenseVals} expenseData - expense data when editting
+ * @param {ExpenseVals} expenseData - expense data when editing
  * @returns {React.FC} - expense dialog component
  */
 const ExpenseDialog: React.FC<ExpenseDialogProps> = ({

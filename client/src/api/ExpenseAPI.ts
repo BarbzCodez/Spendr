@@ -6,7 +6,7 @@ import {
   AddExpenseResponse,
   ExpenseData,
   EditExpenseResponse,
-  DeleteExpenseResponse,
+  MessageResponse,
 } from '../interfaces/interfaces';
 
 /**
@@ -62,14 +62,14 @@ export const editExpenseRequest = async (
  *
  * @param {ExpenseData} data - expense values from UI
  * @param {UserInfo} user - user info
- * @returns {AxiosResponse<DeleteExpenseResponse>}
+ * @returns {AxiosResponse<MessageResponse>}
  * @throws {AxiosError}
  */
 export const deleteExpenseRequest = async (
   data: ExpenseData,
   user: UserInfo,
-): Promise<AxiosResponse<DeleteExpenseResponse>> => {
-  const response = await axios.delete<DeleteExpenseResponse>(
+): Promise<AxiosResponse<MessageResponse>> => {
+  const response = await axios.delete<MessageResponse>(
     `http://localhost:7005/expenses/${data.id}`,
     {
       headers: {

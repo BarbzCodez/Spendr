@@ -115,14 +115,14 @@ const Expenses = (): JSX.Element => {
         });
 
         if (response.status === 200) {
-          const edittedExpense: ExpenseData = response.data.data;
+          const editedExpense: ExpenseData = response.data.data;
           const index = expenses.findIndex(
-            (expense) => expense.id === edittedExpense.id,
+            (expense) => expense.id === editedExpense.id,
           );
 
           if (index != -1) {
             const updatedExpenses = [...expenses];
-            updatedExpenses[index] = edittedExpense;
+            updatedExpenses[index] = editedExpense;
             setExpenses(updatedExpenses);
           }
           setIsDialogOpen(false);
