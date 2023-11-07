@@ -93,3 +93,9 @@ export interface EditExpenseResponse {
 export interface DeleteExpenseResponse {
   message: string;
 }
+
+export interface ReceiptData {
+  title: string;
+  amount: number;
+  date: string;
+}
