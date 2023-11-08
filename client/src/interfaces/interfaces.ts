@@ -146,3 +146,11 @@ export interface AddBudgetResponse {
 export interface EditBudgetResponse {
   data: BudgetWithExpensesData;
 }
+
+export interface HomePageInfo {
+  name: string;
+  description: string;
+  linkText: string;
+  link: string;
+  icon: JSX.Element;
+}
