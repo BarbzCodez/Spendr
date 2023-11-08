@@ -146,3 +146,9 @@ export interface AddBudgetResponse {
 export interface EditBudgetResponse {
   data: BudgetWithExpensesData;
 }
+
+export interface ReceiptData {
+  title: string;
+  amount: number;
+  date: string;
+}
