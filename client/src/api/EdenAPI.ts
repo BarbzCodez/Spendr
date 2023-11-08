@@ -61,8 +61,6 @@ export const getReceiptData = async (file: File): Promise<ReceiptData> => {
     data: formData,
   });
 
-  console.log(response.data);
-
   const data = response.data['eden-ai']?.extracted_data[0];
   if (data) {
     const title = data.merchant_information?.merchant_name;
