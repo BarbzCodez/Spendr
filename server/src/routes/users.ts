@@ -6,6 +6,7 @@ import jwt from 'jsonwebtoken';
 import { authenticate } from '../middleware/authenticate';
 import calculateTotalExpenseForBudget from '../utils/expenses';
 import dotenv from 'dotenv';
+import { ExpenseCategory } from '@prisma/client';
 dotenv.config();
 
 const router = express.Router();
@@ -711,6 +712,97 @@ router.get(
       });
 
       res.status(200).json(expensesByDay);
+    } catch (error) {
+      res.locals.error = error;
+      res.status(500).json({ message: 'Server error' });
+    }
+  },
+);
+
+/**
+ * Get total for all categories
+ *
+ * This router returns the total amount spent for all categories
+ *
+ * @route GET /expenses/total-spending-for-categories
+ * @param {string} userId.path.required - User ID
+ * @param startDate start date for the query (ISO8601 format)
+ * @param endDate end date of the query (ISO8601 format)
+ * @throws {object} 500 - If there is a server error
+ * @returns {object} An object containing the category totals as seen below
+ *
+ *  [
+ *    {
+ *       "category":"GROCERIES",
+ *       "amount": 500.00
+ *    },
+ *    {
+ *       "category":"TRANSPORT",
+ *       "amount": 200.00
+ *    }
+ *  ]
+ */
+router.get(
+  '/:userId/expenses/total-spending-for-categories',
+  authenticate,
+  body('startDate')
+    .isISO8601()
+    .withMessage('startDate must be a valid date in ISO 8601 format.'),
+  body('endDate')
+    .isISO8601()
+    .withMessage('endDate must be a valid date in ISO 8601 format.'),
+  async (req: Request, res: Response) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+
+    try {
+      const userId = parseInt(req.params.userId);
+      const { startDate, endDate } = req.body;
+
+      const user = await prisma.user.findUnique({
+        where: {
+          id: userId,
+        },
+      });
+
+      if (!user || user.userDeleted) {
+        return res.status(400).json({ message: 'Invalid Credentials' });
+      }
+
+      const userExpenses = await prisma.expense.findMany({
+        where: {
+          userId: userId,
+          createdAt: {
+            gte: new Date(startDate),
+            lte: new Date(endDate),
+          },
+        },
+      });
+
+      const expensesTotalByCategory: {
+        category: ExpenseCategory;
+        amount: number;
+      }[] = [];
+
+      userExpenses.forEach((expense) => {
+        //Check for expense category
+        const obj = expensesTotalByCategory.find(
+          (obj) => obj.category == expense.category,
+        );
+
+        if (obj) {
+          obj.amount = obj.amount + expense.amount;
+        } else {
+          expensesTotalByCategory.push({
+            category: expense.category,
+            amount: expense.amount,
+          });
+        }
+      });
+
+      res.status(200).json(expensesTotalByCategory);
     } catch (error) {
       res.locals.error = error;
       res.status(500).json({ message: 'Server error' });
