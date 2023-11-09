@@ -13,17 +13,20 @@ import { BackgroundBox, ExpensesDataGrid } from './styles';
 import { isoToFormattedDate } from '../../../utils/utils';
 import { categories } from '../../../constants/constants';
 import { theme } from '../../../assets/styles';
+
 /**
  * Expenses Group table component
  *
- * @param {ExpenseData[]} expenses - expenses to display
+ * @property {ExpenseData[]} groupExpenses - The group expenses data to be displayed.
+ * @property {function} handleMarkAsPaidGroupExpense - API call to handle marking expenses as paid.
+ * @property {number} currUserId - The current user's ID from useUser
  * @returns {JSX.Element} - Group expenses table
  */
 export const GroupExpensesTable: React.FC<GroupExpenseTableProps> = ({
   groupExpenses,
   handleMarkAsPaidGroupExpense,
   currUserId,
-}) => {
+}): JSX.Element => {
   const [newGroupExpenses, setNewGroupExpenses] = React.useState<
     GroupExpenseDataWithId[]
   >([]);

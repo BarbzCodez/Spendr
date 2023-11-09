@@ -48,16 +48,16 @@ const validationSchema = yup.object().shape({
 /**
  * Group Expense dialog component
  *
- * @param {boolean} open - open/closed state of the dialog
- * @param {function} onClose - function when cancel is clicked
- * @param {function} onSave - function when save is clicked
- * @returns {React.FC} - expense dialog component
+ * @property {boolean} open - open/closed state of the dialog
+ * @property {function} onClose - function when cancel is clicked
+ * @property {function} onAdd - function when save is clicked
+ * @returns {JSX.Element } - expense group dialog component
  */
 const GroupExpenseDialog: React.FC<GroupExpenseDialogProps> = ({
   open,
   onClose,
   onAdd,
-}) => {
+}): JSX.Element => {
   const [userList, setUserList] = React.useState<
     [username: string, amount: number][]
   >([]);

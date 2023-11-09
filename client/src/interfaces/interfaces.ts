@@ -222,4 +222,4 @@ export interface GroupExpenseDataWithId {
 export interface AllGroupExpensesResponse {
   success: boolean;
   data: GroupExpenseData[];
- }
+}
