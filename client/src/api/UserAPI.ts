@@ -10,6 +10,8 @@ import {
   AllExpensesResponse,
   AllBudgetResponse,
   UserInfo,
+  StartEndDatesData,
+  DailyTotalsResponse,
 } from '../interfaces/interfaces';
 
 /**
@@ -145,8 +147,31 @@ export const allBudgetsRequest = async (
 ): Promise<AxiosResponse<AllBudgetResponse>> => {
   const response: AxiosResponse = await axios.get(
     `http://localhost:7005/users/${user.userId}/budgets`,
-
     {
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
+    },
+  );
+  return response;
+};
+
+/**
+ * API daily totals between 2 dates
+ *
+ * @param {UserInfo} user - user info
+ * @param {StartEndDatesData} data - start and end dates
+ * @returns {AxiosResponse<DailyTotalsResponse>} - response
+ * @throws {AxiosError}
+ */
+export const dailyTotalExpensesRequest = async (
+  user: UserInfo,
+  data: StartEndDatesData,
+): Promise<AxiosResponse<DailyTotalsResponse>> => {
+  const response = await axios.get<DailyTotalsResponse>(
+    `http://localhost:7005/users/${user.userId}/expenses/total-daily`,
+    {
+      data: data,
       headers: {
         Authorization: `Bearer ${user.token}`,
       },

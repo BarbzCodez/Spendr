@@ -160,3 +160,18 @@ export interface HomePageInfo {
   link: string;
   icon: JSX.Element;
 }
+
+export interface StartEndDatesData {
+  startDate: string;
+  endDate: string;
+}
+
+export interface DailyTotal {
+  date: string;
+  amount: number;
+}
+
+export interface DailyTotalsResponse {
+  success: boolean;
+  data: [DailyTotal];
+}
