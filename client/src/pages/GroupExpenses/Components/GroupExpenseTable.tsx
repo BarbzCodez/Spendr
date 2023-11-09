@@ -1,5 +1,14 @@
 import * as React from 'react';
-import { Checkbox, Stack, Typography } from '@mui/material';
+import {
+  Checkbox,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+  Stack,
+  Typography,
+} from '@mui/material';
 import { GridColDef, GridRenderCellParams } from '@mui/x-data-grid';
 
 import {
@@ -13,6 +22,7 @@ import { BackgroundBox, ExpensesDataGrid } from './styles';
 import { isoToFormattedDate } from '../../../utils/utils';
 import { categories } from '../../../constants/constants';
 import { theme } from '../../../assets/styles';
+import { PrimaryButton } from '../../../assets/styles/styles';
 
 /**
  * Expenses Group table component
@@ -30,6 +40,27 @@ export const GroupExpensesTable: React.FC<GroupExpenseTableProps> = ({
   const [newGroupExpenses, setNewGroupExpenses] = React.useState<
     GroupExpenseDataWithId[]
   >([]);
+
+  const [openDisclaimer, setOpenDisclaimer] = React.useState<boolean>(false);
+  const [markAsPaidId, setMarkAsPaidId] = React.useState<
+    GroupExpenseAsPaid | undefined
+  >(undefined);
+
+  const handleClickOpenDisclaimer = () => {
+    setOpenDisclaimer(true);
+  };
+
+  const handleConfirmDisclaimer = () => {
+    if (markAsPaidId) {
+      handleMarkAsPaidGroupExpense(markAsPaidId);
+    }
+    handleCloseDisclaimer();
+  };
+
+  const handleCloseDisclaimer = () => {
+    setMarkAsPaidId(undefined);
+    setOpenDisclaimer(false);
+  };
 
   const splitWithId = (data: GroupExpenseData) => {
     const newSplit: splitDataWithId[] = [];
@@ -70,10 +101,10 @@ export const GroupExpensesTable: React.FC<GroupExpenseTableProps> = ({
 
     const handleChange = (isChecked: boolean, groupId: number) => {
       if (isChecked) {
-        const markAsPaid: GroupExpenseAsPaid = {
+        setMarkAsPaidId({
           groupExpenseId: groupId,
-        };
-        handleMarkAsPaidGroupExpense(markAsPaid);
+        });
+        handleClickOpenDisclaimer();
       }
     };
 
@@ -191,6 +222,21 @@ export const GroupExpensesTable: React.FC<GroupExpenseTableProps> = ({
         }}
         pageSizeOptions={[10, 15, 20]}
       />
+      <Dialog open={openDisclaimer} onClose={handleCloseDisclaimer}>
+        <DialogTitle>Disclaimer</DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            Please note that by confirming this action, a personal expense will
+            be created and the group will know that you paid
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <PrimaryButton onClick={handleCloseDisclaimer}>Cancel</PrimaryButton>
+          <PrimaryButton onClick={handleConfirmDisclaimer} autoFocus>
+            Confirm
+          </PrimaryButton>
+        </DialogActions>
+      </Dialog>
     </BackgroundBox>
   );
 };

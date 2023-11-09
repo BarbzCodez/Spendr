@@ -155,7 +155,7 @@ const GroupExpenseDialog: React.FC<GroupExpenseDialogProps> = ({
       <form onSubmit={formik.handleSubmit}>
         <DialogTitle>{'Create Group Split'}</DialogTitle>
         <DialogContent>
-          <Box sx={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+          <Box sx={{ display: 'flex', flexDirection: 'row', gap: '10px' }}>
             <TextField
               id="title"
               label="Title"
@@ -170,7 +170,27 @@ const GroupExpenseDialog: React.FC<GroupExpenseDialogProps> = ({
                   ? formik.errors.title
                   : ' '
               }
+              style={{ width: 300 }}
             />
+            <TextField
+              id="createdAt"
+              label="Date"
+              variant="filled"
+              value={formik.values.createdAt}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              error={
+                formik.touched.createdAt && Boolean(formik.errors.createdAt)
+              }
+              helperText={
+                formik.touched.createdAt && Boolean(formik.errors.createdAt)
+                  ? formik.errors.createdAt
+                  : ' '
+              }
+              style={{ width: 300 }}
+            />
+          </Box>
+          <Box sx={{ display: 'flex', flexDirection: 'row', gap: '10px' }}>
             <TextField
               id="amount"
               label="Amount"
@@ -185,6 +205,7 @@ const GroupExpenseDialog: React.FC<GroupExpenseDialogProps> = ({
                   ? formik.errors.amount
                   : ' '
               }
+              style={{ width: 300 }}
             />
             <TextField
               select
@@ -203,6 +224,7 @@ const GroupExpenseDialog: React.FC<GroupExpenseDialogProps> = ({
                   ? formik.errors.category
                   : ' '
               }
+              style={{ width: 300 }}
             >
               {categories.map((category) => (
                 <MenuItem key={category} value={category}>
@@ -210,119 +232,101 @@ const GroupExpenseDialog: React.FC<GroupExpenseDialogProps> = ({
                 </MenuItem>
               ))}
             </TextField>
-            <TextField
-              id="createdAt"
-              label="Date"
-              variant="filled"
-              value={formik.values.createdAt}
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              error={
-                formik.touched.createdAt && Boolean(formik.errors.createdAt)
-              }
-              helperText={
-                formik.touched.createdAt && Boolean(formik.errors.createdAt)
-                  ? formik.errors.createdAt
-                  : ' '
-              }
-            />
-
+          </Box>
+          <Stack
+            direction="column"
+            justifyContent="center"
+            alignItems="center"
+            spacing={2}
+          >
             <Stack
-              direction="column"
-              justifyContent="center"
+              direction="row"
+              justifyContent="space-between"
               alignItems="center"
               spacing={2}
             >
+              <FormControlLabel
+                control={
+                  <Switch
+                    checked={evenlyDistributed}
+                    onChange={(event) =>
+                      setEvenlyDistributed(event.target.checked)
+                    }
+                  />
+                }
+                label="Distribute Evenly"
+              />
+              <Button
+                variant="outlined"
+                style={{
+                  borderColor: theme.palette.secondary.contrastText,
+                  color: theme.palette.primary.contrastText,
+                }}
+                startIcon={<AddIcon />}
+                onClick={handleAddUser}
+              >
+                Add User
+              </Button>
+              <Button
+                variant="outlined"
+                style={{
+                  borderColor: theme.palette.secondary.contrastText,
+                  color: theme.palette.primary.contrastText,
+                }}
+                startIcon={<RemoveIcon />}
+                onClick={handleDeleteUser}
+              >
+                Delete User
+              </Button>
+            </Stack>
+            {userList.map((values, index) => (
               <Stack
+                key={index}
                 direction="row"
                 justifyContent="space-between"
                 alignItems="center"
                 spacing={2}
               >
-                <FormControlLabel
-                  control={
-                    <Switch
-                      checked={evenlyDistributed}
-                      onChange={(event) =>
-                        setEvenlyDistributed(event.target.checked)
-                      }
-                    />
+                <TextField
+                  label={`User ${index + 1}`}
+                  type="text"
+                  value={values[0] || ''}
+                  style={{ width: '70%' }}
+                  onChange={(event) =>
+                    handleUserInput(event.target.value, index, 0)
                   }
-                  label="Distribute Evenly"
                 />
-                <Button
-                  variant="outlined"
-                  style={{
-                    borderColor: theme.palette.secondary.contrastText,
-                    color: theme.palette.primary.contrastText,
+                <TextField
+                  disabled={evenlyDistributed}
+                  label={`Percentage Amount ${index + 1}`}
+                  type="number"
+                  value={values[1] || ''}
+                  onChange={(event) =>
+                    handleUserInput(event.target.value, index, 1)
+                  }
+                  InputProps={{
+                    endAdornment: (
+                      <InputAdornment position="end">%</InputAdornment>
+                    ),
                   }}
-                  startIcon={<AddIcon />}
-                  onClick={handleAddUser}
-                >
-                  Add User
-                </Button>
-                <Button
-                  variant="outlined"
-                  style={{
-                    borderColor: theme.palette.secondary.contrastText,
-                    color: theme.palette.primary.contrastText,
+                />
+                <TextField
+                  disabled
+                  label={`Amount ${index + 1}`}
+                  type="number"
+                  variant="standard"
+                  value={
+                    (formik.values.amount * (values[1] / 100)).toFixed(2) || ''
+                  }
+                  InputProps={{
+                    startAdornment: (
+                      <InputAdornment position="start">$</InputAdornment>
+                    ),
                   }}
-                  startIcon={<RemoveIcon />}
-                  onClick={handleDeleteUser}
-                >
-                  Delete User
-                </Button>
+                />
               </Stack>
-              {userList.map((values, index) => (
-                <Stack
-                  key={index}
-                  direction="row"
-                  justifyContent="space-between"
-                  alignItems="center"
-                  spacing={2}
-                >
-                  <TextField
-                    label={`User ${index + 1}`}
-                    type="text"
-                    value={values[0] || ''}
-                    style={{ width: '70%' }}
-                    onChange={(event) =>
-                      handleUserInput(event.target.value, index, 0)
-                    }
-                  />
-                  <TextField
-                    disabled={evenlyDistributed}
-                    label={`Percentage Amount ${index + 1}`}
-                    type="number"
-                    value={values[1] || ''}
-                    onChange={(event) =>
-                      handleUserInput(event.target.value, index, 1)
-                    }
-                    InputProps={{
-                      endAdornment: (
-                        <InputAdornment position="end">%</InputAdornment>
-                      ),
-                    }}
-                  />
-                  <TextField
-                    disabled
-                    label={`Amount ${index + 1}`}
-                    type="number"
-                    variant="standard"
-                    value={
-                      (formik.values.amount * (values[1] / 100)).toFixed(2) ||
-                      ''
-                    }
-                    InputProps={{
-                      startAdornment: (
-                        <InputAdornment position="start">$</InputAdornment>
-                      ),
-                    }}
-                  />
-                </Stack>
-              ))}
-            </Stack>
-          </Box>
+            ))}
+          </Stack>
         </DialogContent>
         <DialogActions>
           <PrimaryButton onClick={onClose}>Cancel</PrimaryButton>
