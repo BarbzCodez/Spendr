@@ -100,6 +100,12 @@ export interface EditExpenseResponse {
   data: ExpenseData;
 }
 
+export interface ReceiptData {
+  title: string;
+  amount: number;
+  date: string;
+}
+
 export interface BudgetUIData {
   amount: number;
   duration: Duration;

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Dialog,
   DialogActions,
@@ -10,9 +10,13 @@ import {
 } from '@mui/material';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
-
+import { Upload } from '@mui/icons-material';
 import { ExpenseUIData, ExpenseDialogProps } from '../../interfaces/interfaces';
-import { PrimaryButton } from '../../assets/styles/styles';
+import {
+  PrimaryButton,
+  PrimaryLoadingButton,
+} from '../../assets/styles/styles';
+import { getReceiptData } from '../../api/EdenAPI';
 import { categories } from '../../constants/constants';
 
 const validationSchema = yup.object().shape({
@@ -57,6 +61,8 @@ const ExpenseDialog: React.FC<ExpenseDialogProps> = ({
   onEdit,
   expenseData,
 }) => {
+  const [loading, setLoading] = useState<boolean>(false);
+
   const formik = useFormik({
     initialValues: {
       title: expenseData?.title || '',
@@ -108,6 +114,32 @@ const ExpenseDialog: React.FC<ExpenseDialogProps> = ({
       formik.resetForm();
     }
   }, [open]);
+
+  const handleImageUpload = async (file: File) => {
+    setLoading(true);
+
+    try {
+      const { title, amount, date } = await getReceiptData(file);
+      formik.setFieldValue('title', title);
+      formik.setFieldValue('amount', amount);
+      formik.setFieldValue('createdAt', date);
+      setLoading(false);
+    } catch (error) {
+      console.error(error);
+      setLoading(false);
+    }
+  };
+
+  const handleReceiptUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files ? event.target.files[0] : null;
+    if (file) {
+      handleImageUpload(file);
+    }
+  };
+
+  const triggerFileInput = () => {
+    document.getElementById('receipt-input')?.click();
+  };
 
   return (
     <Dialog open={open} onClose={onClose}>
@@ -195,10 +227,52 @@ const ExpenseDialog: React.FC<ExpenseDialogProps> = ({
           </Box>
         </DialogContent>
         <DialogActions>
-          <PrimaryButton onClick={onClose}>Cancel</PrimaryButton>
-          <PrimaryButton type="submit" color="primary">
-            Save
-          </PrimaryButton>
+          <Box
+            sx={{
+              display: 'flex',
+              flexDirection: 'row',
+              gap: '10px',
+              justifyContent: 'center',
+              padding: '10px',
+              alignItems: 'space-between',
+              flex: 1,
+            }}
+          >
+            <input
+              id="receipt-input"
+              type="file"
+              accept="image/*"
+              style={{ display: 'none' }}
+              onChange={handleReceiptUpload}
+            />
+            <Box
+              sx={{
+                display: 'flex',
+                flexDirection: 'row',
+                gap: '10px',
+                justifyContent: 'left',
+                flex: 1,
+              }}
+            >
+              {!expenseData && open && (
+                <PrimaryLoadingButton
+                  onClick={triggerFileInput}
+                  loading={loading}
+                  loadingPosition="start"
+                  loadingIndicator="Processing..."
+                  startIcon={<Upload />}
+                  variant="outlined"
+                  sx={{ width: '200px' }}
+                >
+                  {!loading && 'Upload Receipt'}
+                </PrimaryLoadingButton>
+              )}
+            </Box>
+            <PrimaryButton onClick={onClose}>Cancel</PrimaryButton>
+            <PrimaryButton type="submit" color="primary">
+              Save
+            </PrimaryButton>
+          </Box>
         </DialogActions>
       </form>
     </Dialog>
