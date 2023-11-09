@@ -729,7 +729,7 @@ router.get(
  * @param {string} startDate start date for the query (ISO8601 format)
  * @param {string} endDate end date of the query (ISO8601 format)
  * @throws {object} 500 - If there is a server error
- * @returns {object} An object containing the category totals as seen below
+ * @returns {object} 200 - An object containing the category totals as seen below
  *
  *  [
  *    {
