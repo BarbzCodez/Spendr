@@ -15,7 +15,11 @@ import { HomePageStack } from './styles';
 import { useUser } from '../../context/UserContext';
 import { homeInfo } from './constants';
 
-const Home = () => {
+/**
+ * Home page component
+ * @returns {JSX.Element} - Home page greeting the user and a explanation of what we offer
+ */
+const Home = (): JSX.Element => {
   const navigate = useNavigate();
   const { username } = useUser();
 
@@ -32,10 +36,10 @@ const Home = () => {
           <Card
             key={info.name}
             sx={{
-              height: 180,
+              height: 220,
               display: 'flex',
               flexDirection: 'column',
-              width: 400,
+              width: 420,
             }}
           >
             <CardContent>
