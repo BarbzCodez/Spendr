@@ -100,6 +100,12 @@ export interface EditExpenseResponse {
   data: ExpenseData;
 }
 
+export interface ReceiptData {
+  title: string;
+  amount: number;
+  date: string;
+}
+
 export interface BudgetUIData {
   amount: number;
   duration: Duration;
@@ -147,8 +153,10 @@ export interface EditBudgetResponse {
   data: BudgetWithExpensesData;
 }
 
-export interface ReceiptData {
-  title: string;
-  amount: number;
-  date: string;
+export interface HomePageInfo {
+  name: string;
+  description: string;
+  linkText: string;
+  link: string;
+  icon: JSX.Element;
 }
