@@ -720,25 +720,25 @@ router.get(
 );
 
 /**
- * Get total for all categories
+ * Get total expenses for all categories given a timeframe
  *
  * This router returns the total amount spent for all categories
  *
  * @route GET /expenses/total-spending-for-categories
  * @param {string} userId.path.required - User ID
- * @param startDate start date for the query (ISO8601 format)
- * @param endDate end date of the query (ISO8601 format)
+ * @param {string} startDate start date for the query (ISO8601 format)
+ * @param {string} endDate end date of the query (ISO8601 format)
  * @throws {object} 500 - If there is a server error
  * @returns {object} An object containing the category totals as seen below
  *
  *  [
  *    {
- *       "category":"GROCERIES",
- *       "amount": 500.00
+ *       category: "GROCERIES",
+ *       amount: 500.00
  *    },
  *    {
- *       "category":"TRANSPORT",
- *       "amount": 200.00
+ *       category: "TRANSPORT",
+ *       amount: 200.00
  *    }
  *  ]
  */
