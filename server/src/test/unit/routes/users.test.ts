@@ -894,16 +894,19 @@ describe('GET /users/:userId/expenses/total-daily', () => {
       });
 
     expect(response.status).toBe(200);
-    expect(response.body).toStrictEqual([
-      {
-        date: '2023-10-12',
-        amount: 200,
-      },
-      {
-        date: '2023-10-13',
-        amount: 100,
-      },
-    ]);
+    expect(response.body).toStrictEqual({
+      success: true,
+      data: [
+        {
+          date: '2023-10-12',
+          amount: 200,
+        },
+        {
+          date: '2023-10-13',
+          amount: 100,
+        },
+      ],
+    });
   });
 
   it('returns 400 if user does not exist', async () => {
@@ -1028,16 +1031,19 @@ describe('GET /users/:userId/expenses/total-spending-for-categories', () => {
       });
 
     expect(response.status).toBe(200);
-    expect(response.body).toStrictEqual([
-      {
-        category: 'GROCERIES',
-        amount: 300,
-      },
-      {
-        category: 'HEALTH',
-        amount: 200,
-      },
-    ]);
+    expect(response.body).toStrictEqual({
+      success: true,
+      data: [
+        {
+          category: 'GROCERIES',
+          amount: 300,
+        },
+        {
+          category: 'HEALTH',
+          amount: 200,
+        },
+      ],
+    });
   });
 
   it('returns 400 if user does not exist', async () => {
