@@ -49,6 +49,14 @@ export interface MessageResponse {
   message: string;
 }
 
+export interface HomePageInfo {
+  name: string;
+  description: string;
+  linkText: string;
+  link: string;
+  icon: JSX.Element;
+}
+
 export interface ExpenseUIData {
   title: string;
   amount: number;
