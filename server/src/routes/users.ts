@@ -787,7 +787,7 @@ router.get(
       }[] = [];
 
       userExpenses.forEach((expense) => {
-        //Check for expense category
+        // Check for expense category
         const obj = expensesTotalByCategory.find(
           (obj) => obj.category == expense.category,
         );
