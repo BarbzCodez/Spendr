@@ -641,17 +641,19 @@ router.get(
  * @returns {object} 400 - If the request body is invalid or invalid credentials
  * @returns {object} 500 - If there is a server error
  * @example response - 200 - An object of an array of expenses on each day
- *
- * [
- *    {
- *        "date": "2023-11-01",
- *        "amount": 135
- *    },
- *    {
- *        "date": "2023-11-02",
- *        "amount": 12
- *    }
- * ]
+ * {
+ *   success: true,
+ *   data: [
+ *     {
+ *         "date": "2023-11-01",
+ *         "amount": 135
+ *     },
+ *     {
+ *         "date": "2023-11-02",
+ *         "amount": 12
+ *     }
+ *   ]
+ * }
  */
 router.get(
   '/:userId/expenses/total-daily',
@@ -711,7 +713,7 @@ router.get(
         }
       });
 
-      res.status(200).json(expensesByDay);
+      res.status(200).json({ success: true, data: expensesByDay });
     } catch (error) {
       res.locals.error = error;
       res.status(500).json({ message: 'Server error' });
@@ -730,17 +732,20 @@ router.get(
  * @param {string} endDate end date of the query (ISO8601 format)
  * @throws {object} 500 - If there is a server error
  * @returns {object} 200 - An object containing the category totals as seen below
- *
- *  [
- *    {
- *       category: "GROCERIES",
- *       amount: 500.00
- *    },
- *    {
- *       category: "TRANSPORT",
- *       amount: 200.00
- *    }
- *  ]
+ * {
+ *   success: true
+ *   data: [
+ *      {
+ *         category: "GROCERIES",
+ *         amount: 500.00
+ *      },
+ *      {
+ *         category: "TRANSPORT",
+ *         amount: 200.00
+ *      }
+ *    ]
+ * }
+
  */
 router.get(
   '/:userId/expenses/total-spending-for-categories',
@@ -802,7 +807,7 @@ router.get(
         }
       });
 
-      res.status(200).json(expensesTotalByCategory);
+      res.status(200).json({ success: true, data: expensesTotalByCategory });
     } catch (error) {
       res.locals.error = error;
       res.status(500).json({ message: 'Server error' });
