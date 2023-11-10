@@ -105,16 +105,16 @@ This test plan covers unit, integration, acceptance, regression, and load testin
 
 ### Integration Tests
 
-1. After creating a new user with a POST request to `/users/register`, the new user data is found in the database with the hashed security answer and password.
-2. After a client obtains JWT from signing in via POST to `/users/login`, the JWT can be used to make request to an authorized route.
-3. After a client sends the correct security answer via POST to `/users/reset-password`, their password is successfully hashed and updated in the database.
-4. After a client sends new user data via POST to `/account/`, their new user data is updated in the database.
-5. After an expense is created via POST to `/expenses`, the user can then fetch the expense they just created via GET to `/expenses/:id`.
-6. After an expense is deleted via POST to `/expenses/:id`, the expense no longer exists in the database, and they can no longer fetch the expense they just deleted via GET to `/expenses/:id`.
-7. After an expense is created via POST to `/expenses`, it correctly contributes to the current months average daily spending retrieved from `/analytics/average-daily`.
-8. After a user deletes their account via DELETE to `/account`, all data in the database associated with their user is deleted, except for group expenses.
-9. After a user creates a group expense via POST to `/group-expenses`, and marks it as paid via `/group-expenses/:id`, the expense is added to their expenses in the database.
-10. After a user creates a budget via POST to `/budgets`, the budget exists in the database and is associated with their account.
+1. After creating a new user via `POST /users/register`, the new user data is found in the database with the hashed security answer and password.
+2. After a client obtains JWT from signing in via `POST /users/login`, the JWT can be used to make request to an protected route.
+3. After an authenticated client updates their user data via `POST /users/update-user`, their new user data is updated with the hashed security answer and password.
+4. After an authenticated client deletes their account via `DELETE /users/delete`, they can no longer log in via `POST /users/login`.
+5. After an authenticated client creates a new expense via `POST /expenses`, the expense exists in the database.
+6. After an authenticated client creates a new budget via `POST /budgets`, the budget exists in the database.
+7. After an authenticated client creates a new group expense via `POST /group-expenses`, a group expense is created in the database, and each user has a group expense split.
+8. After an authenticated client marks a group expense as paid via `PUT /group-expenses/:groupExpenseId/mark-as-paid`, a new expense is created for the user, and the group expense split is marked as paid in the database.
+9. After an authenticated client deletes an expense via `DELETE /expenses/:expenseId`, it should no longer exist in the database.
+10. After a client tries to reset an accounts password using the correct answer to the security question via `POST /users/reset-password`, they should be able to log in via `POST users/login`  using the updated password.
 
 ### 2.2 Test Completeness
 
