@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { LineChart } from '@mui/x-charts/LineChart';
 import { format } from 'date-fns';
+import { Typography } from '@mui/material';
 
 import { BackgroundBox } from './styles';
 import { useUser } from '../../../context/UserContext';
@@ -17,6 +18,7 @@ export const DailyExpenseGraph = (): JSX.Element => {
   const [dailyTotals, setDailyTotals] = React.useState<
     { date: Date; amount: number }[]
   >([]);
+  const [errorMsg, setErrorMsg] = React.useState('No data to show');
 
   const currDate = new Date();
   const firstDateOFMonth = new Date(
@@ -46,32 +48,45 @@ export const DailyExpenseGraph = (): JSX.Element => {
             }),
           );
           setDailyTotals(totalsWithDates);
+
+          if (dailyTotals.length == 0) {
+            setErrorMsg('No data to show');
+          }
         }
       }
-    } catch (error) {}
+    } catch (error) {
+      setErrorMsg('Error fetching data');
+    }
   };
 
   return (
     <BackgroundBox>
-      <LineChart
-        xAxis={[
-          {
-            dataKey: 'date',
-            valueFormatter: (v) => format(v, 'yyyy/MM/dd'),
-            min: firstDateOFMonth,
-            max: currDate,
-          },
-        ]}
-        series={[
-          {
-            dataKey: 'amount',
-            label: 'Daily Total Expense',
-            color: '#FFB7B2',
-            showMark: true,
-          },
-        ]}
-        dataset={dailyTotals}
-      />
+      {dailyTotals.length != 0 && (
+        <LineChart
+          xAxis={[
+            {
+              dataKey: 'date',
+              valueFormatter: (v) => format(v, 'yyyy/MM/dd'),
+              min: firstDateOFMonth,
+              max: currDate,
+            },
+          ]}
+          series={[
+            {
+              dataKey: 'amount',
+              label: 'Daily Total Expense',
+              color: '#FFB7B2',
+              showMark: true,
+            },
+          ]}
+          dataset={dailyTotals}
+        />
+      )}
+      {dailyTotals.length == 0 && (
+        <Typography variant="body1" align="center">
+          {errorMsg}
+        </Typography>
+      )}
     </BackgroundBox>
   );
 };

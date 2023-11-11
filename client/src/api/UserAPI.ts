@@ -171,7 +171,7 @@ export const dailyTotalExpensesRequest = async (
   const response = await axios.get<DailyTotalsResponse>(
     `http://localhost:7005/users/${user.userId}/expenses/total-daily`,
     {
-      data: data,
+      params: data,
       headers: {
         Authorization: `Bearer ${user.token}`,
       },
