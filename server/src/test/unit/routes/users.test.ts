@@ -1024,7 +1024,7 @@ describe('GET /users/:userId/expenses/total-spending-for-categories', () => {
     prismaMock.expense.findMany.mockResolvedValue(mockedExpenses);
 
     const response = await request(app).get(
-      '/users/1/expenses/total-spending-for-categories?startDate=2023-10-12,endDate=2023-10-14',
+      '/users/1/expenses/total-spending-for-categories?startDate=2023-10-12&endDate=2023-10-14',
     );
 
     expect(response.status).toBe(200);
@@ -1047,7 +1047,7 @@ describe('GET /users/:userId/expenses/total-spending-for-categories', () => {
     prismaMock.user.findUnique.mockResolvedValue(null); // Mocking no user
 
     const response = await request(app).get(
-      '/users/1/expenses/total-spending-for-categories?startDate=2023-10-12,endDate=2023-10-14',
+      '/users/1/expenses/total-spending-for-categories?startDate=2023-10-12&endDate=2023-10-14',
     );
 
     expect(response.status).toBe(400);
@@ -1066,7 +1066,7 @@ describe('GET /users/:userId/expenses/total-spending-for-categories', () => {
     prismaMock.user.findUnique.mockResolvedValue(user);
 
     const response = await request(app).get(
-      '/users/1/expenses/total-spending-for-categories?startDate=2023-10-12,endDate=2023-10-14',
+      '/users/1/expenses/total-spending-for-categories?startDate=2023-10-12&endDate=2023-10-14',
     );
 
     expect(response.status).toBe(400);
@@ -1075,7 +1075,7 @@ describe('GET /users/:userId/expenses/total-spending-for-categories', () => {
 
   it('returns 400 when there is an error in the input format', async () => {
     const response = await request(app).get(
-      '/users/1/expenses/total-spending-for-categories?startDate=random,endDate=string',
+      '/users/1/expenses/total-spending-for-categories?startDate=random&endDate=string',
     );
 
     expect(response.status).toBe(400);
@@ -1085,7 +1085,7 @@ describe('GET /users/:userId/expenses/total-spending-for-categories', () => {
     prismaMock.user.findUnique.mockRejectedValue(new Error());
 
     const response = await request(app).get(
-      '/users/1/expenses/total-spending-for-categories?startDate=2023-10-12,endDate=2023-10-14',
+      '/users/1/expenses/total-spending-for-categories?startDate=2023-10-12&endDate=2023-10-14',
     );
 
     expect(response.status).toBe(500);
