@@ -936,6 +936,14 @@ describe('GET /users/:userId/expenses/total-daily', () => {
     expect(response.body.message).toBe('Invalid Credentials');
   });
 
+  it('returns 400 when there is an error in the input format', async () => {
+    const response = await request(app).get(
+      '/users/1/expenses/total-daily?startDate=random&endDate=string',
+    );
+
+    expect(response.status).toBe(400);
+  });
+
   it('returns 500 when there is a server error', async () => {
     prismaMock.user.findUnique.mockRejectedValue(new Error());
 
