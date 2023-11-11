@@ -21,14 +21,10 @@ export const DailyExpenseGraph = (): JSX.Element => {
   const [errorMsg, setErrorMsg] = React.useState('No data to show');
 
   const currDate = new Date();
-  const firstDateOFMonth = new Date(
-    currDate.getFullYear(),
-    currDate.getMonth(),
-    1,
-  );
+  const startDate = new Date(currDate.getFullYear(), currDate.getMonth(), 1);
 
   React.useEffect(() => {
-    fetchDailyExpenses(firstDateOFMonth.toISOString(), currDate.toISOString());
+    fetchDailyExpenses(startDate.toISOString(), currDate.toISOString());
   }, []);
 
   const fetchDailyExpenses = async (startDate: string, endDate: string) => {
@@ -67,7 +63,7 @@ export const DailyExpenseGraph = (): JSX.Element => {
             {
               dataKey: 'date',
               valueFormatter: (v) => format(v, 'yyyy/MM/dd'),
-              min: firstDateOFMonth,
+              min: startDate,
               max: currDate,
             },
           ]}
