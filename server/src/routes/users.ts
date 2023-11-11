@@ -751,10 +751,10 @@ router.get(
 router.get(
   '/:userId/expenses/total-spending-for-categories',
   authenticate,
-  body('startDate')
+  query('startDate')
     .isISO8601()
     .withMessage('startDate must be a valid date in ISO 8601 format.'),
-  body('endDate')
+  query('endDate')
     .isISO8601()
     .withMessage('endDate must be a valid date in ISO 8601 format.'),
   async (req: Request, res: Response) => {
@@ -765,7 +765,8 @@ router.get(
 
     try {
       const userId = parseInt(req.params.userId);
-      const { startDate, endDate } = req.body;
+      const startDate = req.query.startDate as string;
+      const endDate = req.query.endDate as string;
 
       const user = await prisma.user.findUnique({
         where: {
