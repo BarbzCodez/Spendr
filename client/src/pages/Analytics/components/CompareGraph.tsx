@@ -4,73 +4,9 @@ import { MenuItem, TextField, Typography } from '@mui/material';
 import { ArrowUpward, ArrowDownward } from '@mui/icons-material';
 
 import { BackgroundBox, CenteredBox, ComparisonGraphBox } from './styles';
-
-const dailyTotals1 = [
-  { date: '2023-10-01', amount: 45.25 },
-  { date: '2023-10-02', amount: 58.75 },
-  { date: '2023-10-03', amount: 32.4 },
-  { date: '2023-10-04', amount: 70.1 },
-  { date: '2023-10-05', amount: 39.9 },
-  { date: '2023-10-06', amount: 55.6 },
-  { date: '2023-10-07', amount: 47.8 },
-  { date: '2023-10-08', amount: 62.3 },
-  { date: '2023-10-09', amount: 38.5 },
-  { date: '2023-10-10', amount: 49.2 },
-  { date: '2023-10-11', amount: 67.1 },
-  { date: '2023-10-12', amount: 53.75 },
-  { date: '2023-10-13', amount: 29.6 },
-  { date: '2023-10-14', amount: 42.9 },
-  { date: '2023-10-15', amount: 51.4 },
-  { date: '2023-10-16', amount: 59.2 },
-  { date: '2023-10-17', amount: 64.7 },
-  { date: '2023-10-18', amount: 36.8 },
-  { date: '2023-10-19', amount: 48.9 },
-  { date: '2023-10-20', amount: 44.1 },
-  { date: '2023-10-21', amount: 52.4 },
-  { date: '2023-10-22', amount: 61.6 },
-  { date: '2023-10-23', amount: 33.7 },
-  { date: '2023-10-24', amount: 46.8 },
-  { date: '2023-10-25', amount: 38.2 },
-  { date: '2023-10-26', amount: 50.3 },
-  { date: '2023-10-27', amount: 55.4 },
-  { date: '2023-10-28', amount: 69.8 },
-  { date: '2023-10-29', amount: 42.9 },
-  { date: '2023-10-30', amount: 60.1 },
-  { date: '2023-10-31', amount: 37.5 },
-];
-
-const dailyTotals2 = [
-  { date: '2023-09-01', amount: 64.23 },
-  { date: '2023-09-02', amount: 32.65 },
-  { date: '2023-09-03', amount: 89.54 },
-  { date: '2023-09-04', amount: 23.12 },
-  { date: '2023-09-05', amount: 87.57 },
-  { date: '2023-09-06', amount: 23.65 },
-  { date: '2023-09-07', amount: 84.34 },
-  { date: '2023-09-08', amount: 76.23 },
-  { date: '2023-09-09', amount: 15.23 },
-  { date: '2023-09-10', amount: 97.24 },
-  { date: '2023-09-11', amount: 38.75 },
-  { date: '2023-09-12', amount: 83.34 },
-  { date: '2023-09-13', amount: 26.88 },
-  { date: '2023-09-14', amount: 93.35 },
-  { date: '2023-09-15', amount: 88.35 },
-  { date: '2023-09-16', amount: 23.66 },
-  { date: '2023-09-17', amount: 13.25 },
-  { date: '2023-09-18', amount: 64.35 },
-  { date: '2023-09-19', amount: 55.45 },
-  { date: '2023-09-20', amount: 87.24 },
-  { date: '2023-09-21', amount: 12.35 },
-  { date: '2023-09-22', amount: 85.34 },
-  { date: '2023-09-23', amount: 35.24 },
-  { date: '2023-09-24', amount: 86.75 },
-  { date: '2023-09-25', amount: 24.76 },
-  { date: '2023-09-26', amount: 57.76 },
-  { date: '2023-09-27', amount: 68.46 },
-  { date: '2023-09-28', amount: 69.99 },
-  { date: '2023-09-29', amount: 94.46 },
-  { date: '2023-09-30', amount: 35.57 },
-];
+import { dailyTotalExpensesRequest } from '../../../api/UserAPI';
+import { useUser } from '../../../context/UserContext';
+import { DailyTotal } from '../../../interfaces/interfaces';
 
 /**
  * Comparison graph component
@@ -78,12 +14,24 @@ const dailyTotals2 = [
  * @returns {JSX.Element} - comparison graph
  */
 export const CompareGraph: React.FC = () => {
+  const { userId, token } = useUser();
   const [firstMonthIndex, setFirstMonthIndex] = useState(0);
   const [secondMonthIndex, setSecondMonthIndex] = useState(1);
-  const [firstMonthData, setFirstMonthData] = useState(dailyTotals1);
-  const [secondMonthData, setSecondMonthData] = useState(dailyTotals2);
-
-  const getMonthsArray = () => {
+  const [firstMonthData, setFirstMonthData] = useState<
+    { date: Date; amount: number }[]
+  >([]);
+  const [secondMonthData, setSecondMonthData] = useState<
+    { date: Date; amount: number }[]
+  >([]);
+  const [combinedData, setCombinedData] = useState<
+    (
+      | { day: number; firstAmount: number; secondAmount: number }
+      | { day: number; firstAmount: number }
+      | { day: number; secondAmount: number }
+    )[]
+  >([]);
+  const [errorMsg, setErrorMsg] = React.useState('No data to show');
+  const monthsArray = (() => {
     const currDate = new Date();
     const currMonth = currDate.getMonth();
     const currYear = currDate.getFullYear();
@@ -105,23 +53,153 @@ export const CompareGraph: React.FC = () => {
     }
 
     return result;
+  })();
+
+  React.useEffect(() => {
+    setCorrespondingData(firstMonthIndex, setFirstMonthData);
+    setCorrespondingData(secondMonthIndex, setSecondMonthData);
+    calcCombinedData();
+  }, []);
+
+  React.useEffect(() => {
+    setCorrespondingData(firstMonthIndex, setFirstMonthData);
+    calcCombinedData();
+  }, [firstMonthIndex]);
+
+  React.useEffect(() => {
+    setCorrespondingData(secondMonthIndex, setSecondMonthData);
+    calcCombinedData();
+  }, [secondMonthIndex]);
+
+  const setCorrespondingData = (
+    index: number,
+    setFunc: React.Dispatch<
+      React.SetStateAction<
+        {
+          date: Date;
+          amount: number;
+        }[]
+      >
+    >,
+  ) => {
+    const monthYear = monthsArray[index];
+    const startDate = new Date(monthYear.year, monthYear.month, 1);
+    const endDate = new Date(monthYear.year, monthYear.month + 1, 0);
+    console.log('startDate: ' + startDate + ', eEndDate: ' + endDate);
+
+    fetchDailyExpenses(startDate.toISOString(), endDate.toISOString(), setFunc);
   };
-  const monthsArray = getMonthsArray();
 
-  const maxLength = Math.max(firstMonthData.length, secondMonthData.length);
-  const combinedData = Array.from({ length: maxLength }, (_, index) => {
-    const firstEntry = firstMonthData[index] || { amount: 0 };
-    const secondEntry = secondMonthData[index] || { amount: 0 };
-    const day = index + 1;
+  const fetchDailyExpenses = async (
+    startDate: string,
+    endDate: string,
+    setData: React.Dispatch<
+      React.SetStateAction<
+        {
+          date: Date;
+          amount: number;
+        }[]
+      >
+    >,
+  ) => {
+    try {
+      if (userId != null && token != null) {
+        const response = await dailyTotalExpensesRequest(
+          { userId, token },
+          { startDate, endDate },
+        );
 
-    return {
-      day,
-      firstAmount: firstEntry.amount,
-      secondAmount: secondEntry.amount,
-    };
-  });
+        if (response.status === 200) {
+          const totals: [DailyTotal] = response.data.data;
+          const totalsWithDates: { date: Date; amount: number }[] = totals.map(
+            (item) => ({
+              ...item,
+              date: new Date(`${item.date}T12:00:00Z`),
+            }),
+          );
 
-  const getAverage = (data: { date: string; amount: number }[]) => {
+          setData(totalsWithDates);
+          if (totalsWithDates.length == 0) {
+            setErrorMsg(
+              'At least one of the months does not have data to show',
+            );
+          }
+        }
+      }
+    } catch (error) {
+      setErrorMsg('Error fetching data');
+    }
+
+    return;
+  };
+
+  const calcCombinedData = () => {
+    firstMonthData.sort((x, y) => x.date.getTime() - y.date.getTime());
+    secondMonthData.sort((x, y) => x.date.getTime() - y.date.getTime());
+    const combinedArray: (
+      | { day: number; firstAmount: number; secondAmount: number }
+      | { day: number; firstAmount: number }
+      | { day: number; secondAmount: number }
+    )[] = [];
+
+    let firstIndex = 0;
+    let secondIndex = 0;
+
+    while (
+      firstIndex < firstMonthData.length ||
+      secondIndex < secondMonthData.length
+    ) {
+      const firstObj =
+        firstIndex < firstMonthData.length
+          ? firstMonthData[firstIndex]
+          : undefined;
+      const secondObj =
+        secondIndex < secondMonthData.length
+          ? secondMonthData[secondIndex]
+          : undefined;
+
+      if (firstObj == undefined && secondObj != undefined) {
+        combinedArray.push({
+          day: secondObj.date.getDate(),
+          secondAmount: secondObj.amount,
+        });
+        secondIndex++;
+      } else if (secondObj == undefined && firstObj != undefined) {
+        combinedArray.push({
+          day: firstObj.date.getDate(),
+          firstAmount: firstObj.amount,
+        });
+        firstIndex++;
+      } else if (firstObj != undefined && secondObj != undefined) {
+        if (firstObj.date.getTime() == secondObj.date.getTime()) {
+          combinedArray.push({
+            day: firstObj.date.getDate(),
+            firstAmount: firstObj.amount,
+            secondAmount: secondObj.amount,
+          });
+          firstIndex++;
+          secondIndex++;
+        } else if (firstObj.date.getTime() < secondObj.date.getTime()) {
+          combinedArray.push({
+            day: firstObj.date.getDate(),
+            firstAmount: firstObj.amount,
+          });
+          firstIndex++;
+        } else {
+          // firstObj.date.getTime() > secondObj.date.getTime()
+          combinedArray.push({
+            day: secondObj.date.getDate(),
+            secondAmount: secondObj.amount,
+          });
+          secondIndex++;
+        }
+      }
+    }
+
+    setCombinedData(combinedArray);
+  };
+
+  const getAverage = (data: { date: Date; amount: number }[]) => {
     const totalAmount = data.reduce(
       (accumulator, currentValue) => accumulator + currentValue.amount,
       0,
@@ -189,18 +267,12 @@ export const CompareGraph: React.FC = () => {
     );
   };
 
-  const changeFirstMonth = (newVal: number) => {
+  const changeFirstMonthIndex = (newVal: number) => {
     setFirstMonthIndex(newVal);
-
-    // TODO: set firstMonthData to be the response from API request
-    setFirstMonthData(dailyTotals1);
   };
 
-  const changeSecondMonth = (newVal: number) => {
+  const changeSecondMonthIndex = (newVal: number) => {
     setSecondMonthIndex(newVal);
-
-    // TODO: set secondMonthData to be the response from API request
-    setSecondMonthData(dailyTotals2);
   };
 
   return (
@@ -213,7 +285,7 @@ export const CompareGraph: React.FC = () => {
           size="small"
           value={firstMonthIndex}
           onChange={(e) =>
-            changeFirstMonth(e.target.value as unknown as number)
+            changeFirstMonthIndex(e.target.value as unknown as number)
           }
           style={{ margin: '0 2vw', marginTop: '1vh' }}
           InputLabelProps={{
@@ -233,7 +305,7 @@ export const CompareGraph: React.FC = () => {
           size="small"
           value={secondMonthIndex}
           onChange={(e) =>
-            changeSecondMonth(e.target.value as unknown as number)
+            changeSecondMonthIndex(e.target.value as unknown as number)
           }
           style={{ margin: '0 2vw', marginTop: '1vh' }}
           InputLabelProps={{
@@ -247,33 +319,40 @@ export const CompareGraph: React.FC = () => {
           ))}
         </TextField>
       </CenteredBox>
-      <ComparisonGraphBox>
-        <LineChart
-          xAxis={[
-            {
-              dataKey: 'day',
-              min: 1,
-              max: maxLength,
-            },
-          ]}
-          series={[
-            {
-              dataKey: 'firstAmount',
-              label: 'Month 1 Daily Total Expense',
-              color: '#C353DB',
-              showMark: true,
-            },
-            {
-              dataKey: 'secondAmount',
-              label: 'Month 2 Daily Total Expense',
-              color: '#F1E194',
-              showMark: true,
-            },
-          ]}
-          dataset={combinedData}
-        />
-        {getComparisonInfo()}
-      </ComparisonGraphBox>
+      {firstMonthData.length != 0 && secondMonthData.length != 0 && (
+        <ComparisonGraphBox>
+          <LineChart
+            xAxis={[
+              {
+                dataKey: 'day',
+                min: 1,
+                max: 31,
+              },
+            ]}
+            series={[
+              {
+                dataKey: 'firstAmount',
+                label: 'Month 1 Daily Total Expense',
+                color: '#C353DB',
+                showMark: true,
+              },
+              {
+                dataKey: 'secondAmount',
+                label: 'Month 2 Daily Total Expense',
+                color: '#F1E194',
+                showMark: true,
+              },
+            ]}
+            dataset={combinedData}
+          />
+          {getComparisonInfo()}
+        </ComparisonGraphBox>
+      )}
+      {(firstMonthData.length == 0 || secondMonthData.length == 0) && (
+        <Typography variant="body1" align="center">
+          {errorMsg}
+        </Typography>
+      )}
     </BackgroundBox>
   );
 };
