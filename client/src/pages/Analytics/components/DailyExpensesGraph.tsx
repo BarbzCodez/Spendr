@@ -22,6 +22,7 @@ export const DailyExpenseGraph = (): JSX.Element => {
 
   const currDate = new Date();
   const startDate = new Date(currDate.getFullYear(), currDate.getMonth(), 1);
+  const endDate = new Date(currDate.getFullYear(), currDate.getMonth() + 1, 0);
 
   React.useEffect(() => {
     fetchDailyExpenses(startDate.toISOString(), currDate.toISOString());
@@ -43,6 +44,7 @@ export const DailyExpenseGraph = (): JSX.Element => {
               date: new Date(`${item.date}T12:00:00Z`),
             }),
           );
+          totalsWithDates.sort((x, y) => x.date.getTime() - y.date.getTime());
           setDailyTotals(totalsWithDates);
 
           if (dailyTotals.length == 0) {
@@ -64,7 +66,7 @@ export const DailyExpenseGraph = (): JSX.Element => {
               dataKey: 'date',
               valueFormatter: (v) => format(v, 'yyyy/MM/dd'),
               min: startDate,
-              max: currDate,
+              max: endDate,
             },
           ]}
           series={[
