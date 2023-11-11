@@ -175,3 +175,8 @@ export interface DailyTotalsResponse {
   success: boolean;
   data: [DailyTotal];
 }
+
+export interface CategoryTotalsResponse {
+  success: boolean;
+  data: { category: string; amount: number }[];
+}
