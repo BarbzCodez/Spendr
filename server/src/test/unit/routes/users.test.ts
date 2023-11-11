@@ -886,12 +886,9 @@ describe('GET /users/:userId/expenses/total-daily', () => {
 
     prismaMock.expense.findMany.mockResolvedValue(mockedExpenses);
 
-    const response = await request(app)
-      .get('/users/1/expenses/total-daily')
-      .send({
-        startDate: '2023-10-12',
-        endDate: '2023-10-14',
-      });
+    const response = await request(app).get(
+      '/users/1/expenses/total-daily?startDate=2023-10-12&endDate=2023-10-14',
+    );
 
     expect(response.status).toBe(200);
     expect(response.body).toStrictEqual({
@@ -912,12 +909,9 @@ describe('GET /users/:userId/expenses/total-daily', () => {
   it('returns 400 if user does not exist', async () => {
     prismaMock.user.findUnique.mockResolvedValue(null); // Mocking no user
 
-    const response = await request(app)
-      .get('/users/1/expenses/total-daily')
-      .send({
-        startDate: '2023-10-12',
-        endDate: '2023-10-14',
-      });
+    const response = await request(app).get(
+      '/users/1/expenses/total-daily?startDate=2023-10-12&endDate=2023-10-14',
+    );
 
     expect(response.status).toBe(400);
     expect(response.body.message).toBe('Invalid Credentials');
@@ -934,24 +928,18 @@ describe('GET /users/:userId/expenses/total-daily', () => {
     };
     prismaMock.user.findUnique.mockResolvedValue(user);
 
-    const response = await request(app)
-      .get('/users/1/expenses/total-daily')
-      .send({
-        startDate: '2023-10-12',
-        endDate: '2023-10-14',
-      });
+    const response = await request(app).get(
+      '/users/1/expenses/total-daily?startDate=2023-10-12&endDate=2023-10-14',
+    );
 
     expect(response.status).toBe(400);
     expect(response.body.message).toBe('Invalid Credentials');
   });
 
   it('returns 400 when there is an error in the input format', async () => {
-    const response = await request(app)
-      .get('/users/1/expenses/total-daily')
-      .send({
-        startDate: 'random',
-        endDate: 'string',
-      });
+    const response = await request(app).get(
+      '/users/1/expenses/total-daily?startDate=random&endDate=string',
+    );
 
     expect(response.status).toBe(400);
   });
@@ -959,12 +947,9 @@ describe('GET /users/:userId/expenses/total-daily', () => {
   it('returns 500 when there is a server error', async () => {
     prismaMock.user.findUnique.mockRejectedValue(new Error());
 
-    const response = await request(app)
-      .get('/users/1/expenses/total-daily')
-      .send({
-        startDate: '2023-10-12',
-        endDate: '2023-10-14',
-      });
+    const response = await request(app).get(
+      '/users/1/expenses/total-daily?startDate=2023-10-12&endDate=2023-10-14',
+    );
 
     expect(response.status).toBe(500);
     expect(response.body.message).toBe('Server error');
