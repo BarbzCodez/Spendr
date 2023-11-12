@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { LineChart } from '@mui/x-charts/LineChart';
+import { BarChart } from '@mui/x-charts/BarChart';
 import { MenuItem, TextField, Typography } from '@mui/material';
 import { ArrowUpward, ArrowDownward } from '@mui/icons-material';
 
@@ -18,19 +18,15 @@ export const CompareGraph: React.FC = () => {
   const [firstMonthIndex, setFirstMonthIndex] = useState(0);
   const [secondMonthIndex, setSecondMonthIndex] = useState(1);
   const [firstMonthData, setFirstMonthData] = useState<
-    { date: Date; amount: number }[]
+    { date: string; amount: number }[]
   >([]);
   const [secondMonthData, setSecondMonthData] = useState<
-    { date: Date; amount: number }[]
+    { date: string; amount: number }[]
   >([]);
   const [combinedData, setCombinedData] = useState<
-    (
-      | { day: number; firstAmount: number; secondAmount: number }
-      | { day: number; firstAmount: number }
-      | { day: number; secondAmount: number }
-    )[]
+    { day: number; firstAmount: number; secondAmount: number }[]
   >([]);
-  const [errorMsg, setErrorMsg] = React.useState('No data to show');
+  const [errorMsg, setErrorMsg] = React.useState('Loading...');
   const monthsArray = (() => {
     const currDate = new Date();
     const currMonth = currDate.getMonth();
@@ -56,27 +52,42 @@ export const CompareGraph: React.FC = () => {
   })();
 
   React.useEffect(() => {
-    setCorrespondingData(firstMonthIndex, setFirstMonthData);
-    setCorrespondingData(secondMonthIndex, setSecondMonthData);
-    calcCombinedData();
+    const updateData = async () => {
+      await setCorrespondingData(firstMonthIndex, setFirstMonthData);
+      await setCorrespondingData(secondMonthIndex, setSecondMonthData);
+    };
+
+    updateData();
   }, []);
 
   React.useEffect(() => {
-    setCorrespondingData(firstMonthIndex, setFirstMonthData);
-    calcCombinedData();
+    const updateData = async () => {
+      await setCorrespondingData(firstMonthIndex, setFirstMonthData);
+    };
+
+    updateData();
   }, [firstMonthIndex]);
 
   React.useEffect(() => {
-    setCorrespondingData(secondMonthIndex, setSecondMonthData);
-    calcCombinedData();
+    const updateData = async () => {
+      await setCorrespondingData(secondMonthIndex, setSecondMonthData);
+    };
+
+    updateData();
   }, [secondMonthIndex]);
 
-  const setCorrespondingData = (
+  React.useEffect(() => {
+    if (firstMonthData.length != 0 && secondMonthData.length != 0) {
+      calcAndSetCombinedData();
+    }
+  }, [firstMonthData, secondMonthData]);
+
+  const setCorrespondingData = async (
     index: number,
     setFunc: React.Dispatch<
       React.SetStateAction<
         {
-          date: Date;
+          date: string;
           amount: number;
         }[]
       >
@@ -85,9 +96,12 @@ export const CompareGraph: React.FC = () => {
     const monthYear = monthsArray[index];
     const startDate = new Date(monthYear.year, monthYear.month, 1);
     const endDate = new Date(monthYear.year, monthYear.month + 1, 0);
-    console.log('startDate: ' + startDate + ', eEndDate: ' + endDate);
 
-    fetchDailyExpenses(startDate.toISOString(), endDate.toISOString(), setFunc);
+    await fetchDailyExpenses(
+      startDate.toISOString(),
+      endDate.toISOString(),
+      setFunc,
+    );
   };
 
   const fetchDailyExpenses = async (
@@ -96,7 +110,7 @@ export const CompareGraph: React.FC = () => {
     setData: React.Dispatch<
       React.SetStateAction<
         {
-          date: Date;
+          date: string;
           amount: number;
         }[]
       >
@@ -111,14 +125,11 @@ export const CompareGraph: React.FC = () => {
 
         if (response.status === 200) {
           const totals: [DailyTotal] = response.data.data;
-          const totalsWithDates: { date: Date; amount: number }[] = totals.map(
-            (item) => ({
-              ...item,
-              date: new Date(`${item.date}T12:00:00Z`),
-            }),
-          );
-
+          const totalsWithDates: { date: string; amount: number }[] =
+            getTotalsWithDates(totals);
+          totalsWithDates.sort((x, y) => (x.date > y.date ? 1 : -1));
           setData(totalsWithDates);
+
           if (totalsWithDates.length == 0) {
             setErrorMsg(
               'At least one of the months does not have data to show',
@@ -129,77 +140,59 @@ export const CompareGraph: React.FC = () => {
     } catch (error) {
       setErrorMsg('Error fetching data');
     }
-
-    return;
   };
 
-  const calcCombinedData = () => {
-    firstMonthData.sort((x, y) => x.date.getTime() - y.date.getTime());
-    secondMonthData.sort((x, y) => x.date.getTime() - y.date.getTime());
-    const combinedArray: (
-      | { day: number; firstAmount: number; secondAmount: number }
-      | { day: number; firstAmount: number }
-      | { day: number; secondAmount: number }
-    )[] = [];
+  const getTotalsWithDates = (totals: [DailyTotal]) => {
+    const datesMap = new Map<string, number>();
+    const startDate = new Date(
+      parseInt(totals[0].date.split('-')[0]),
+      parseInt(totals[0].date.split('-')[1]) - 1,
+      1,
+    );
+    const endDate = new Date(
+      parseInt(totals[0].date.split('-')[0]),
+      parseInt(totals[0].date.split('-')[1]),
+      0,
+    );
 
-    let firstIndex = 0;
-    let secondIndex = 0;
+    totals.forEach(({ date, amount }) => {
+      datesMap.set(date, amount);
+    });
 
-    while (
-      firstIndex < firstMonthData.length ||
-      secondIndex < secondMonthData.length
-    ) {
-      const firstObj =
-        firstIndex < firstMonthData.length
-          ? firstMonthData[firstIndex]
-          : undefined;
-      const secondObj =
-        secondIndex < secondMonthData.length
-          ? secondMonthData[secondIndex]
-          : undefined;
-
-      if (firstObj == undefined && secondObj != undefined) {
-        combinedArray.push({
-          day: secondObj.date.getDate(),
-          secondAmount: secondObj.amount,
-        });
-        secondIndex++;
-      } else if (secondObj == undefined && firstObj != undefined) {
-        combinedArray.push({
-          day: firstObj.date.getDate(),
-          firstAmount: firstObj.amount,
-        });
-        firstIndex++;
-      } else if (firstObj != undefined && secondObj != undefined) {
-        if (firstObj.date.getTime() == secondObj.date.getTime()) {
-          combinedArray.push({
-            day: firstObj.date.getDate(),
-            firstAmount: firstObj.amount,
-            secondAmount: secondObj.amount,
-          });
-          firstIndex++;
-          secondIndex++;
-        } else if (firstObj.date.getTime() < secondObj.date.getTime()) {
-          combinedArray.push({
-            day: firstObj.date.getDate(),
-            firstAmount: firstObj.amount,
-          });
-          firstIndex++;
-        } else {
-          // firstObj.date.getTime() > secondObj.date.getTime()
-          combinedArray.push({
-            day: secondObj.date.getDate(),
-            secondAmount: secondObj.amount,
-          });
-          secondIndex++;
-        }
+    const currentDate = startDate;
+    while (currentDate <= endDate) {
+      const currentDateStr = currentDate.toISOString().split('T')[0];
+      if (!datesMap.has(currentDateStr)) {
+        datesMap.set(currentDateStr, 0);
       }
+      currentDate.setDate(currentDate.getDate() + 1);
     }
 
-    setCombinedData(combinedArray);
+    const result = Array.from(datesMap, ([date, amount]) => ({
+      date: date,
+      amount: amount,
+    }));
+    return result;
   };
 
-  const getAverage = (data: { date: Date; amount: number }[]) => {
+  const calcAndSetCombinedData = () => {
+    const maxLength = Math.max(firstMonthData.length, secondMonthData.length);
+    const combinedData = Array.from({ length: maxLength }, (_, index) => {
+      const firstEntry = firstMonthData[index] || { amount: 0 };
+      const secondEntry = secondMonthData[index] || { amount: 0 };
+      const day = index + 1;
+
+      return {
+        day,
+        firstAmount: firstEntry.amount,
+        secondAmount: secondEntry.amount,
+      };
+    });
+
+    setCombinedData(combinedData);
+  };
+
+  const getAverage = (data: { date: string; amount: number }[]) => {
     const totalAmount = data.reduce(
       (accumulator, currentValue) => accumulator + currentValue.amount,
       0,
@@ -319,14 +312,15 @@ export const CompareGraph: React.FC = () => {
           ))}
         </TextField>
       </CenteredBox>
-      {firstMonthData.length != 0 && secondMonthData.length != 0 && (
+      {combinedData.length != 0 && (
         <ComparisonGraphBox>
-          <LineChart
+          <BarChart
             xAxis={[
               {
                 dataKey: 'day',
                 min: 1,
                 max: 31,
+                scaleType: 'band',
               },
             ]}
             series={[
@@ -334,13 +328,11 @@ export const CompareGraph: React.FC = () => {
                 dataKey: 'firstAmount',
                 label: 'Month 1 Daily Total Expense',
                 color: '#C353DB',
-                showMark: true,
               },
               {
                 dataKey: 'secondAmount',
                 label: 'Month 2 Daily Total Expense',
                 color: '#F1E194',
-                showMark: true,
               },
             ]}
             dataset={combinedData}
@@ -348,7 +340,7 @@ export const CompareGraph: React.FC = () => {
           {getComparisonInfo()}
         </ComparisonGraphBox>
       )}
-      {(firstMonthData.length == 0 || secondMonthData.length == 0) && (
+      {combinedData.length == 0 && (
         <Typography variant="body1" align="center">
           {errorMsg}
         </Typography>
