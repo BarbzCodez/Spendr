@@ -3,7 +3,7 @@ import { Typography } from '@mui/material';
 
 import { PrimaryDiv } from '../../assets/styles';
 import Header from '../../components/Header';
-import { DailyExpenseGraph } from './components/DailyExpensesGraph';
+import { MonthlyExpensesGraph } from './components/MonthlyExpensesGraph';
 import { CategoryGraph } from './components/CategoryGraph';
 import { CompareGraph } from './components/CompareGraph';
 import {
@@ -28,7 +28,7 @@ const Analytics = (): JSX.Element => {
             This month
           </Typography>
           <DailyAndCategoryBox>
-            <DailyExpenseGraph />
+            <MonthlyExpensesGraph />
             <CategoryGraph />
           </DailyAndCategoryBox>
         </AnalyticsSubBox>
