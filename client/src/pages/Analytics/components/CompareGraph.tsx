@@ -223,11 +223,7 @@ export const CompareGraph: React.FC = () => {
             marginBottom: 15,
           }}
         >
-          <Typography
-            variant="body1"
-            align="center"
-            style={{ color: `${color}` }}
-          >
+          <Typography variant="body1" align="center" style={{ color: color }}>
             {monthString}
           </Typography>
           <Typography variant="body1" align="center">
