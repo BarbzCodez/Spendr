@@ -1,12 +1,15 @@
 import React, { useState } from 'react';
 import { BarChart } from '@mui/x-charts/BarChart';
-import { MenuItem, TextField, Typography } from '@mui/material';
+import { MenuItem, TextField, Typography, Stack } from '@mui/material';
 import { ArrowUpward, ArrowDownward } from '@mui/icons-material';
 
 import { BackgroundBox, CenteredBox, ComparisonGraphBox } from './styles';
 import { dailyTotalExpensesRequest } from '../../../api/UserAPI';
 import { useUser } from '../../../context/UserContext';
 import { DailyTotal } from '../../../interfaces/interfaces';
+
+const firstColor = '#C353DB';
+const secondColor = '#F1E194';
 
 /**
  * Comparison graph component
@@ -201,19 +204,6 @@ export const CompareGraph: React.FC = () => {
   };
 
   const getComparisonInfo = () => {
-    const firstMonthString = new Date(
-      monthsArray[firstMonthIndex].year,
-      monthsArray[firstMonthIndex].month,
-    ).toLocaleString('default', {
-      month: 'short',
-    });
-    const secondMonthString = new Date(
-      monthsArray[secondMonthIndex].year,
-      monthsArray[secondMonthIndex].month,
-    ).toLocaleString('default', {
-      month: 'short',
-    });
-
     const firstMonthAvg = Number(getAverage(firstMonthData));
     const secondMonthAvg = Number(getAverage(secondMonthData));
     const percentageChange = Math.abs(
@@ -221,11 +211,29 @@ export const CompareGraph: React.FC = () => {
     ).toFixed(2);
     const isDecrease = firstMonthAvg >= secondMonthAvg;
 
-    const averageText = (monthString: string, average: number) => {
+    const averageText = (
+      monthString: string,
+      average: number,
+      color: string,
+    ) => {
       return (
-        <Typography variant="body1" style={{ width: 157 }}>
-          {monthString} average: {average.toFixed(2)}
-        </Typography>
+        <Stack
+          style={{
+            width: 125,
+            marginBottom: 15,
+          }}
+        >
+          <Typography
+            variant="body1"
+            align="center"
+            style={{ color: `${color}` }}
+          >
+            {monthString}
+          </Typography>
+          <Typography variant="body1" align="center">
+            average: {average.toFixed(2)}
+          </Typography>
+        </Stack>
       );
     };
 
@@ -235,8 +243,16 @@ export const CompareGraph: React.FC = () => {
           flexDirection: 'column',
         }}
       >
-        {averageText(firstMonthString, firstMonthAvg)}
-        {averageText(secondMonthString, secondMonthAvg)}
+        {averageText(
+          monthsArray[firstMonthIndex].text,
+          firstMonthAvg,
+          firstColor,
+        )}
+        {averageText(
+          monthsArray[secondMonthIndex].text,
+          secondMonthAvg,
+          secondColor,
+        )}
 
         <CenteredBox
           style={{
@@ -277,7 +293,7 @@ export const CompareGraph: React.FC = () => {
           }
           style={{ margin: '0 2vw', marginTop: '1vh' }}
           InputLabelProps={{
-            style: { color: '#C353DB' },
+            style: { color: firstColor },
           }}
         >
           {monthsArray.map((item, index) => (
@@ -297,7 +313,7 @@ export const CompareGraph: React.FC = () => {
           }
           style={{ margin: '0 2vw', marginTop: '1vh' }}
           InputLabelProps={{
-            style: { color: '#F1E194' },
+            style: { color: secondColor },
           }}
         >
           {monthsArray.map((item, index) => (
@@ -321,13 +337,13 @@ export const CompareGraph: React.FC = () => {
             series={[
               {
                 dataKey: 'firstAmount',
-                label: 'Month 1 Daily Total Expense',
-                color: '#C353DB',
+                label: `${monthsArray[firstMonthIndex].text} Daily Total Expense`,
+                color: firstColor,
               },
               {
                 dataKey: 'secondAmount',
-                label: 'Month 2 Daily Total Expense',
-                color: '#F1E194',
+                label: `${monthsArray[secondMonthIndex].text} Daily Total Expense`,
+                color: secondColor,
               },
             ]}
             dataset={combinedData}
