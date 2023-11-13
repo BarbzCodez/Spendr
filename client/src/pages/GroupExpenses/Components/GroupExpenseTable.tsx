@@ -225,9 +225,15 @@ export const GroupExpensesTable: React.FC<GroupExpenseTableProps> = ({
       <Dialog open={openDisclaimer} onClose={handleCloseDisclaimer}>
         <DialogTitle>Disclaimer</DialogTitle>
         <DialogContent>
-          <DialogContentText id="alert-dialog-description">
+          <DialogContentText
+            style={{
+              whiteSpace: 'pre-line',
+            }}
+          >
             Please note that by confirming this action, a personal expense will
-            be created and the group will know that you paid
+            be created with the amount you are marking as paid.{'\n'}Any further
+            edits or deletions made to that expense will not be reflected in the
+            group expense.
           </DialogContentText>
         </DialogContent>
         <DialogActions>

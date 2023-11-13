@@ -1,9 +1,10 @@
 import * as React from 'react';
 import AddIcon from '@mui/icons-material/Add';
 import { Alert, Snackbar } from '@mui/material';
+import { Stack } from '@mui/material';
+import axios, { AxiosError } from 'axios';
 
 import { PrimaryDiv } from '../../assets/styles/styles';
-import { Stack } from '@mui/material';
 import { PrimaryButton } from '../../assets/styles/styles';
 import {
   GroupExpenseUIData,
@@ -28,12 +29,15 @@ import {
  * @returns {JSX.Element} - expenses page
  */
 const GroupExpenses = (): JSX.Element => {
-  const [isDialogOpen, setIsDialogOpen] = React.useState(false);
+  const [isDialogOpen, setIsDialogOpen] = React.useState<boolean>(false);
   const [groupExpenses, setGroupExpenses] = React.useState<GroupExpenseData[]>(
     [],
   );
-  const [isSnackbarOpen, setIsSnackbarOpen] = React.useState(false);
-  const { userId, token } = useUser();
+
+  const [isSnackbarOpen, setIsSnackbarOpen] = React.useState<boolean>(false);
+  const [generalError, setGeneralError] = React.useState<string>('');
+
+  const { userId, token, username } = useUser();
 
   React.useEffect(() => {
     fetchGroupExpenses();
@@ -50,7 +54,7 @@ const GroupExpenses = (): JSX.Element => {
         }
       }
     } catch (error) {
-      setIsSnackbarOpen(true);
+      setGeneralError('An error occurred, please try again');
     }
   };
 
@@ -84,6 +88,21 @@ const GroupExpenses = (): JSX.Element => {
         }
       }
     } catch (error) {
+      if (axios.isAxiosError(error)) {
+        const axiosError: AxiosError = error;
+        const errorData = axiosError.response?.data as { message: string };
+        if (
+          axiosError.response?.status === 400 &&
+          errorData.message ===
+            "Invalid usernames, at least one of the users doesn't exist"
+        ) {
+          setGeneralError(
+            "At least one of the users doesn't exist. Please make sure you input the right names",
+          );
+        } else {
+          setGeneralError('An error occurred, please try again');
+        }
+      }
       setIsSnackbarOpen(true);
     }
   };
@@ -116,6 +135,7 @@ const GroupExpenses = (): JSX.Element => {
   return (
     <PrimaryDiv>
       <GroupExpenseDialog
+        username={username ?? ''}
         open={isDialogOpen}
         onClose={() => setIsDialogOpen(false)}
         onAdd={handleAddGroupExpense}
@@ -131,7 +151,7 @@ const GroupExpenses = (): JSX.Element => {
           severity="error"
           sx={{ width: '100%' }}
         >
-          An error occurred
+          {generalError}
         </Alert>
       </Snackbar>
       <Header />

@@ -179,6 +179,7 @@ export interface GroupExpenseAsPaid {
 }
 
 export interface GroupExpenseDialogProps {
+  username: string;
   open: boolean;
   onClose: () => void;
   onAdd: (groupExpenseData: GroupExpenseUIData) => void;
