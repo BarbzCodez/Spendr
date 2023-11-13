@@ -52,17 +52,17 @@ export const CompareGraph: React.FC = () => {
   })();
 
   React.useEffect(() => {
-    const updateData = async () => {
-      await setCorrespondingData(firstMonthIndex, setFirstMonthData);
-      await setCorrespondingData(secondMonthIndex, setSecondMonthData);
+    const setMonthsData = async () => {
+      await setMonthlyData(firstMonthIndex, setFirstMonthData);
+      await setMonthlyData(secondMonthIndex, setSecondMonthData);
     };
 
-    updateData();
+    setMonthsData();
   }, []);
 
   React.useEffect(() => {
     const updateData = async () => {
-      await setCorrespondingData(firstMonthIndex, setFirstMonthData);
+      await setMonthlyData(firstMonthIndex, setFirstMonthData);
     };
 
     updateData();
@@ -70,7 +70,7 @@ export const CompareGraph: React.FC = () => {
 
   React.useEffect(() => {
     const updateData = async () => {
-      await setCorrespondingData(secondMonthIndex, setSecondMonthData);
+      await setMonthlyData(secondMonthIndex, setSecondMonthData);
     };
 
     updateData();
@@ -82,7 +82,7 @@ export const CompareGraph: React.FC = () => {
     }
   }, [firstMonthData, secondMonthData]);
 
-  const setCorrespondingData = async (
+  const setMonthlyData = async (
     index: number,
     setFunc: React.Dispatch<
       React.SetStateAction<
@@ -197,32 +197,37 @@ export const CompareGraph: React.FC = () => {
       (accumulator, currentValue) => accumulator + currentValue.amount,
       0,
     );
-    const average = totalAmount / data.length;
-    return average.toFixed(2);
+    return totalAmount / data.length;
   };
 
   const getComparisonInfo = () => {
-    const month1String = new Date(
+    const firstMonthString = new Date(
       monthsArray[firstMonthIndex].year,
       monthsArray[firstMonthIndex].month,
     ).toLocaleString('default', {
       month: 'short',
     });
-    const month2String = new Date(
+    const secondMonthString = new Date(
       monthsArray[secondMonthIndex].year,
       monthsArray[secondMonthIndex].month,
     ).toLocaleString('default', {
       month: 'short',
     });
 
-    const firstMonthAvg = getAverage(firstMonthData);
-    const secondMonthAvg = getAverage(secondMonthData);
-    const percentageChange = (
-      ((Number(secondMonthAvg) - Number(firstMonthAvg)) /
-        Number(firstMonthAvg)) *
-      100
+    const firstMonthAvg = Number(getAverage(firstMonthData));
+    const secondMonthAvg = Number(getAverage(secondMonthData));
+    const percentageChange = Math.abs(
+      ((secondMonthAvg - firstMonthAvg) / firstMonthAvg) * 100,
     ).toFixed(2);
-    const isDecrease = firstMonthAvg > secondMonthAvg;
+    const isDecrease = firstMonthAvg >= secondMonthAvg;
+
+    const averageText = (monthString: string, average: number) => {
+      return (
+        <Typography variant="body1" style={{ width: 157 }}>
+          {monthString} average: {average.toFixed(2)}
+        </Typography>
+      );
+    };
 
     return (
       <CenteredBox
@@ -230,32 +235,22 @@ export const CompareGraph: React.FC = () => {
           flexDirection: 'column',
         }}
       >
-        <Typography variant="body1" style={{ width: 157 }}>
-          {month1String} average: {firstMonthAvg}
-        </Typography>
-        <Typography variant="body1" style={{ width: 157 }}>
-          {month2String} average: {secondMonthAvg}
-        </Typography>
+        {averageText(firstMonthString, firstMonthAvg)}
+        {averageText(secondMonthString, secondMonthAvg)}
 
-        {isDecrease ? (
-          <CenteredBox
-            style={{
-              flexDirection: 'row',
-            }}
-          >
+        <CenteredBox
+          style={{
+            flexDirection: 'row',
+          }}
+        >
+          {isDecrease ? (
             <ArrowDownward sx={{ color: 'green' }} />
-            <Typography variant="body1">{percentageChange}%</Typography>
-          </CenteredBox>
-        ) : (
-          <CenteredBox
-            style={{
-              flexDirection: 'row',
-            }}
-          >
+          ) : (
             <ArrowUpward sx={{ color: 'red' }} />
-            <Typography variant="body1">{percentageChange}%</Typography>
-          </CenteredBox>
-        )}
+          )}
+
+          <Typography variant="body1">{percentageChange}%</Typography>
+        </CenteredBox>
       </CenteredBox>
     );
   };
