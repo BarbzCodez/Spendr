@@ -18,7 +18,7 @@ export const MonthlyExpensesGraph = (): JSX.Element => {
   const [accumulatedTotals, setAccumulatedTotals] = React.useState<
     { date: Date; accumulatedAmount: number }[]
   >([]);
-  const [errorMsg, setErrorMsg] = React.useState('Loading...');
+  const [errorState, setErrorState] = React.useState(false);
 
   const currDate = new Date();
   const startDate = new Date(currDate.getFullYear(), currDate.getMonth(), 1);
@@ -43,34 +43,28 @@ export const MonthlyExpensesGraph = (): JSX.Element => {
 
         if (response.status === 200) {
           const totals: [DailyTotal] = response.data.data;
-          calcAndSetAccumulatedTotals(totals);
-
-          if (accumulatedTotals.length == 0) {
-            setErrorMsg('No data to show');
-          }
+          calcAndSetAccumulatedTotals(totals, startDate, endDate);
         }
       }
     } catch (error) {
-      setErrorMsg('Error fetching data');
+      setErrorState(true);
     }
   };
 
-  const calcAndSetAccumulatedTotals = (dailyTotals: [DailyTotal]) => {
+  const calcAndSetAccumulatedTotals = (
+    dailyTotals: DailyTotal[],
+    startDateStr: string,
+    endDateStr: string,
+  ) => {
     const datesMap = new Map<string, number>();
-    const startDate = new Date(
-      parseInt(dailyTotals[0].date.split('-')[0]),
-      parseInt(dailyTotals[0].date.split('-')[1]) - 1,
-      1,
-    );
-    const endDate = new Date(
-      parseInt(dailyTotals[0].date.split('-')[0]),
-      parseInt(dailyTotals[0].date.split('-')[1]),
-      0,
-    );
+    const startDate = new Date(startDateStr);
+    const endDate = new Date(endDateStr);
 
-    dailyTotals.forEach(({ date, amount }) => {
-      datesMap.set(date, amount);
-    });
+    if (dailyTotals.length != 0) {
+      dailyTotals.forEach(({ date, amount }) => {
+        datesMap.set(date, amount);
+      });
+    }
 
     const currentDate = startDate;
     while (currentDate <= endDate) {
@@ -98,7 +92,7 @@ export const MonthlyExpensesGraph = (): JSX.Element => {
 
   return (
     <BackgroundBox>
-      {accumulatedTotals.length != 0 && (
+      {!errorState && accumulatedTotals.length != 0 && (
         <LineChart
           xAxis={[
             {
@@ -119,9 +113,14 @@ export const MonthlyExpensesGraph = (): JSX.Element => {
           dataset={accumulatedTotals}
         />
       )}
-      {accumulatedTotals.length == 0 && (
+      {!errorState && accumulatedTotals.length == 0 && (
         <Typography variant="body1" align="center">
-          {errorMsg}
+          Fetching data...
+        </Typography>
+      )}
+      {errorState && (
+        <Typography variant="body1" align="center">
+          Error fetching data. Please reload.
         </Typography>
       )}
     </BackgroundBox>

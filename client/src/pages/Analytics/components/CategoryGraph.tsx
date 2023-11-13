@@ -25,7 +25,7 @@ export const CategoryGraph: React.FC = () => {
   const [categoryTotals, setCategoryTotals] = React.useState<
     { id: number; value: number; label: string }[]
   >([]);
-  const [errorMsg, setErrorMsg] = React.useState('Loading...');
+  const [errorState, setErrorState] = React.useState(false);
   const currDate = new Date();
   const startDate = new Date(currDate.getFullYear(), currDate.getMonth(), 1);
 
@@ -46,14 +46,10 @@ export const CategoryGraph: React.FC = () => {
             response.data.data;
           const processedTotals = processData(totals);
           setCategoryTotals(processedTotals);
-
-          if (categoryTotals.length == 0) {
-            setErrorMsg('No data to show');
-          }
         }
       }
     } catch (error) {
-      setErrorMsg('Error fetching data');
+      setErrorState(true);
     }
   };
 
@@ -74,7 +70,7 @@ export const CategoryGraph: React.FC = () => {
 
   return (
     <BackgroundBox>
-      {categoryTotals.length != 0 && (
+      {!errorState && categoryTotals.length != 0 && (
         <PieChart
           colors={[
             '#FFB7B2',
@@ -94,9 +90,14 @@ export const CategoryGraph: React.FC = () => {
           height={250}
         />
       )}
-      {categoryTotals.length == 0 && (
+      {!errorState && categoryTotals.length == 0 && (
         <Typography variant="body1" align="center">
-          {errorMsg}
+          Fetching data...
+        </Typography>
+      )}
+      {errorState && (
+        <Typography variant="body1" align="center">
+          Error loading data. Please reload.
         </Typography>
       )}
     </BackgroundBox>

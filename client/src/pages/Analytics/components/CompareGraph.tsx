@@ -29,7 +29,7 @@ export const CompareGraph: React.FC = () => {
   const [combinedData, setCombinedData] = useState<
     { day: number; firstAmount: number; secondAmount: number }[]
   >([]);
-  const [errorMsg, setErrorMsg] = React.useState('Loading...');
+  const [errorState, setErrorState] = React.useState(false);
   const monthsArray = (() => {
     const currDate = new Date();
     const currMonth = currDate.getMonth();
@@ -80,9 +80,7 @@ export const CompareGraph: React.FC = () => {
   }, [secondMonthIndex]);
 
   React.useEffect(() => {
-    if (firstMonthData.length != 0 && secondMonthData.length != 0) {
-      calcAndSetCombinedData();
-    }
+    calcAndSetCombinedData();
   }, [firstMonthData, secondMonthData]);
 
   const setMonthlyData = async (
@@ -129,38 +127,30 @@ export const CompareGraph: React.FC = () => {
         if (response.status === 200) {
           const totals: [DailyTotal] = response.data.data;
           const totalsWithDates: { date: string; amount: number }[] =
-            getTotalsWithDates(totals);
+            getTotalsWithDates(totals, startDate, endDate);
           totalsWithDates.sort((x, y) => (x.date > y.date ? 1 : -1));
           setData(totalsWithDates);
-
-          if (totalsWithDates.length == 0) {
-            setErrorMsg(
-              'At least one of the months does not have data to show',
-            );
-          }
         }
       }
     } catch (error) {
-      setErrorMsg('Error fetching data');
+      setErrorState(true);
     }
   };
 
-  const getTotalsWithDates = (totals: [DailyTotal]) => {
+  const getTotalsWithDates = (
+    totals: DailyTotal[],
+    startDateStr: string,
+    endDateStr: string,
+  ) => {
     const datesMap = new Map<string, number>();
-    const startDate = new Date(
-      parseInt(totals[0].date.split('-')[0]),
-      parseInt(totals[0].date.split('-')[1]) - 1,
-      1,
-    );
-    const endDate = new Date(
-      parseInt(totals[0].date.split('-')[0]),
-      parseInt(totals[0].date.split('-')[1]),
-      0,
-    );
+    const startDate = new Date(startDateStr);
+    const endDate = new Date(endDateStr);
 
-    totals.forEach(({ date, amount }) => {
-      datesMap.set(date, amount);
-    });
+    if (totals.length != 0) {
+      totals.forEach(({ date, amount }) => {
+        datesMap.set(date, amount);
+      });
+    }
 
     const currentDate = startDate;
     while (currentDate <= endDate) {
@@ -206,9 +196,12 @@ export const CompareGraph: React.FC = () => {
   const getComparisonInfo = () => {
     const firstMonthAvg = Number(getAverage(firstMonthData));
     const secondMonthAvg = Number(getAverage(secondMonthData));
-    const percentageChange = Math.abs(
-      ((secondMonthAvg - firstMonthAvg) / firstMonthAvg) * 100,
-    ).toFixed(2);
+    const percentageChange =
+      firstMonthAvg == 0 && secondMonthAvg == 0
+        ? '0.00'
+        : Math.abs(
+            ((secondMonthAvg - firstMonthAvg) / firstMonthAvg) * 100,
+          ).toFixed(2);
     const isDecrease = firstMonthAvg >= secondMonthAvg;
 
     const averageText = (
@@ -319,7 +312,7 @@ export const CompareGraph: React.FC = () => {
           ))}
         </TextField>
       </CenteredBox>
-      {combinedData.length != 0 && (
+      {!errorState && combinedData.length != 0 && (
         <ComparisonGraphBox>
           <BarChart
             xAxis={[
@@ -347,9 +340,14 @@ export const CompareGraph: React.FC = () => {
           {getComparisonInfo()}
         </ComparisonGraphBox>
       )}
-      {combinedData.length == 0 && (
+      {!errorState && combinedData.length == 0 && (
         <Typography variant="body1" align="center">
-          {errorMsg}
+          Fetching data...
+        </Typography>
+      )}
+      {errorState && (
+        <Typography variant="body1" align="center">
+          Error fetching data. Please reload.
         </Typography>
       )}
     </BackgroundBox>
