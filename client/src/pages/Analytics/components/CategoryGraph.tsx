@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { PieChart } from '@mui/x-charts/PieChart';
-import { Typography, Box, Stack } from '@mui/material';
+import { Typography, Box } from '@mui/material';
 import CircleIcon from '@mui/icons-material/Circle';
 
 import { useUser } from '../../../context/UserContext';
