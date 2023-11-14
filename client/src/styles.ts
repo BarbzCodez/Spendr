@@ -1,4 +1,4 @@
-import { styled, Stack, Box } from '@mui/system';
+import { styled, Box } from '@mui/system';
 
 export const PopupDiv = styled(Box)({
   maxHeight: '100vh',

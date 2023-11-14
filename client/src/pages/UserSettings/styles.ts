@@ -1,4 +1,4 @@
-import { styled, Stack, Box } from '@mui/system';
+import { styled, Stack } from '@mui/system';
 
 export const SettingsStack = styled(Stack)(({ theme }) => ({
   background: `${theme.palette.secondary.main} 0%`,
