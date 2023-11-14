@@ -7,7 +7,9 @@
     "start": "node ./build/server.js",
     "build": "rm -rf ./build && tsc -p ./",
     "lint": "eslint --ext .ts .",
-    "test": "jest",
+    "test": "jest --testPathPattern=unit --collect-coverage",
+    "test:integration": "sh ./run-integration-tests.sh",
+    "test:integration:cleanup": "docker-compose -f docker-compose.test.yml down",
     "postinstall": "prisma generate"
   },
   "keywords": [],
