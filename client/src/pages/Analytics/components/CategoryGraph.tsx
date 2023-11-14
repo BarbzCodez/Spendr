@@ -1,19 +1,16 @@
 import * as React from 'react';
-import { BackgroundBox } from './styles';
 import { PieChart } from '@mui/x-charts/PieChart';
-import { Typography } from '@mui/material';
+import { Typography, Box, Stack } from '@mui/material';
+import CircleIcon from '@mui/icons-material/Circle';
 
 import { useUser } from '../../../context/UserContext';
 import { categoryTotalExpensesRequest } from '../../../api/UserAPI';
-
-const allCategories = [
-  'GROCERIES',
-  'TRANSPORT',
-  'ENTERTAINMENT',
-  'HEALTH',
-  'UTILITIES',
-  'OTHER',
-];
+import { categories, categoryGraphColors } from '../../../constants/constants';
+import {
+  BackgroundBox,
+  DataHorizontalBox,
+  CategoriesLegendBox,
+} from './styles';
 
 /**
  * Category graph component
@@ -32,6 +29,10 @@ export const CategoryGraph: React.FC = () => {
   React.useEffect(() => {
     fetchCategoryExpenses(startDate.toISOString(), currDate.toISOString());
   }, []);
+
+  React.useEffect(() => {
+    console.log(window.innerWidth);
+  }, [window.innerWidth]);
 
   const fetchCategoryExpenses = async (startDate: string, endDate: string) => {
     try {
@@ -59,7 +60,7 @@ export const CategoryGraph: React.FC = () => {
     const categoryMap = new Map(
       totals.map((item) => [item.category, item.amount]),
     );
-    const processedData = allCategories.map((category, index) => ({
+    const processedData = categories.map((category, index) => ({
       id: index,
       value: categoryMap.get(category) || 0,
       label: category,
@@ -68,27 +69,56 @@ export const CategoryGraph: React.FC = () => {
     return processedData;
   };
 
+  const getCategoriesLegend = () => {
+    return (
+      <CategoriesLegendBox>
+        {categories.map((category, index) => (
+          <Box
+            key={index}
+            sx={{
+              display: 'flex',
+              flexDirection: 'row',
+            }}
+          >
+            <CircleIcon style={{ color: categoryGraphColors[index] }} />
+            <Typography
+              variant="body1"
+              align="center"
+              sx={{
+                '@media (max-width:1000px)': {
+                  fontSize: '0.7rem',
+                },
+              }}
+            >
+              {category}
+            </Typography>
+          </Box>
+        ))}
+      </CategoriesLegendBox>
+    );
+  };
+
   return (
     <BackgroundBox>
       {!errorState && categoryTotals.length != 0 && (
-        <PieChart
-          colors={[
-            '#FFB7B2',
-            '#B2FFCC',
-            '#EBB2FF',
-            '#FFF3B2',
-            '#FFB2E5',
-            '#B2C3FF',
-          ]}
-          series={[
-            {
-              data: categoryTotals,
-              highlightScope: { faded: 'global', highlighted: 'item' },
-              faded: { innerRadius: 30, additionalRadius: -30 },
-            },
-          ]}
-          height={250}
-        />
+        <DataHorizontalBox>
+          <Box sx={{ flex: 1 }}>
+            <PieChart
+              colors={categoryGraphColors}
+              series={[
+                {
+                  data: categoryTotals,
+                  highlightScope: { faded: 'global', highlighted: 'item' },
+                  faded: { innerRadius: 30, additionalRadius: -30 },
+                },
+              ]}
+              slotProps={{
+                legend: { hidden: true },
+              }}
+            />
+          </Box>
+          {getCategoriesLegend()}
+        </DataHorizontalBox>
       )}
       {!errorState && categoryTotals.length == 0 && (
         <Typography variant="body1" align="center">

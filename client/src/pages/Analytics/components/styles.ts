@@ -23,3 +23,17 @@ export const ComparisonGraphBox = styled(Box)({
   flexDirection: 'row',
   height: '80%',
 });
+
+export const DataHorizontalBox = styled(Box)({
+  width: '100%',
+  height: '80%',
+  display: 'flex',
+  flexDirection: 'row',
+});
+
+export const CategoriesLegendBox = styled(Box)({
+  display: 'flex',
+  flexDirection: 'column',
+  justifyContent: 'center',
+  height: '100%',
+});
