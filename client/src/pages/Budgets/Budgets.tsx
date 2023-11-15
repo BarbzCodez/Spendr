@@ -7,7 +7,7 @@ import BudgetDialog from './Components/BudgetDialog';
 import ProgressBar from './Components/ProgressBar';
 
 import { PrimaryDiv, theme } from '../../assets/styles';
-import { BudgetStack, PopupDiv } from './styles';
+import { BudgetStack } from './styles';
 import { PrimaryButton } from '../../assets/styles/styles';
 import { useUser } from '../../context/UserContext';
 import {
@@ -21,6 +21,7 @@ import {
   editBudgetRequest,
   deleteBudgetRequest,
 } from '../../api/BudgetAPI';
+import { PopupDiv } from '../../styles';
 
 /**
  * Budgets page component
@@ -201,7 +202,7 @@ const Budgets = (): JSX.Element => {
           Add Budget
         </PrimaryButton>
       </Stack>
-      <PopupDiv>
+      <PopupDiv style={{ paddingTop: '2vh' }}>
         <BudgetStack spacing={2} boxShadow={5}>
           <Typography variant="h4" component="h2" noWrap>
             {'My Budgets'}
