@@ -17,7 +17,7 @@ import {
  *
  * @returns {JSX.Element} - category graph
  */
-export const CategoryGraph: React.FC = () => {
+export const CategoryGraph: React.FC = (): JSX.Element => {
   const { userId, token } = useUser();
   const [categoryTotals, setCategoryTotals] = React.useState<
     { id: number; value: number; label: string }[]
@@ -29,10 +29,6 @@ export const CategoryGraph: React.FC = () => {
   React.useEffect(() => {
     fetchCategoryExpenses(startDate.toISOString(), currDate.toISOString());
   }, []);
-
-  React.useEffect(() => {
-    console.log(window.innerWidth);
-  }, [window.innerWidth]);
 
   const fetchCategoryExpenses = async (startDate: string, endDate: string) => {
     try {
@@ -112,6 +108,8 @@ export const CategoryGraph: React.FC = () => {
                   faded: { innerRadius: 30, additionalRadius: -30 },
                 },
               ]}
+              height={200}
+              margin={{ right: 5 }}
               slotProps={{
                 legend: { hidden: true },
               }}
