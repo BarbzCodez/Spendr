@@ -110,7 +110,7 @@ const GroupExpenseDialog: React.FC<GroupExpenseDialogProps> = ({
         updatedUserList[index][2] = 'Username cannot be empty';
         foundError = true;
       }
-      currPercentage += user[1];
+      currPercentage += Number(user[1]);
     });
 
     if (Math.abs(currPercentage - 100) >= 0.001) {
@@ -396,6 +396,7 @@ const GroupExpenseDialog: React.FC<GroupExpenseDialogProps> = ({
                   value={
                     evenlyDistributed ? Number(values[1]).toFixed(2) : values[1]
                   }
+                  inputProps={{ maxLength: 5 }}
                   onChange={(event) =>
                     handleUserInput(event.target.value, index, 1)
                   }
