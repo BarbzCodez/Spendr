@@ -14,6 +14,7 @@ import Signup from './pages/Signup';
 import Expenses from './pages/Expenses';
 import Home from './pages/Home';
 import Analytics from './pages/Analytics';
+import GroupExpenses from './pages/GroupExpenses';
 
 const RequireAuth: React.FC<{ children: React.ReactElement }> = ({
   children,
@@ -73,18 +74,26 @@ function App(): JSX.Element {
               }
             />
             <Route
-              path="/user-settings"
-              element={
-                <RequireAuth>
-                  <UserSettings />
-                </RequireAuth>
-              }
-            />
-            <Route
               path="/analytics"
               element={
                 <RequireAuth>
                   <Analytics />
+                </RequireAuth>
+              }
+            />
+            <Route
+              path="/group-expenses"
+              element={
+                <RequireAuth>
+                  <GroupExpenses />
+                </RequireAuth>
+              }
+            />
+            <Route
+              path="/user-settings"
+              element={
+                <RequireAuth>
+                  <UserSettings />
                 </RequireAuth>
               }
             />

@@ -52,6 +52,7 @@ export const theme = createTheme({
     },
     success: {
       main: '#2273FF',
+      light: '#77A2ED',
     },
     background: {
       default: '#1a1a24',

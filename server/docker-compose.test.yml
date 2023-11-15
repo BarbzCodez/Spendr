@@ -1,0 +1,24 @@
+version: '3'
+services:
+  test-db:
+    image: postgres:latest
+    volumes:
+      - db:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: spendr_test_database
+      POSTGRES_USER: test_admin
+      POSTGRES_PASSWORD: test_admin
+    ports:
+      - '5433:5432'
+
+  pgadmin:
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: 'admin@admin.com'
+      PGADMIN_DEFAULT_PASSWORD: 'root'
+    ports:
+      - '5051:80'
+
+volumes:
+  db:
+    driver: local
