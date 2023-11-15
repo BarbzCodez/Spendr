@@ -204,7 +204,7 @@ export const categoryTotalExpensesRequest = async (
   );
   return response;
 };
-    
+
 /**
  * API all user group expenses
  *
@@ -218,7 +218,6 @@ export const allGroupExpensesRequest = async (
   const response: AxiosResponse = await axios.get(
     `http://localhost:7005/users/${user.userId}/group-expenses`,
     {
-      params: data,
       headers: {
         Authorization: `Bearer ${user.token}`,
       },
