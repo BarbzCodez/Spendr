@@ -18,6 +18,7 @@ import {
 } from '../../assets/styles/styles';
 import { getReceiptData } from '../../api/EdenAPI';
 import { categories } from '../../constants/constants';
+import { isoToFormattedDate } from '../../utils/utils';
 
 const validationSchema = yup.object().shape({
   title: yup.string().required('Title cannot be empty'),
@@ -35,15 +36,6 @@ const validationSchema = yup.object().shape({
     )
     .required('Date cannot be empty'),
 });
-
-const isoToFormattedDate = (isoDateString: string): string => {
-  const date = new Date(isoDateString);
-  const day = date.getDate().toString().padStart(2, '0');
-  const month = (date.getMonth() + 1).toString().padStart(2, '0');
-  const year = date.getFullYear().toString();
-
-  return `${year}/${month}/${day}`;
-};
 
 /**
  * Expense dialog component

@@ -7,15 +7,8 @@ import { theme } from '../../../assets/styles';
 import { ExpenseTableProps, ExpenseData } from '../../../interfaces/interfaces';
 
 import { BackgroundBox, ExpensesDataGrid } from './styles';
-
-const isoToFormattedDate = (isoDateString: string): string => {
-  const date = new Date(isoDateString);
-  const day = date.getDate().toString().padStart(2, '0');
-  const month = (date.getMonth() + 1).toString().padStart(2, '0');
-  const year = date.getFullYear().toString();
-
-  return `${year}/${month}/${day}`;
-};
+import { isoToFormattedDate } from '../../../utils/utils';
+import { categories } from '../../../constants/constants';
 
 /**
  * Expenses table component
@@ -68,14 +61,7 @@ export const ExpensesTable: React.FC<ExpenseTableProps> = ({
       type: 'singleSelect',
       minWidth: 150,
       flex: 1,
-      valueOptions: [
-        'GROCERIES',
-        'TRANSPORT',
-        'ENTERTAINMENT',
-        'HEALTH',
-        'UTILITIES',
-        'OTHER',
-      ],
+      valueOptions: categories,
     },
     {
       field: 'actions',

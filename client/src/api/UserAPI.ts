@@ -10,6 +10,7 @@ import {
   AllExpensesResponse,
   AllBudgetResponse,
   UserInfo,
+  AllGroupExpensesResponse,
 } from '../interfaces/interfaces';
 
 /**
@@ -123,7 +124,6 @@ export const allExpensesRequest = async (
 ): Promise<AxiosResponse<AllExpensesResponse>> => {
   const response: AxiosResponse = await axios.get(
     `http://localhost:7005/users/${user.userId}/expenses`,
-
     {
       headers: {
         Authorization: `Bearer ${user.token}`,
@@ -145,7 +145,27 @@ export const allBudgetsRequest = async (
 ): Promise<AxiosResponse<AllBudgetResponse>> => {
   const response: AxiosResponse = await axios.get(
     `http://localhost:7005/users/${user.userId}/budgets`,
+    {
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
+    },
+  );
+  return response;
+};
 
+/**
+ * API all user group expenses
+ *
+ * @param {UserInfo} user - user info
+ * @returns {AxiosResponse<AllGroupExpensesResponse>} - response
+ * @throws {AxiosError}
+ */
+export const allGroupExpensesRequest = async (
+  user: UserInfo,
+): Promise<AxiosResponse<AllGroupExpensesResponse>> => {
+  const response: AxiosResponse = await axios.get(
+    `http://localhost:7005/users/${user.userId}/group-expenses`,
     {
       headers: {
         Authorization: `Bearer ${user.token}`,
