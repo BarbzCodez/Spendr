@@ -394,7 +394,7 @@ const GroupExpenseDialog: React.FC<GroupExpenseDialogProps> = ({
                   label={`Percentage ${index + 1}`}
                   type="number"
                   value={
-                    evenlyDistributed ? Number(values[1].toFixed(2)) : values[1]
+                    evenlyDistributed ? Number(values[1]).toFixed(2) : values[1]
                   }
                   onChange={(event) =>
                     handleUserInput(event.target.value, index, 1)
