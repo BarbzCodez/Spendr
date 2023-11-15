@@ -232,3 +232,23 @@ export interface AllGroupExpensesResponse {
   success: boolean;
   data: GroupExpenseData[];
 }
+
+export interface StartEndDatesData {
+  startDate: string;
+  endDate: string;
+}
+
+export interface DailyTotal {
+  date: string;
+  amount: number;
+}
+
+export interface DailyTotalsResponse {
+  success: boolean;
+  data: [DailyTotal];
+}
+
+export interface CategoryTotalsResponse {
+  success: boolean;
+  data: { category: string; amount: number }[];
+}
