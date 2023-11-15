@@ -14,7 +14,6 @@ import Header from '../../components/Header';
 import { HomePageStack } from './styles';
 import { useUser } from '../../context/UserContext';
 import { homeInfo } from './constants';
-import { PopupDiv } from '../../styles';
 
 /**
  * Home page component
@@ -28,12 +27,18 @@ const Home = (): JSX.Element => {
   return (
     <PrimaryDiv>
       <Header />
-      <Stack justifyContent="center" alignItems="center" padding="20px">
-        <Typography variant="h3" justifyContent="center" alignItems="center">
+      <Stack
+        direction="column"
+        spacing={2}
+        style={{
+          paddingTop: '10px',
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}
+      >
+        <Typography variant="h3" padding="20px">
           Welcome back, {username}!
         </Typography>
-      </Stack>
-      <PopupDiv style={{ paddingTop: '10px' }}>
         <HomePageStack direction="row" spacing={2} useFlexGap>
           {homeInfo.map((info) => (
             <Card
@@ -66,7 +71,7 @@ const Home = (): JSX.Element => {
             </Card>
           ))}
         </HomePageStack>
-      </PopupDiv>
+      </Stack>
     </PrimaryDiv>
   );
 };
