@@ -1,8 +1,13 @@
 import * as React from 'react';
 import { Typography } from '@mui/material';
 
-import { PrimaryDiv } from '../../assets/styles/styles';
-import { RightBox, LeftStack, SignupBox, ClipArt } from './styles';
+import {
+  PrimaryDiv,
+  EntryBox,
+  EntryLeftStack,
+  EntryClipArt,
+  EntryRightBox,
+} from '../../assets/styles';
 import picture from '../../assets/images/otherStonks-noBackgrounds.png';
 import SignupForm from './components/SignupForm';
 
@@ -14,15 +19,15 @@ import SignupForm from './components/SignupForm';
 const Signup = (): JSX.Element => {
   return (
     <PrimaryDiv>
-      <SignupBox>
-        <LeftStack direction="column" spacing={'2vh'} alignItems="center">
+      <EntryBox>
+        <EntryLeftStack direction="column" spacing={'2vh'} alignItems="center">
           <Typography variant="h3">Create Account</Typography>
           <SignupForm />
-        </LeftStack>
-        <RightBox>
-          <ClipArt src={picture} alt="Picture" />
-        </RightBox>
-      </SignupBox>
+        </EntryLeftStack>
+        <EntryRightBox>
+          <EntryClipArt src={picture} alt="Picture" />
+        </EntryRightBox>
+      </EntryBox>
     </PrimaryDiv>
   );
 };

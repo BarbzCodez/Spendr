@@ -1,28 +1,33 @@
 import * as React from 'react';
 import { Typography } from '@mui/material';
 
-import { PrimaryDiv } from '../../assets/styles/styles';
-import { LeftStack, LoginBox, RightBox, ClipArt } from './styles';
+import {
+  PrimaryDiv,
+  EntryBox,
+  EntryLeftStack,
+  EntryClipArt,
+  EntryRightBox,
+} from '../../assets/styles';
 import picture from '../../assets/images/otherStonks-noBackgrounds.png';
 import LoginForm from './components/LoginForm';
 
 /**
  * Login page component
  *
- * @returns {JSX.Element} - login component
+ * @returns {JSX.Element} - Users Login component page
  */
 const Login = (): JSX.Element => {
   return (
     <PrimaryDiv>
-      <LoginBox>
-        <LeftStack direction="column" spacing={'3vh'} alignItems="center">
+      <EntryBox>
+        <EntryLeftStack direction="column" spacing={'3vh'} alignItems="center">
           <Typography variant="h3">Log In</Typography>
           <LoginForm />
-        </LeftStack>
-        <RightBox>
-          <ClipArt src={picture} alt="Picture" />
-        </RightBox>
-      </LoginBox>
+        </EntryLeftStack>
+        <EntryRightBox>
+          <EntryClipArt src={picture} alt="Picture" />
+        </EntryRightBox>
+      </EntryBox>
     </PrimaryDiv>
   );
 };

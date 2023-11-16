@@ -6,9 +6,13 @@ import Header from '../../components/Header';
 import BudgetDialog from './Components/BudgetDialog';
 import ProgressBar from './Components/ProgressBar';
 
-import { PrimaryDiv, theme } from '../../assets/styles';
+import {
+  PrimaryDiv,
+  PrimaryButton,
+  theme,
+  PopupDiv,
+} from '../../assets/styles';
 import { BudgetStack } from './styles';
-import { PrimaryButton } from '../../assets/styles/styles';
 import { useUser } from '../../context/UserContext';
 import {
   BudgetData,
@@ -21,10 +25,10 @@ import {
   editBudgetRequest,
   deleteBudgetRequest,
 } from '../../api/BudgetAPI';
-import { PopupDiv } from '../../styles';
 
 /**
  * Budgets page component
+ *
  * @returns {JSX.Element} - Budgets page
  */
 const Budgets = (): JSX.Element => {

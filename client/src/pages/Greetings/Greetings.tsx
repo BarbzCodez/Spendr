@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Divider } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 
-import { PrimaryButton } from '../../assets/styles/styles';
+import { PrimaryButton } from '../../assets/styles';
 import logo from '../../assets/images/spendr_1.png';
 import picture from '../../assets/images/stonks-nobackground.png';
 import {
@@ -16,6 +16,7 @@ import {
 
 /**
  * greetings page component
+ *
  * @returns {JSX.Element} - greetings page
  */
 const Greetings = (): JSX.Element => {

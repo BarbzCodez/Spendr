@@ -7,6 +7,7 @@ import { BackgroundBox } from './styles';
 import { useUser } from '../../../context/UserContext';
 import { dailyTotalExpensesRequest } from '../../../api/UserAPI';
 import { DailyTotal } from '../../../interfaces/generalInterfaces';
+import { categoryGraphColors } from '../../../assets/constants';
 
 /**
  * Monthly expenses graph component
@@ -106,7 +107,7 @@ export const MonthlyExpensesGraph = (): JSX.Element => {
             {
               dataKey: 'accumulatedAmount',
               label: 'Total Monthly Expenses',
-              color: '#FFB7B2',
+              color: categoryGraphColors[0],
               showMark: true,
             },
           ]}

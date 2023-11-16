@@ -22,6 +22,7 @@ import {
   UpdateUsernameData,
 } from '../../../interfaces/userInterfaces';
 import { SettingStack, SecondaryText } from './styles';
+import { delay } from '../../../assets/utils';
 
 const validationSchemaUsername = yup.object().shape({
   username: yup.string().required('Username cannot be empty'),
@@ -34,11 +35,9 @@ const validationSchemaPassword = yup.object().shape({
     .required('Password cannot be empty'),
 });
 
-function delay(ms: number) {
-  return new Promise((resolve) => setTimeout(resolve, ms));
-}
 /**
  * Return the list of settings component
+ *
  * @returns {JSX.Element} - List of settings component
  */
 export const SettingsListComponent = (): JSX.Element => {

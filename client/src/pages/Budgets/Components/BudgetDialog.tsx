@@ -15,8 +15,9 @@ import {
   BudgetUIData,
   BudgetDialogProps,
 } from '../../../interfaces/budgetInterfaces';
-import { PrimaryButton } from '../../../assets/styles/styles';
-import { duration, categories } from '../../../assets/constants/constants';
+import { PrimaryButton } from '../../../assets/styles';
+import { duration, categories } from '../../../assets/constants';
+import { capitalizeWord } from '../../../assets/utils';
 
 const validationSchema = yup.object().shape({
   amount: yup
@@ -31,11 +32,13 @@ const validationSchema = yup.object().shape({
 /**
  * Budget dialog component
  *
- * @param {boolean} open - open/closed state of the dialog
- * @param {function} onClose - function when cancel is clicked
- * @param {function} onSave - function when save is clicked
- * @param {budgetData} budgetData - budget data when editing
- * @returns {FC<BudgetDialogProps>} - expense dialog component
+ * @property {boolean} open - open/closed state of the dialog
+ * @property {function} onClose - function when cancel is clicked when adding a budget
+ * @property {function} onAdd - function when add a new budget is clicked
+ * @property {function} onEdit - function when edit is clicked
+ * @property {budgetData} budgetData - budget data when editing
+ *
+ * @returns {JSX.Element} - expense dialog component
  */
 const BudgetDialog: FC<BudgetDialogProps> = ({
   open,
@@ -43,7 +46,7 @@ const BudgetDialog: FC<BudgetDialogProps> = ({
   onAdd,
   onEdit,
   budgetData,
-}) => {
+}): JSX.Element => {
   const formik = useFormik({
     initialValues: {
       amount: budgetData?.amount || 0,
@@ -155,8 +158,7 @@ const BudgetDialog: FC<BudgetDialogProps> = ({
             >
               {categories.map((category) => (
                 <MenuItem key={category} value={category}>
-                  {category.charAt(0).toUpperCase() +
-                    category.slice(1).toLowerCase()}
+                  {capitalizeWord(category)}
                 </MenuItem>
               ))}
             </TextField>

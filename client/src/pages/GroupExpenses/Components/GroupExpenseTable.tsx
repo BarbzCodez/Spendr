@@ -19,10 +19,9 @@ import {
   GroupExpenseDataWithId,
 } from '../../../interfaces/groupSplitInterfaces';
 import { BackgroundBox, ExpensesDataGrid } from './styles';
-import { isoToFormattedDate } from '../../../utils/utils';
-import { categories } from '../../../assets/constants/constants';
-import { theme } from '../../../assets/styles';
-import { PrimaryButton } from '../../../assets/styles/styles';
+import { isoToFormattedDate, valueLabelOptions } from '../../../assets/utils';
+import { categories } from '../../../assets/constants';
+import { theme, PrimaryButton } from '../../../assets/styles';
 
 /**
  * Expenses Group table component
@@ -30,13 +29,14 @@ import { PrimaryButton } from '../../../assets/styles/styles';
  * @property {ExpenseData[]} groupExpenses - The group expenses data to be displayed.
  * @property {function} handleMarkAsPaidGroupExpense - API call to handle marking expenses as paid.
  * @property {number} currUserId - The current user's ID from useUser
- * @returns {FC<GroupExpenseTableProps>} - Group expenses table
+ *
+ * @returns {JSX.Element } - Group expenses table
  */
 export const GroupExpensesTable: FC<GroupExpenseTableProps> = ({
   groupExpenses,
   handleMarkAsPaidGroupExpense,
   currUserId,
-}) => {
+}): JSX.Element => {
   const [newGroupExpenses, setNewGroupExpenses] = useState<
     GroupExpenseDataWithId[]
   >([]);
@@ -188,7 +188,7 @@ export const GroupExpensesTable: FC<GroupExpenseTableProps> = ({
       type: 'singleSelect',
       minWidth: 150,
       flex: 1,
-      valueOptions: categories,
+      valueOptions: valueLabelOptions(categories),
     },
     {
       field: 'split',

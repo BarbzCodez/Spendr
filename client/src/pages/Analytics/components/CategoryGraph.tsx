@@ -14,6 +14,7 @@ import {
   DataHorizontalBox,
   CategoriesLegendBox,
 } from './styles';
+import { capitalizeWord } from '../../../assets/utils';
 
 /**
  * Category graph component
@@ -89,7 +90,7 @@ export const CategoryGraph = (): JSX.Element => {
                 },
               }}
             >
-              {category}
+              {capitalizeWord(category)}
             </Typography>
           </Box>
         ))}

@@ -5,17 +5,17 @@ import { Stack } from '@mui/material';
 import axios, { AxiosError } from 'axios';
 
 import {
+  theme,
   PrimaryDiv,
   PrimaryButton,
   TableBox,
-} from '../../assets/styles/styles';
+} from '../../assets/styles';
 import {
   GroupExpenseUIData,
   GroupExpenseData,
   GroupExpenseAsPaid,
 } from '../../interfaces/groupSplitInterfaces';
 import { allGroupExpensesRequest } from '../../api/UserAPI';
-import { theme } from '../../assets/styles';
 import { useUser } from '../../context/UserContext';
 import Header from '../../components/Header';
 import GroupExpenseDialog from './Components/GroupExpenseDialog';

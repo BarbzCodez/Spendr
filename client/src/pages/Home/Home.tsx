@@ -9,7 +9,7 @@ import {
 } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 
-import { PrimaryDiv } from '../../assets/styles/styles';
+import { PrimaryDiv } from '../../assets/styles';
 import Header from '../../components/Header';
 import { HomePageStack } from './styles';
 import { useUser } from '../../context/UserContext';

@@ -1,5 +1,5 @@
 import { styled } from '@mui/system';
-import { PrimaryDiv, ResizingImg } from '../../assets/styles/styles';
+import { PrimaryDiv, ResizingImg } from '../../assets/styles';
 import { Box, Typography, Stack } from '@mui/material';
 
 export const GreetingsDiv = styled(PrimaryDiv)(() => ({

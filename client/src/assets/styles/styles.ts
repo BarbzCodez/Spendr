@@ -1,5 +1,5 @@
 import { styled } from '@mui/system';
-import { Button, Box } from '@mui/material';
+import { Button, Box, Stack } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
 
 export const PrimaryDiv = styled('div')(({ theme }) => ({
@@ -33,11 +33,6 @@ export const PrimaryLoadingButton = styled(LoadingButton)(({ theme }) => ({
   },
 }));
 
-export const ResizingImg = styled('img')(() => ({
-  width: '30vw',
-  objectFit: 'contain',
-}));
-
 export const TableBox = styled(Box)({
   display: 'flex',
   flexDirection: 'column',
@@ -45,4 +40,43 @@ export const TableBox = styled(Box)({
   alignItems: 'center',
   flex: 1,
   paddingBottom: '5vh',
+});
+
+// Greetings, Login and Signup
+
+export const ResizingImg = styled('img')(() => ({
+  width: '30vw',
+  objectFit: 'contain',
+}));
+
+export const EntryClipArt = styled(ResizingImg)(() => ({
+  right: '0',
+  bottom: '0',
+  position: 'absolute',
+}));
+
+export const EntryBox = styled(Box)(() => ({
+  flexGrow: 1,
+  padding: '10vh 10vw',
+  display: 'flex',
+  flexDirection: 'row',
+}));
+
+export const EntryLeftStack = styled(Stack)(() => ({
+  width: '50%',
+}));
+
+export const EntryRightBox = styled(Box)(() => ({
+  position: 'relative',
+  width: '50%',
+}));
+
+export const PopupDiv = styled(Box)({
+  maxHeight: '100vh',
+  display: 'flex',
+  margin: '1px',
+  paddingTop: '2vh',
+  flexDirection: 'column',
+  justifyContent: 'center',
+  alignItems: 'center',
 });

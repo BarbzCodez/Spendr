@@ -24,10 +24,9 @@ import {
   GroupExpenseDialogProps,
   GroupExpenseUIData,
 } from '../../../interfaces/groupSplitInterfaces';
-import { PrimaryButton } from '../../../assets/styles/styles';
-import { capitalizeWord, isoToFormattedDate } from '../../../utils/utils';
-import { categories } from '../../../assets/constants/constants';
-import { theme } from '../../../assets/styles';
+import { capitalizeWord, isoToFormattedDate } from '../../../assets/utils';
+import { categories } from '../../../assets/constants';
+import { PrimaryButton, theme } from '../../../assets/styles';
 
 const validationSchema = yup.object().shape({
   title: yup.string().required('Title cannot be empty'),
@@ -54,6 +53,7 @@ const validationSchema = yup.object().shape({
  * @property {boolean} open - open/closed state of the dialog
  * @property {function} onClose - function when cancel is clicked
  * @property {function} onAdd - function when save is clicked
+ *
  * @returns {FC<GroupExpenseDialogProps>} - expense group dialog component
  */
 const GroupExpenseDialog: FC<GroupExpenseDialogProps> = ({
@@ -61,7 +61,7 @@ const GroupExpenseDialog: FC<GroupExpenseDialogProps> = ({
   open,
   onClose,
   onAdd,
-}) => {
+}): JSX.Element => {
   const defaultUserList: [username: string, amount: number, error: string][] = [
     [username, 0, ''],
     ['', 0, ''],
