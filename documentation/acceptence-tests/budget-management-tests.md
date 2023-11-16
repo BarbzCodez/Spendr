@@ -1,11 +1,11 @@
 # Budget Management Acceptance Tests
 
-## Acceptance test summary
+## Acceptance Test Summary
 
-### create, view and modify budget
+### Create, View and Modify budget
 
 1. Login as valid user with expenses
-2. Navigate to the Budgets section
+2. Navigate to the Budgets section by clicking on Budgets on the home page
 3. Click Add Budget
 4. Fill in all required fields (amount, category, and duration)
 5. Click save

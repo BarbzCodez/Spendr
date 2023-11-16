@@ -1,8 +1,8 @@
 # User Management Acceptance Tests
 
-## Acceptance test summary
+## Acceptance Test Summary
 
-### Register, login, and logout
+### Register, Login, and Logout
 
 1. Click Get started
 2. Enter all the fields
@@ -15,20 +15,21 @@
 9. Click log out
 10. Ensure user is logged out and returned to login menu
 
-### change credentials
+### Change Credentials
 
-1. Enter valid user login credentials
+1. Enter registered user login credentials
 2. Click login
 3. Click user icon
 4. Click settings
 5. Click the edit icon next to user and password type in new values
-6. Ensure successfully updated popup appears
-7. Click Log out
-8. Ensure updated credentials are valid for log in
+6. Click Save
+7. Ensure successfully updated popup appears
+8. Click Log out
+9. Ensure updated credentials are valid for log in
 
-### delete account
+### Delete Account
 
-1. Enter valid user login credentials
+1. Enter registered user login credentials
 2. Click login
 3. Click user icon
 4. Click settings
