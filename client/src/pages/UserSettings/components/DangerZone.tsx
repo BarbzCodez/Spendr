@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, SyntheticEvent } from 'react';
 import { Alert, Snackbar, Stack, Typography } from '@mui/material';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import axios, { AxiosError } from 'axios';
@@ -28,10 +28,8 @@ function delay(ms: number) {
 const DangerZone = (): JSX.Element => {
   const navigate = useNavigate();
   const { userId, token } = useUser();
-
-  const [generalError, setGeneralError] = React.useState(' ');
-
-  const [openSnackbar, setOpenSnackbar] = React.useState(false);
+  const [generalError, setGeneralError] = useState(' ');
+  const [openSnackbar, setOpenSnackbar] = useState(false);
 
   const handleDeleteUser = async () => {
     try {
@@ -75,7 +73,7 @@ const DangerZone = (): JSX.Element => {
   });
 
   const handleSnackbarClose = (
-    event?: React.SyntheticEvent | Event,
+    event?: SyntheticEvent | Event,
     reason?: string,
   ) => {
     if (reason === 'clickaway') {

@@ -1,5 +1,5 @@
 import { styled } from '@mui/system';
-import { Button } from '@mui/material';
+import { Button, Box } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
 
 export const PrimaryDiv = styled('div')(({ theme }) => ({
@@ -37,3 +37,12 @@ export const ResizingImg = styled('img')(() => ({
   width: '30vw',
   objectFit: 'contain',
 }));
+
+export const TableBox = styled(Box)({
+  display: 'flex',
+  flexDirection: 'column',
+  justifyContent: 'center',
+  alignItems: 'center',
+  flex: 1,
+  paddingBottom: '5vh',
+});

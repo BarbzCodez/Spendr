@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useState, MouseEvent } from 'react';
 import {
   Box,
   Toolbar,
@@ -21,15 +21,13 @@ import { useUser } from '../../context/UserContext';
  *
  * @returns {JSX.Element} - top header component
  */
-const Header: React.FC = () => {
+const Header = (): JSX.Element => {
   const navigate = useNavigate();
   const { logout } = useUser();
 
-  const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
-    null,
-  );
+  const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
 
-  const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
+  const handleOpenUserMenu = (event: MouseEvent<HTMLElement>) => {
     setAnchorElUser(event.currentTarget);
   };
 

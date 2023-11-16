@@ -1,20 +1,23 @@
 import axios, { AxiosResponse } from 'axios';
+
 import {
+  MessageResponse,
+  StartEndDatesData,
+  DailyTotalsResponse,
+  CategoryTotalsResponse,
+} from '../interfaces/generalInterfaces';
+import {
+  UserInfo,
   SignupData,
   SignupResponse,
   LoginData,
   LoginResponse,
-  MessageResponse,
   UpdateUsernameData,
   UpdatePasswordData,
-  AllExpensesResponse,
-  AllBudgetResponse,
-  UserInfo,
-  StartEndDatesData,
-  DailyTotalsResponse,
-  CategoryTotalsResponse,
-  AllGroupExpensesResponse,
-} from '../interfaces/interfaces';
+} from '../interfaces/userInterfaces';
+import { AllExpensesResponse } from '../interfaces/expenseInterfaces';
+import { AllBudgetResponse } from '../interfaces/budgetInterfaces';
+import { AllGroupExpensesResponse } from '../interfaces/groupSplitInterfaces';
 
 /**
  * API signup request

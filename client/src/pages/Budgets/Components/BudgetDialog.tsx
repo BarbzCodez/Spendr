@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, FC } from 'react';
 import {
   Dialog,
   DialogActions,
@@ -14,9 +14,9 @@ import * as yup from 'yup';
 import {
   BudgetUIData,
   BudgetDialogProps,
-} from '../../../interfaces/interfaces';
+} from '../../../interfaces/budgetInterfaces';
 import { PrimaryButton } from '../../../assets/styles/styles';
-import { duration, categories } from '../../../constants/constants';
+import { duration, categories } from '../../../assets/constants/constants';
 
 const validationSchema = yup.object().shape({
   amount: yup
@@ -35,9 +35,9 @@ const validationSchema = yup.object().shape({
  * @param {function} onClose - function when cancel is clicked
  * @param {function} onSave - function when save is clicked
  * @param {budgetData} budgetData - budget data when editing
- * @returns {React.FC} - expense dialog component
+ * @returns {FC<BudgetDialogProps>} - expense dialog component
  */
-const BudgetDialog: React.FC<BudgetDialogProps> = ({
+const BudgetDialog: FC<BudgetDialogProps> = ({
   open,
   onClose,
   onAdd,

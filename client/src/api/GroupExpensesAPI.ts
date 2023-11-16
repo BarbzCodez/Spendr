@@ -1,12 +1,12 @@
 import axios, { AxiosResponse } from 'axios';
 
+import { MessageResponse } from '../interfaces/generalInterfaces';
+import { UserInfo } from '../interfaces/userInterfaces';
 import {
-  UserInfo,
   GroupExpenseUIData,
   AddGroupExpenseResponse,
-  MessageResponse,
   GroupExpenseAsPaid,
-} from '../interfaces/interfaces';
+} from '../interfaces/groupSplitInterfaces';
 
 /**
  * API add group expense

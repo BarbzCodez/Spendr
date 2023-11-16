@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { FC, useState, useEffect } from 'react';
 import {
   Checkbox,
   Dialog,
@@ -17,10 +17,10 @@ import {
   GroupExpenseAsPaid,
   GroupExpenseData,
   GroupExpenseDataWithId,
-} from '../../../interfaces/interfaces';
+} from '../../../interfaces/groupSplitInterfaces';
 import { BackgroundBox, ExpensesDataGrid } from './styles';
 import { isoToFormattedDate } from '../../../utils/utils';
-import { categories } from '../../../constants/constants';
+import { categories } from '../../../assets/constants/constants';
 import { theme } from '../../../assets/styles';
 import { PrimaryButton } from '../../../assets/styles/styles';
 
@@ -30,19 +30,19 @@ import { PrimaryButton } from '../../../assets/styles/styles';
  * @property {ExpenseData[]} groupExpenses - The group expenses data to be displayed.
  * @property {function} handleMarkAsPaidGroupExpense - API call to handle marking expenses as paid.
  * @property {number} currUserId - The current user's ID from useUser
- * @returns {JSX.Element} - Group expenses table
+ * @returns {FC<GroupExpenseTableProps>} - Group expenses table
  */
-export const GroupExpensesTable: React.FC<GroupExpenseTableProps> = ({
+export const GroupExpensesTable: FC<GroupExpenseTableProps> = ({
   groupExpenses,
   handleMarkAsPaidGroupExpense,
   currUserId,
-}): JSX.Element => {
-  const [newGroupExpenses, setNewGroupExpenses] = React.useState<
+}) => {
+  const [newGroupExpenses, setNewGroupExpenses] = useState<
     GroupExpenseDataWithId[]
   >([]);
 
-  const [openDisclaimer, setOpenDisclaimer] = React.useState<boolean>(false);
-  const [markAsPaidId, setMarkAsPaidId] = React.useState<
+  const [openDisclaimer, setOpenDisclaimer] = useState<boolean>(false);
+  const [markAsPaidId, setMarkAsPaidId] = useState<
     GroupExpenseAsPaid | undefined
   >(undefined);
 
@@ -79,7 +79,7 @@ export const GroupExpensesTable: React.FC<GroupExpenseTableProps> = ({
     return newSplit;
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     const updatedGroupExpense: GroupExpenseDataWithId[] = [];
     groupExpenses.forEach(
       (data, index) =>

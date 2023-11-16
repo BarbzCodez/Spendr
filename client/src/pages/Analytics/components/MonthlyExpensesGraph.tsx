@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useState, useEffect } from 'react';
 import { LineChart } from '@mui/x-charts/LineChart';
 import { format } from 'date-fns';
 import { Typography } from '@mui/material';
@@ -6,19 +6,19 @@ import { Typography } from '@mui/material';
 import { BackgroundBox } from './styles';
 import { useUser } from '../../../context/UserContext';
 import { dailyTotalExpensesRequest } from '../../../api/UserAPI';
-import { DailyTotal } from '../../../interfaces/interfaces';
+import { DailyTotal } from '../../../interfaces/generalInterfaces';
 
 /**
- * Daily expenses graph component
+ * Monthly expenses graph component
  *
- * @returns {JSX.Element} - daily expenses graph
+ * @returns {JSX.Element} - monthly expenses graph
  */
 export const MonthlyExpensesGraph = (): JSX.Element => {
   const { userId, token } = useUser();
-  const [accumulatedTotals, setAccumulatedTotals] = React.useState<
+  const [accumulatedTotals, setAccumulatedTotals] = useState<
     { date: Date; accumulatedAmount: number }[]
   >([]);
-  const [errorState, setErrorState] = React.useState(false);
+  const [errorState, setErrorState] = useState(false);
 
   const currDate = new Date();
   const startDate = new Date(currDate.getFullYear(), currDate.getMonth(), 1);
@@ -29,7 +29,7 @@ export const MonthlyExpensesGraph = (): JSX.Element => {
     12,
   );
 
-  React.useEffect(() => {
+  useEffect(() => {
     fetchDailyExpenses(startDate.toISOString(), currDate.toISOString());
   }, []);
 

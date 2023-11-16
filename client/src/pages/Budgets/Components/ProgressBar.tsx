@@ -1,20 +1,20 @@
-import * as React from 'react';
+import React, { FC } from 'react';
 import LinearProgress from '@mui/material/LinearProgress';
 import { Box, Typography, Stack, IconButton } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import ClearIcon from '@mui/icons-material/Clear';
 
-import { ProgressBarBudgetProps } from '../../../interfaces/interfaces';
+import { ProgressBarBudgetProps } from '../../../interfaces/budgetInterfaces';
 
 /**
  * Progress Bar component
- * @returns {JSX.Element} - Progress Bar
+ * @returns {FC<ProgressBarBudgetProps>} - Progress Bar
  */
-const ProgressBar: React.FC<ProgressBarBudgetProps> = ({
+const ProgressBar: FC<ProgressBarBudgetProps> = ({
   budgets,
   handleEditDialog,
   handleDeleteBudget,
-}): JSX.Element => {
+}) => {
   const getTitle = (category: string | undefined, duration: string) => {
     if (category) {
       return `${

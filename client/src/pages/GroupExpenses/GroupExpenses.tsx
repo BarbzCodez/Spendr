@@ -1,20 +1,22 @@
-import * as React from 'react';
+import React, { useState, useEffect, SyntheticEvent } from 'react';
 import AddIcon from '@mui/icons-material/Add';
 import { Alert, Snackbar } from '@mui/material';
 import { Stack } from '@mui/material';
 import axios, { AxiosError } from 'axios';
 
-import { PrimaryDiv } from '../../assets/styles/styles';
-import { PrimaryButton } from '../../assets/styles/styles';
+import {
+  PrimaryDiv,
+  PrimaryButton,
+  TableBox,
+} from '../../assets/styles/styles';
 import {
   GroupExpenseUIData,
   GroupExpenseData,
   GroupExpenseAsPaid,
-} from '../../interfaces/interfaces';
+} from '../../interfaces/groupSplitInterfaces';
 import { allGroupExpensesRequest } from '../../api/UserAPI';
 import { theme } from '../../assets/styles';
 import { useUser } from '../../context/UserContext';
-import { TableBox } from '../styles';
 import Header from '../../components/Header';
 import GroupExpenseDialog from './Components/GroupExpenseDialog';
 import GroupExpensesTable from './Components/GroupExpenseTable';
@@ -29,17 +31,15 @@ import {
  * @returns {JSX.Element} - expenses page
  */
 const GroupExpenses = (): JSX.Element => {
-  const [isDialogOpen, setIsDialogOpen] = React.useState<boolean>(false);
-  const [groupExpenses, setGroupExpenses] = React.useState<GroupExpenseData[]>(
-    [],
-  );
+  const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false);
+  const [groupExpenses, setGroupExpenses] = useState<GroupExpenseData[]>([]);
 
-  const [isSnackbarOpen, setIsSnackbarOpen] = React.useState<boolean>(false);
-  const [generalError, setGeneralError] = React.useState<string>('');
+  const [isSnackbarOpen, setIsSnackbarOpen] = useState<boolean>(false);
+  const [generalError, setGeneralError] = useState<string>('');
 
   const { userId, token, username } = useUser();
 
-  React.useEffect(() => {
+  useEffect(() => {
     fetchGroupExpenses();
   }, [userId]);
 
@@ -59,7 +59,7 @@ const GroupExpenses = (): JSX.Element => {
   };
 
   const handleSnackbarClose = (
-    event?: React.SyntheticEvent | Event,
+    event?: SyntheticEvent | Event,
     reason?: string,
   ) => {
     if (reason === 'clickaway') {

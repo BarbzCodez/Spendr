@@ -1,11 +1,11 @@
-import * as React from 'react';
+import React, { useState, useEffect, SyntheticEvent } from 'react';
 import AddIcon from '@mui/icons-material/Add';
 import { Alert, Snackbar } from '@mui/material';
 
 import { PrimaryDiv } from '../../assets/styles/styles';
 import { Stack } from '@mui/material';
-import { PrimaryButton } from '../../assets/styles/styles';
-import { ExpenseUIData, ExpenseData } from '../../interfaces/interfaces';
+import { PrimaryButton, TableBox } from '../../assets/styles/styles';
+import { ExpenseUIData, ExpenseData } from '../../interfaces/expenseInterfaces';
 import { allExpensesRequest } from '../../api/UserAPI';
 import {
   addExpenseRequest,
@@ -14,7 +14,6 @@ import {
 } from '../../api/ExpenseAPI';
 import { theme } from '../../assets/styles';
 import { useUser } from '../../context/UserContext';
-import { TableBox } from '../styles';
 import ExpensesTable from './Components/ExpenseTable';
 import ExpenseDialog from '../../components/ExpenseDialog';
 import Header from '../../components/Header';
@@ -25,17 +24,15 @@ import Header from '../../components/Header';
  * @returns {JSX.Element} - expenses page
  */
 const Expenses = (): JSX.Element => {
-  const [isDialogOpen, setIsDialogOpen] = React.useState(false);
-  const [expenses, setExpenses] = React.useState<ExpenseData[]>([]);
-  const [isSnackbarOpen, setIsSnackbarOpen] = React.useState(false);
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [expenses, setExpenses] = useState<ExpenseData[]>([]);
+  const [isSnackbarOpen, setIsSnackbarOpen] = useState(false);
   const { userId, token } = useUser();
-  const [expenseToEdit, setExpenseToEdit] = React.useState<ExpenseData | null>(
-    null,
-  );
+  const [expenseToEdit, setExpenseToEdit] = useState<ExpenseData | null>(null);
 
-  React.useEffect(() => {
+  useEffect(() => {
     fetchExpenses();
-  }, [userId]);
+  }, []);
 
   const fetchExpenses = async () => {
     try {
@@ -62,7 +59,7 @@ const Expenses = (): JSX.Element => {
   };
 
   const handleSnackbarClose = (
-    event?: React.SyntheticEvent | Event,
+    event?: SyntheticEvent | Event,
     reason?: string,
   ) => {
     if (reason === 'clickaway') {

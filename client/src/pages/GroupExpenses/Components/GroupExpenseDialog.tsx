@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { FC, useEffect, useState, SyntheticEvent } from 'react';
 import {
   Stack,
   Switch,
@@ -23,10 +23,10 @@ import * as yup from 'yup';
 import {
   GroupExpenseDialogProps,
   GroupExpenseUIData,
-} from '../../../interfaces/interfaces';
+} from '../../../interfaces/groupSplitInterfaces';
 import { PrimaryButton } from '../../../assets/styles/styles';
 import { capitalizeWord, isoToFormattedDate } from '../../../utils/utils';
-import { categories } from '../../../constants/constants';
+import { categories } from '../../../assets/constants/constants';
 import { theme } from '../../../assets/styles';
 
 const validationSchema = yup.object().shape({
@@ -54,32 +54,31 @@ const validationSchema = yup.object().shape({
  * @property {boolean} open - open/closed state of the dialog
  * @property {function} onClose - function when cancel is clicked
  * @property {function} onAdd - function when save is clicked
- * @returns {JSX.Element } - expense group dialog component
+ * @returns {FC<GroupExpenseDialogProps>} - expense group dialog component
  */
-const GroupExpenseDialog: React.FC<GroupExpenseDialogProps> = ({
+const GroupExpenseDialog: FC<GroupExpenseDialogProps> = ({
   username,
   open,
   onClose,
   onAdd,
-}): JSX.Element => {
+}) => {
   const defaultUserList: [username: string, amount: number, error: string][] = [
     [username, 0, ''],
     ['', 0, ''],
   ];
 
   const [userList, setUserList] =
-    React.useState<[username: string, amount: number, error: string][]>(
+    useState<[username: string, amount: number, error: string][]>(
       defaultUserList,
     );
 
-  const [evenlyDistributed, setEvenlyDistributed] =
-    React.useState<boolean>(true);
+  const [evenlyDistributed, setEvenlyDistributed] = useState<boolean>(true);
 
-  const [isSnackbarOpen, setIsSnackbarOpen] = React.useState<boolean>(false);
-  const [generalError, setGeneralError] = React.useState<string>('');
+  const [isSnackbarOpen, setIsSnackbarOpen] = useState<boolean>(false);
+  const [generalError, setGeneralError] = useState<string>('');
 
   const handleSnackbarClose = (
-    event?: React.SyntheticEvent | Event,
+    event?: SyntheticEvent | Event,
     reason?: string,
   ) => {
     if (reason === 'clickaway') {

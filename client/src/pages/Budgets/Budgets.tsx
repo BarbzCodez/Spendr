@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useState, useEffect, SyntheticEvent } from 'react';
 import { Alert, Snackbar, Stack, Typography } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 
@@ -14,7 +14,7 @@ import {
   BudgetData,
   BudgetUIData,
   BudgetWithExpensesData,
-} from '../../interfaces/interfaces';
+} from '../../interfaces/budgetInterfaces';
 import { allBudgetsRequest } from '../../api/UserAPI';
 import {
   addBudgetRequest,
@@ -29,13 +29,13 @@ import { PopupDiv } from '../../styles';
  */
 const Budgets = (): JSX.Element => {
   const { userId, token } = useUser();
-  const [isDialogOpen, setIsDialogOpen] = React.useState(false);
-  const [budgets, setBudgets] = React.useState<BudgetWithExpensesData[]>([]);
-  const [isSnackbarOpen, setIsSnackbarOpen] = React.useState(false);
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [budgets, setBudgets] = useState<BudgetWithExpensesData[]>([]);
+  const [isSnackbarOpen, setIsSnackbarOpen] = useState(false);
   const [budgetToEdit, setBudgetToEdit] =
-    React.useState<BudgetWithExpensesData | null>(null);
+    useState<BudgetWithExpensesData | null>(null);
 
-  React.useEffect(() => {
+  useEffect(() => {
     fetchBudgets();
   }, [userId]);
 
@@ -64,7 +64,7 @@ const Budgets = (): JSX.Element => {
   };
 
   const handleSnackbarClose = (
-    event?: React.SyntheticEvent | Event,
+    event?: SyntheticEvent | Event,
     reason?: string,
   ) => {
     if (reason === 'clickaway') {
