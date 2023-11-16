@@ -42,10 +42,17 @@ export const theme = createTheme({
     },
     info: {
       main: '#084F09',
-      light: '#000000',
+      light: '#B6B6B6',
     },
     error: {
       main: '#EE5A5E',
+    },
+    warning: {
+      main: '#F1E194',
+    },
+    success: {
+      main: '#2273FF',
+      light: '#77A2ED',
     },
     background: {
       default: '#1a1a24',

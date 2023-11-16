@@ -1,10 +1,11 @@
 import { styled, Box } from '@mui/system';
 
-export const TableBox = styled(Box)({
+export const PopupDiv = styled(Box)({
+  maxHeight: '100vh',
   display: 'flex',
+  margin: '1px',
+  paddingTop: '2vh',
   flexDirection: 'column',
   justifyContent: 'center',
   alignItems: 'center',
-  flex: 1,
-  paddingBottom: '5vh',
 });

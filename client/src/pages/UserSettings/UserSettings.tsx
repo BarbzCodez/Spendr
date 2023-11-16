@@ -2,7 +2,9 @@ import * as React from 'react';
 import { PrimaryDiv } from '../../assets/styles/';
 import Header from '../../components/Header';
 import { Typography } from '@mui/material';
-import { SettingsStack, PopupDiv } from './styles';
+
+import { SettingsStack } from './styles';
+import { PopupDiv } from '../../styles';
 import SettingsListComponent from './components/SettingsListItem';
 import DangerZone from './components/DangerZone';
 

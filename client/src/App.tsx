@@ -6,6 +6,7 @@ import CircularProgress from '@mui/material/CircularProgress';
 
 import { theme } from './assets/styles';
 import { UserProvider, useUser } from './context/UserContext';
+import Budgets from './pages/Budgets';
 import Greetings from './pages/Greetings';
 import UserSettings from './pages/UserSettings';
 import Login from './pages/Login';
@@ -13,6 +14,7 @@ import Signup from './pages/Signup';
 import Expenses from './pages/Expenses';
 import Home from './pages/Home';
 import Analytics from './pages/Analytics';
+import GroupExpenses from './pages/GroupExpenses';
 
 const RequireAuth: React.FC<{ children: React.ReactElement }> = ({
   children,
@@ -37,7 +39,7 @@ const RequireAuth: React.FC<{ children: React.ReactElement }> = ({
  * main App component
  * @returns {JSX.Element} - the rendered App component
  */
-function App() {
+function App(): JSX.Element {
   return (
     <ThemeProvider theme={theme}>
       <UserProvider>
@@ -64,10 +66,10 @@ function App() {
               }
             />
             <Route
-              path="/user-settings"
+              path="/budgets"
               element={
                 <RequireAuth>
-                  <UserSettings />
+                  <Budgets />
                 </RequireAuth>
               }
             />
@@ -76,6 +78,22 @@ function App() {
               element={
                 <RequireAuth>
                   <Analytics />
+                </RequireAuth>
+              }
+            />
+            <Route
+              path="/group-expenses"
+              element={
+                <RequireAuth>
+                  <GroupExpenses />
+                </RequireAuth>
+              }
+            />
+            <Route
+              path="/user-settings"
+              element={
+                <RequireAuth>
+                  <UserSettings />
                 </RequireAuth>
               }
             />

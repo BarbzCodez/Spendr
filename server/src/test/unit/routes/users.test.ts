@@ -782,6 +782,7 @@ describe('GET /users/:userId/group-expenses', () => {
     expect(response.body.success).toBe(true);
     expect(response.body.data).toStrictEqual([
       {
+        id: 1,
         title: 'Sobeys',
         totalAmount: 100,
         category: ExpenseCategory.GROCERIES,
@@ -835,6 +836,242 @@ describe('GET /users/:userId/group-expenses', () => {
     prismaMock.user.findUnique.mockRejectedValue(new Error());
 
     const response = await request(app).get('/users/1/group-expenses').send();
+
+    expect(response.status).toBe(500);
+    expect(response.body.message).toBe('Server error');
+  });
+});
+
+describe('GET /users/:userId/expenses/total-daily', () => {
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+
+  it('returns 200 with total expenses on each day if expenses are found', async () => {
+    prismaMock.user.findUnique.mockResolvedValue({
+      id: 1,
+      username: 'testuser',
+      password: 'testpassword',
+      securityQuestion: 'Your favorite color?',
+      securityAnswer: 'Blue',
+      userDeleted: false,
+    });
+
+    const mockedExpenses = [
+      {
+        id: 1,
+        userId: 1,
+        title: 'expense 1',
+        amount: 100,
+        createdAt: new Date('2023-10-12T00:20:00Z'),
+        category: ExpenseCategory.GROCERIES,
+      },
+      {
+        id: 2,
+        userId: 1,
+        title: 'expense 2',
+        amount: 100,
+        createdAt: new Date('2023-10-12T00:00:00Z'),
+        category: ExpenseCategory.GROCERIES,
+      },
+      {
+        id: 3,
+        userId: 1,
+        title: 'expense 3',
+        amount: 100,
+        createdAt: new Date('2023-10-13T00:00:00Z'),
+        category: ExpenseCategory.GROCERIES,
+      },
+    ];
+
+    prismaMock.expense.findMany.mockResolvedValue(mockedExpenses);
+
+    const response = await request(app).get(
+      '/users/1/expenses/total-daily?startDate=2023-10-12&endDate=2023-10-14',
+    );
+
+    expect(response.status).toBe(200);
+    expect(response.body).toStrictEqual({
+      success: true,
+      data: [
+        {
+          date: '2023-10-12',
+          amount: 200,
+        },
+        {
+          date: '2023-10-13',
+          amount: 100,
+        },
+      ],
+    });
+  });
+
+  it('returns 400 if user does not exist', async () => {
+    prismaMock.user.findUnique.mockResolvedValue(null); // Mocking no user
+
+    const response = await request(app).get(
+      '/users/1/expenses/total-daily?startDate=2023-10-12&endDate=2023-10-14',
+    );
+
+    expect(response.status).toBe(400);
+    expect(response.body.message).toBe('Invalid Credentials');
+  });
+
+  it('returns 400 if user is deleted', async () => {
+    const user = {
+      id: 1,
+      username: 'testuser',
+      password: 'testpassword',
+      securityQuestion: 'Your favorite color?',
+      securityAnswer: 'Blue',
+      userDeleted: true,
+    };
+    prismaMock.user.findUnique.mockResolvedValue(user);
+
+    const response = await request(app).get(
+      '/users/1/expenses/total-daily?startDate=2023-10-12&endDate=2023-10-14',
+    );
+
+    expect(response.status).toBe(400);
+    expect(response.body.message).toBe('Invalid Credentials');
+  });
+
+  it('returns 400 when there is an error in the input format', async () => {
+    const response = await request(app).get(
+      '/users/1/expenses/total-daily?startDate=random&endDate=string',
+    );
+
+    expect(response.status).toBe(400);
+  });
+
+  it('returns 500 when there is a server error', async () => {
+    prismaMock.user.findUnique.mockRejectedValue(new Error());
+
+    const response = await request(app).get(
+      '/users/1/expenses/total-daily?startDate=2023-10-12&endDate=2023-10-14',
+    );
+
+    expect(response.status).toBe(500);
+    expect(response.body.message).toBe('Server error');
+  });
+});
+
+describe('GET /users/:userId/expenses/total-spending-for-categories', () => {
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+
+  it('returns 200 with category and total if expenses are found', async () => {
+    prismaMock.user.findUnique.mockResolvedValue({
+      id: 1,
+      username: 'testuser',
+      password: 'testpassword',
+      securityQuestion: 'Your favorite color?',
+      securityAnswer: 'Blue',
+      userDeleted: false,
+    });
+
+    const mockedExpenses = [
+      {
+        id: 1,
+        userId: 1,
+        title: 'expense 1',
+        amount: 100,
+        createdAt: new Date('2023-10-12T00:20:00Z'),
+        category: ExpenseCategory.GROCERIES,
+      },
+      {
+        id: 2,
+        userId: 1,
+        title: 'expense 2',
+        amount: 100,
+        createdAt: new Date('2023-10-12T00:00:00Z'),
+        category: ExpenseCategory.GROCERIES,
+      },
+      {
+        id: 3,
+        userId: 1,
+        title: 'expense 3',
+        amount: 100,
+        createdAt: new Date('2023-10-13T00:00:00Z'),
+        category: ExpenseCategory.GROCERIES,
+      },
+      {
+        id: 4,
+        userId: 1,
+        title: 'expense 4',
+        amount: 200,
+        createdAt: new Date('2023-10-13T00:00:00Z'),
+        category: ExpenseCategory.HEALTH,
+      },
+    ];
+
+    prismaMock.expense.findMany.mockResolvedValue(mockedExpenses);
+
+    const response = await request(app).get(
+      '/users/1/expenses/total-spending-for-categories?startDate=2023-10-12&endDate=2023-10-14',
+    );
+
+    expect(response.status).toBe(200);
+    expect(response.body).toStrictEqual({
+      success: true,
+      data: [
+        {
+          category: 'GROCERIES',
+          amount: 300,
+        },
+        {
+          category: 'HEALTH',
+          amount: 200,
+        },
+      ],
+    });
+  });
+
+  it('returns 400 if user does not exist', async () => {
+    prismaMock.user.findUnique.mockResolvedValue(null); // Mocking no user
+
+    const response = await request(app).get(
+      '/users/1/expenses/total-spending-for-categories?startDate=2023-10-12&endDate=2023-10-14',
+    );
+
+    expect(response.status).toBe(400);
+    expect(response.body.message).toBe('Invalid Credentials');
+  });
+
+  it('returns 400 if user is deleted', async () => {
+    const user = {
+      id: 1,
+      username: 'testuser',
+      password: 'testpassword',
+      securityQuestion: 'Your favorite color?',
+      securityAnswer: 'Blue',
+      userDeleted: true,
+    };
+    prismaMock.user.findUnique.mockResolvedValue(user);
+
+    const response = await request(app).get(
+      '/users/1/expenses/total-spending-for-categories?startDate=2023-10-12&endDate=2023-10-14',
+    );
+
+    expect(response.status).toBe(400);
+    expect(response.body.message).toBe('Invalid Credentials');
+  });
+
+  it('returns 400 when there is an error in the input format', async () => {
+    const response = await request(app).get(
+      '/users/1/expenses/total-spending-for-categories?startDate=random&endDate=string',
+    );
+
+    expect(response.status).toBe(400);
+  });
+
+  it('returns 500 when there is a server error', async () => {
+    prismaMock.user.findUnique.mockRejectedValue(new Error());
+
+    const response = await request(app).get(
+      '/users/1/expenses/total-spending-for-categories?startDate=2023-10-12&endDate=2023-10-14',
+    );
 
     expect(response.status).toBe(500);
     expect(response.body.message).toBe('Server error');

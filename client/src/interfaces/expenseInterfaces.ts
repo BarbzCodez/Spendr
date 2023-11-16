@@ -1,44 +1,3 @@
-export interface SignupData {
-  username: string;
-  password: string;
-  securityQuestion: string;
-  securityAnswer: string;
-}
-
-export interface SignupResponse {
-  message: string;
-  user: {
-    id: number;
-    username: string;
-  };
-}
-
-export interface LoginData {
-  username: string;
-  password: string;
-}
-
-export interface LoginResponse {
-  message: string;
-  user: {
-    id: number;
-    username: string;
-  };
-  token: string;
-}
-
-export interface UpdateUsernameData {
-  username: string;
-}
-
-export interface UpdatePasswordData {
-  password: string;
-}
-
-export interface MessageResponse {
-  message: string;
-}
-
 export interface ExpenseUIData {
   title: string;
   amount: number;
@@ -74,11 +33,6 @@ export interface AllExpensesResponse {
   data: [ExpenseData];
 }
 
-export interface UserInfo {
-  userId: number;
-  token: string;
-}
-
 export interface AddExpenseResponse {
   message: string;
   expense: {
@@ -88,8 +42,4 @@ export interface AddExpenseResponse {
 
 export interface EditExpenseResponse {
   data: ExpenseData;
-}
-
-export interface DeleteExpenseResponse {
-  message: string;
 }

@@ -1,13 +1,13 @@
 import axios, { AxiosResponse } from 'axios';
 
+import { MessageResponse } from '../interfaces/generalInterfaces';
+import { UserInfo } from '../interfaces/userInterfaces';
 import {
   ExpenseUIData,
-  UserInfo,
   AddExpenseResponse,
   ExpenseData,
   EditExpenseResponse,
-  DeleteExpenseResponse,
-} from '../interfaces/interfaces';
+} from '../interfaces/expenseInterfaces';
 
 /**
  * API add expense
@@ -62,14 +62,14 @@ export const editExpenseRequest = async (
  *
  * @param {ExpenseData} data - expense values from UI
  * @param {UserInfo} user - user info
- * @returns {AxiosResponse<DeleteExpenseResponse>}
+ * @returns {AxiosResponse<MessageResponse>}
  * @throws {AxiosError}
  */
 export const deleteExpenseRequest = async (
   data: ExpenseData,
   user: UserInfo,
-): Promise<AxiosResponse<DeleteExpenseResponse>> => {
-  const response = await axios.delete<DeleteExpenseResponse>(
+): Promise<AxiosResponse<MessageResponse>> => {
+  const response = await axios.delete<MessageResponse>(
     `http://localhost:7005/expenses/${data.id}`,
     {
       headers: {

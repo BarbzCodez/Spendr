@@ -1,15 +1,23 @@
 import axios, { AxiosResponse } from 'axios';
+
 import {
+  MessageResponse,
+  StartEndDatesData,
+  DailyTotalsResponse,
+  CategoryTotalsResponse,
+} from '../interfaces/generalInterfaces';
+import {
+  UserInfo,
   SignupData,
   SignupResponse,
   LoginData,
   LoginResponse,
-  MessageResponse,
   UpdateUsernameData,
   UpdatePasswordData,
-  AllExpensesResponse,
-  UserInfo,
-} from '../interfaces/interfaces';
+} from '../interfaces/userInterfaces';
+import { AllExpensesResponse } from '../interfaces/expenseInterfaces';
+import { AllBudgetResponse } from '../interfaces/budgetInterfaces';
+import { AllGroupExpensesResponse } from '../interfaces/groupSplitInterfaces';
 
 /**
  * API signup request
@@ -122,7 +130,96 @@ export const allExpensesRequest = async (
 ): Promise<AxiosResponse<AllExpensesResponse>> => {
   const response: AxiosResponse = await axios.get(
     `http://localhost:7005/users/${user.userId}/expenses`,
+    {
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
+    },
+  );
+  return response;
+};
 
+/**
+ * API all user budgets
+ *
+ * @param {UserInfo} user - user info
+ * @returns {AxiosResponse<AllBudgetResponse>} - response
+ * @throws {AxiosError}
+ */
+export const allBudgetsRequest = async (
+  user: UserInfo,
+): Promise<AxiosResponse<AllBudgetResponse>> => {
+  const response: AxiosResponse = await axios.get(
+    `http://localhost:7005/users/${user.userId}/budgets`,
+    {
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
+    },
+  );
+  return response;
+};
+
+/**
+ * API daily totals between 2 dates
+ *
+ * @param {UserInfo} user - user info
+ * @param {StartEndDatesData} data - start and end dates
+ * @returns {AxiosResponse<DailyTotalsResponse>} - response
+ * @throws {AxiosError}
+ */
+export const dailyTotalExpensesRequest = async (
+  user: UserInfo,
+  data: StartEndDatesData,
+): Promise<AxiosResponse<DailyTotalsResponse>> => {
+  const response = await axios.get<DailyTotalsResponse>(
+    `http://localhost:7005/users/${user.userId}/expenses/total-daily`,
+    {
+      params: data,
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
+    },
+  );
+  return response;
+};
+
+/**
+ * API category totals between 2 dates
+ *
+ * @param {UserInfo} user - user info
+ * @param {StartEndDatesData} data - start and end dates
+ * @returns {AxiosResponse<CategoryTotalsResponse>} - response
+ * @throws {AxiosError}
+ */
+export const categoryTotalExpensesRequest = async (
+  user: UserInfo,
+  data: StartEndDatesData,
+): Promise<AxiosResponse<CategoryTotalsResponse>> => {
+  const response = await axios.get<CategoryTotalsResponse>(
+    `http://localhost:7005/users/${user.userId}/expenses/total-spending-for-categories`,
+    {
+      params: data,
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
+    },
+  );
+  return response;
+};
+
+/**
+ * API all user group expenses
+ *
+ * @param {UserInfo} user - user info
+ * @returns {AxiosResponse<AllGroupExpensesResponse>} - response
+ * @throws {AxiosError}
+ */
+export const allGroupExpensesRequest = async (
+  user: UserInfo,
+): Promise<AxiosResponse<AllGroupExpensesResponse>> => {
+  const response: AxiosResponse = await axios.get(
+    `http://localhost:7005/users/${user.userId}/group-expenses`,
     {
       headers: {
         Authorization: `Bearer ${user.token}`,

@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
@@ -7,7 +7,7 @@ import { Typography, TextField } from '@mui/material';
 
 import { PrimaryButton } from '../../../assets/styles/styles';
 import { loginRequest } from '../../../api/UserAPI';
-import { LoginData, LoginResponse } from '../../../interfaces/interfaces';
+import { LoginData, LoginResponse } from '../../../interfaces/userInterfaces';
 import { useUser } from '../../../context/UserContext';
 
 const validationSchema = yup.object().shape({
@@ -17,7 +17,7 @@ const validationSchema = yup.object().shape({
 
 const LoginForm = (): JSX.Element => {
   const navigate = useNavigate();
-  const [error, setError] = React.useState(' ');
+  const [error, setError] = useState(' ');
   const { login } = useUser();
 
   const handleLogin = async (values: LoginData) => {
