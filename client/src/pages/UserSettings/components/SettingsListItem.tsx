@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, ChangeEvent, SyntheticEvent } from 'react';
 import {
   Alert,
   Divider,
@@ -20,7 +20,7 @@ import { updatePassword, updateUsername } from '../../../api/UserAPI';
 import {
   UpdatePasswordData,
   UpdateUsernameData,
-} from '../../../interfaces/interfaces';
+} from '../../../interfaces/userInterfaces';
 import { SettingStack, SecondaryText } from './styles';
 
 const validationSchemaUsername = yup.object().shape({
@@ -43,14 +43,12 @@ function delay(ms: number) {
  */
 export const SettingsListComponent = (): JSX.Element => {
   const { userId, username, token } = useUser();
-  const [currUsername, setCurrUsername] = React.useState(username);
-
-  const [editUsername, setEditUsername] = React.useState(false);
-  const [editPassword, setEditPassword] = React.useState(false);
-  const [usernameError, setUsernameError] = React.useState(' ');
-  const [generalError, setGeneralError] = React.useState(' ');
-
-  const [openSnackbar, setOpenSnackbar] = React.useState(false);
+  const [currUsername, setCurrUsername] = useState(username);
+  const [editUsername, setEditUsername] = useState(false);
+  const [editPassword, setEditPassword] = useState(false);
+  const [usernameError, setUsernameError] = useState(' ');
+  const [generalError, setGeneralError] = useState(' ');
+  const [openSnackbar, setOpenSnackbar] = useState(false);
 
   const handleUpdateUsername = async (values: UpdateUsernameData) => {
     try {
@@ -135,13 +133,13 @@ export const SettingsListComponent = (): JSX.Element => {
       }
     }
   };
-  const handleUsernameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleUsernameChange = (event: ChangeEvent<HTMLInputElement>) => {
     setUsernameError(' ');
     formikUsername.handleChange(event);
   };
 
   const handleSnackbarClose = (
-    event?: React.SyntheticEvent | Event,
+    event?: SyntheticEvent | Event,
     reason?: string,
   ) => {
     if (reason === 'clickaway') {

@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { FC, ChangeEvent, useState, SyntheticEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
@@ -7,25 +7,10 @@ import axios, { AxiosError } from 'axios';
 
 import { PrimaryButton } from '../../../assets/styles/styles';
 import { signupRequest } from '../../../api/UserAPI';
-
-interface SignupFields {
-  username: string;
-  password: string;
-  confirmPassword: string;
-  securityQuestion: string;
-  securityAnswer: string;
-}
-
-interface SignupTextFieldProps {
-  id: string;
-  label: string;
-  value: string;
-  type?: string;
-  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
-  onBlur: (event: React.FocusEvent<HTMLInputElement>) => void;
-  error?: boolean;
-  helperText?: string;
-}
+import {
+  SignupFields,
+  SignupTextFieldProps,
+} from '../../../interfaces/userInterfaces';
 
 function delay(ms: number) {
   return new Promise((resolve) => setTimeout(resolve, ms));
@@ -45,7 +30,7 @@ const validationSchema = yup.object().shape({
   securityAnswer: yup.string().required('Security answer cannot be empty'),
 });
 
-const SignupTextField: React.FC<SignupTextFieldProps> = ({
+const SignupTextField: FC<SignupTextFieldProps> = ({
   id,
   label,
   value,
@@ -80,9 +65,9 @@ const SignupTextField: React.FC<SignupTextFieldProps> = ({
  */
 const SignupForm = (): JSX.Element => {
   const navigate = useNavigate();
-  const [usernameError, setUsernameError] = React.useState(' '); // initial state is space to reserve the vertical space for the error
-  const [generalError, setGeneralError] = React.useState(false);
-  const [openSnackbar, setOpenSnackbar] = React.useState(false);
+  const [usernameError, setUsernameError] = useState(' '); // initial state is space to reserve the vertical space for the error
+  const [generalError, setGeneralError] = useState(false);
+  const [openSnackbar, setOpenSnackbar] = useState(false);
 
   const handleSignup = async (values: SignupFields) => {
     try {
@@ -118,13 +103,13 @@ const SignupForm = (): JSX.Element => {
     }
   };
 
-  const handleUsernameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleUsernameChange = (event: ChangeEvent<HTMLInputElement>) => {
     setUsernameError(' ');
     formik.handleChange(event);
   };
 
   const handleSnackbarClose = (
-    event?: React.SyntheticEvent | Event,
+    event?: SyntheticEvent | Event,
     reason?: string,
   ) => {
     if (reason === 'clickaway') {

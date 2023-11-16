@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { ReceiptData } from '../interfaces/interfaces';
+import { ReceiptData } from '../interfaces/generalInterfaces';
 
 /**
  * Convert date from DD/MM/YYYY to YYYY/MM/DD

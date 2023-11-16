@@ -1,11 +1,14 @@
-import * as React from 'react';
+import React, { useState, useEffect } from 'react';
 import { PieChart } from '@mui/x-charts/PieChart';
 import { Typography, Box } from '@mui/material';
 import CircleIcon from '@mui/icons-material/Circle';
 
 import { useUser } from '../../../context/UserContext';
 import { categoryTotalExpensesRequest } from '../../../api/UserAPI';
-import { categories, categoryGraphColors } from '../../../constants/constants';
+import {
+  categories,
+  categoryGraphColors,
+} from '../../../assets/constants/constants';
 import {
   BackgroundBox,
   DataHorizontalBox,
@@ -17,16 +20,16 @@ import {
  *
  * @returns {JSX.Element} - category graph
  */
-export const CategoryGraph: React.FC = (): JSX.Element => {
+export const CategoryGraph = (): JSX.Element => {
   const { userId, token } = useUser();
-  const [categoryTotals, setCategoryTotals] = React.useState<
+  const [categoryTotals, setCategoryTotals] = useState<
     { id: number; value: number; label: string }[]
   >([]);
-  const [errorState, setErrorState] = React.useState(false);
+  const [errorState, setErrorState] = useState(false);
   const currDate = new Date();
   const startDate = new Date(currDate.getFullYear(), currDate.getMonth(), 1);
 
-  React.useEffect(() => {
+  useEffect(() => {
     fetchCategoryExpenses(startDate.toISOString(), currDate.toISOString());
   }, []);
 

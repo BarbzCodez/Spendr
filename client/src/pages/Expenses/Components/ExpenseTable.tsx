@@ -1,23 +1,26 @@
-import * as React from 'react';
+import React, { FC } from 'react';
 import { GridColDef, GridActionsCellItem } from '@mui/x-data-grid';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import EditIcon from '@mui/icons-material/Edit';
 
 import { theme } from '../../../assets/styles';
-import { ExpenseTableProps, ExpenseData } from '../../../interfaces/interfaces';
+import {
+  ExpenseTableProps,
+  ExpenseData,
+} from '../../../interfaces/expenseInterfaces';
 
 import { BackgroundBox, ExpensesDataGrid } from './styles';
 import { isoToFormattedDate } from '../../../utils/utils';
-import { categories } from '../../../constants/constants';
+import { categories } from '../../../assets/constants/constants';
 
 /**
  * Expenses table component
  *
  * @param {ExpenseData[]} expenses - expenses to display
- * @param {React.Dispatch<React.SetStateAction<ExpenseData[]>>} setExpenses - set function for expenses
- * @returns {JSX.Element} - expenses table
+ * @param {Dispatch<SetStateAction<ExpenseData[]>>} setExpenses - set function for expenses
+ * @returns {FC<ExpenseTableProps>} - expenses table
  */
-export const ExpensesTable: React.FC<ExpenseTableProps> = ({
+export const ExpensesTable: FC<ExpenseTableProps> = ({
   expenses,
   handleEditDialog,
   handleDeleteExpense,

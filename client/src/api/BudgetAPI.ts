@@ -1,13 +1,13 @@
 import axios, { AxiosResponse } from 'axios';
 
+import { MessageResponse } from '../interfaces/generalInterfaces';
+import { UserInfo } from '../interfaces/userInterfaces';
 import {
-  UserInfo,
   BudgetUIData,
   AddBudgetResponse,
   BudgetData,
   EditBudgetResponse,
-  MessageResponse,
-} from '../interfaces/interfaces';
+} from '../interfaces/budgetInterfaces';
 
 /**
  * API add Budget

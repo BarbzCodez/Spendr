@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, Dispatch, SetStateAction } from 'react';
 import { BarChart } from '@mui/x-charts/BarChart';
 import { MenuItem, TextField, Typography, Stack } from '@mui/material';
 import { ArrowUpward, ArrowDownward } from '@mui/icons-material';
@@ -6,8 +6,8 @@ import { ArrowUpward, ArrowDownward } from '@mui/icons-material';
 import { BackgroundBox, CenteredBox, ComparisonGraphBox } from './styles';
 import { dailyTotalExpensesRequest } from '../../../api/UserAPI';
 import { useUser } from '../../../context/UserContext';
-import { DailyTotal } from '../../../interfaces/interfaces';
-import { compareGraphColors } from '../../../constants/constants';
+import { DailyTotal } from '../../../interfaces/generalInterfaces';
+import { compareGraphColors } from '../../../assets/constants/constants';
 
 const firstColor = compareGraphColors[0];
 const secondColor = compareGraphColors[1];
@@ -17,7 +17,7 @@ const secondColor = compareGraphColors[1];
  *
  * @returns {JSX.Element} - comparison graph
  */
-export const CompareGraph: React.FC = () => {
+export const CompareGraph = (): JSX.Element => {
   const { userId, token } = useUser();
   const [firstMonthIndex, setFirstMonthIndex] = useState(0);
   const [secondMonthIndex, setSecondMonthIndex] = useState(1);
@@ -30,7 +30,7 @@ export const CompareGraph: React.FC = () => {
   const [combinedData, setCombinedData] = useState<
     { day: number; firstAmount: number; secondAmount: number }[]
   >([]);
-  const [errorState, setErrorState] = React.useState(false);
+  const [errorState, setErrorState] = useState(false);
   const monthsArray = (() => {
     const currDate = new Date();
     const currMonth = currDate.getMonth();
@@ -55,7 +55,7 @@ export const CompareGraph: React.FC = () => {
     return result;
   })();
 
-  React.useEffect(() => {
+  useEffect(() => {
     const setMonthsData = async () => {
       await setMonthlyData(firstMonthIndex, setFirstMonthData);
       await setMonthlyData(secondMonthIndex, setSecondMonthData);
@@ -64,7 +64,7 @@ export const CompareGraph: React.FC = () => {
     setMonthsData();
   }, []);
 
-  React.useEffect(() => {
+  useEffect(() => {
     const updateData = async () => {
       await setMonthlyData(firstMonthIndex, setFirstMonthData);
     };
@@ -72,7 +72,7 @@ export const CompareGraph: React.FC = () => {
     updateData();
   }, [firstMonthIndex]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     const updateData = async () => {
       await setMonthlyData(secondMonthIndex, setSecondMonthData);
     };
@@ -80,14 +80,14 @@ export const CompareGraph: React.FC = () => {
     updateData();
   }, [secondMonthIndex]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     calcAndSetCombinedData();
   }, [firstMonthData, secondMonthData]);
 
   const setMonthlyData = async (
     index: number,
-    setFunc: React.Dispatch<
-      React.SetStateAction<
+    setFunc: Dispatch<
+      SetStateAction<
         {
           date: string;
           amount: number;
@@ -109,8 +109,8 @@ export const CompareGraph: React.FC = () => {
   const fetchDailyExpenses = async (
     startDate: string,
     endDate: string,
-    setData: React.Dispatch<
-      React.SetStateAction<
+    setData: Dispatch<
+      SetStateAction<
         {
           date: string;
           amount: number;

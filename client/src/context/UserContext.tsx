@@ -4,6 +4,7 @@ import React, {
   useState,
   ReactNode,
   useEffect,
+  FC,
 } from 'react';
 
 interface UserContextType {
@@ -21,7 +22,7 @@ interface UserProviderProps {
 
 const UserContext = createContext<UserContextType | undefined>(undefined);
 
-export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
+export const UserProvider: FC<UserProviderProps> = ({ children }) => {
   const [userId, setUserId] = useState<number | null>(null);
   const [username, setUsername] = useState<string | null>(null);
 

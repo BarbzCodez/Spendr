@@ -5,7 +5,7 @@ import WalletIcon from '@mui/icons-material/Wallet';
 import AutoGraphIcon from '@mui/icons-material/AutoGraph';
 import { blue, green, pink, yellow } from '@mui/material/colors';
 
-import { HomePageInfo } from '../../interfaces/interfaces';
+import { HomePageInfo } from '../../interfaces/generalInterfaces';
 
 /**
  * Information for the home page, containing details about different sections.

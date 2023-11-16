@@ -6,7 +6,12 @@ import { LeftStack, LoginBox, RightBox, ClipArt } from './styles';
 import picture from '../../assets/images/otherStonks-noBackgrounds.png';
 import LoginForm from './components/LoginForm';
 
-const Login = () => {
+/**
+ * Login page component
+ *
+ * @returns {JSX.Element} - login component
+ */
+const Login = (): JSX.Element => {
   return (
     <PrimaryDiv>
       <LoginBox>

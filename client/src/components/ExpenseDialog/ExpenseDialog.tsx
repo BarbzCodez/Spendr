@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, FC, ChangeEvent } from 'react';
 import {
   Dialog,
   DialogActions,
@@ -11,13 +11,16 @@ import {
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 import { Upload } from '@mui/icons-material';
-import { ExpenseUIData, ExpenseDialogProps } from '../../interfaces/interfaces';
+import {
+  ExpenseUIData,
+  ExpenseDialogProps,
+} from '../../interfaces/expenseInterfaces';
 import {
   PrimaryButton,
   PrimaryLoadingButton,
 } from '../../assets/styles/styles';
 import { getReceiptData } from '../../api/EdenAPI';
-import { categories } from '../../constants/constants';
+import { categories } from '../../assets/constants/constants';
 import { isoToFormattedDate } from '../../utils/utils';
 
 const validationSchema = yup.object().shape({
@@ -44,9 +47,9 @@ const validationSchema = yup.object().shape({
  * @param {function} onClose - function when cancel is clicked
  * @param {function} onSave - function when save is clicked
  * @param {ExpenseVals} expenseData - expense data when editing
- * @returns {React.FC} - expense dialog component
+ * @returns {FC<ExpenseDialogProps>} - expense dialog component
  */
-const ExpenseDialog: React.FC<ExpenseDialogProps> = ({
+const ExpenseDialog: FC<ExpenseDialogProps> = ({
   open,
   onClose,
   onAdd,
@@ -122,7 +125,7 @@ const ExpenseDialog: React.FC<ExpenseDialogProps> = ({
     }
   };
 
-  const handleReceiptUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleReceiptUpload = (event: ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files ? event.target.files[0] : null;
     if (file) {
       handleImageUpload(file);
