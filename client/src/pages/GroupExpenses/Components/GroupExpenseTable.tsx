@@ -30,7 +30,7 @@ import { theme, PrimaryButton } from '../../../assets/styles';
  * @property {function} handleMarkAsPaidGroupExpense - API call to handle marking expenses as paid.
  * @property {number} currUserId - The current user's ID from useUser
  *
- * @returns {JSX.Element } - Group expenses table
+ * @returns {JSX.Element} - Group expenses table
  */
 export const GroupExpensesTable: FC<GroupExpenseTableProps> = ({
   groupExpenses,

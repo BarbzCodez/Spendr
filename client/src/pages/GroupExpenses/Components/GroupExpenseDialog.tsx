@@ -54,7 +54,7 @@ const validationSchema = yup.object().shape({
  * @property {function} onClose - function when cancel is clicked
  * @property {function} onAdd - function when save is clicked
  *
- * @returns {FC<GroupExpenseDialogProps>} - expense group dialog component
+ * @returns {JSX.Element} - expense group dialog component
  */
 const GroupExpenseDialog: FC<GroupExpenseDialogProps> = ({
   username,
