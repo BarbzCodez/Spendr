@@ -36,7 +36,7 @@ export const addBudgetRequest = async (
 /**
  * API edit budget
  *
- * @param {BudgetData} data - all budget values
+ * @param {BudgetData} data - all budget values that are going to be edited
  * @param {UserInfo} user - user info
  * @returns {AxiosResponse<EditBudgetResponse>}
  * @throws {AxiosError}

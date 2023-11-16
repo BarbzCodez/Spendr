@@ -22,7 +22,18 @@ interface UserProviderProps {
 
 const UserContext = createContext<UserContextType | undefined>(undefined);
 
-export const UserProvider: FC<UserProviderProps> = ({ children }) => {
+/**
+ * UserProvider setups the context for user-related information
+ * for the whole page
+ *
+ * @param {UserProviderProps} props - Contains: userId, username token and if isLoading
+ * @property {React.ReactNode} props.children - The child elements to be wrapped by the context provider.
+ *
+ * @returns {JSX.Element} The user context
+ */
+export const UserProvider: FC<UserProviderProps> = ({
+  children,
+}: UserProviderProps): JSX.Element => {
   const [userId, setUserId] = useState<number | null>(null);
   const [username, setUsername] = useState<string | null>(null);
 
@@ -82,7 +93,14 @@ export const UserProvider: FC<UserProviderProps> = ({ children }) => {
   );
 };
 
-export const useUser = () => {
+/**
+ * Custom hook for accessing the user information through the userContext
+ *
+ * @throws {Error} Throws an error if used outside the context of UserProvider
+ *
+ * @returns {UserContextType} The user context value
+ */
+export const useUser = (): UserContextType => {
   const context = useContext(UserContext);
   if (context === undefined) {
     throw new Error('useUser must be used within UserProvider');

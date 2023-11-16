@@ -3,28 +3,29 @@ import { GridColDef, GridActionsCellItem } from '@mui/x-data-grid';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import EditIcon from '@mui/icons-material/Edit';
 
-import { theme } from '../../../assets/styles';
 import {
   ExpenseTableProps,
   ExpenseData,
 } from '../../../interfaces/expenseInterfaces';
-
 import { BackgroundBox, ExpensesDataGrid } from './styles';
-import { isoToFormattedDate } from '../../../utils/utils';
-import { categories } from '../../../assets/constants/constants';
+import { theme } from '../../../assets/styles';
+import { isoToFormattedDate, valueLabelOptions } from '../../../assets/utils';
+import { categories } from '../../../assets/constants';
 
 /**
  * Expenses table component
  *
- * @param {ExpenseData[]} expenses - expenses to display
- * @param {Dispatch<SetStateAction<ExpenseData[]>>} setExpenses - set function for expenses
- * @returns {FC<ExpenseTableProps>} - expenses table
+ * @property {ExpenseData[]} expenses - expenses to display
+ * @property {function} handleEditDialog - The function to handle editing expense details
+ * @property {function} handleDeleteExpense - The function to handle deleting an expense
+ *
+ * @returns {JSX.Element} - expenses table
  */
 export const ExpensesTable: FC<ExpenseTableProps> = ({
   expenses,
   handleEditDialog,
   handleDeleteExpense,
-}) => {
+}): JSX.Element => {
   const columns: GridColDef[] = [
     {
       field: 'title',
@@ -64,7 +65,7 @@ export const ExpensesTable: FC<ExpenseTableProps> = ({
       type: 'singleSelect',
       minWidth: 150,
       flex: 1,
-      valueOptions: categories,
+      valueOptions: valueLabelOptions(categories),
     },
     {
       field: 'actions',

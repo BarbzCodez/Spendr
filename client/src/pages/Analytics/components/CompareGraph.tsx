@@ -7,7 +7,7 @@ import { BackgroundBox, CenteredBox, ComparisonGraphBox } from './styles';
 import { dailyTotalExpensesRequest } from '../../../api/UserAPI';
 import { useUser } from '../../../context/UserContext';
 import { DailyTotal } from '../../../interfaces/generalInterfaces';
-import { compareGraphColors } from '../../../assets/constants/constants';
+import { compareGraphColors } from '../../../assets/constants';
 
 const firstColor = compareGraphColors[0];
 const secondColor = compareGraphColors[1];

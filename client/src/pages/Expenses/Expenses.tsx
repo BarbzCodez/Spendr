@@ -1,10 +1,7 @@
 import React, { useState, useEffect, SyntheticEvent } from 'react';
 import AddIcon from '@mui/icons-material/Add';
-import { Alert, Snackbar } from '@mui/material';
+import { Alert, Snackbar, Stack } from '@mui/material';
 
-import { PrimaryDiv } from '../../assets/styles/styles';
-import { Stack } from '@mui/material';
-import { PrimaryButton, TableBox } from '../../assets/styles/styles';
 import { ExpenseUIData, ExpenseData } from '../../interfaces/expenseInterfaces';
 import { allExpensesRequest } from '../../api/UserAPI';
 import {
@@ -12,10 +9,15 @@ import {
   deleteExpenseRequest,
   editExpenseRequest,
 } from '../../api/ExpenseAPI';
-import { theme } from '../../assets/styles';
+import {
+  theme,
+  PrimaryDiv,
+  PrimaryButton,
+  TableBox,
+} from '../../assets/styles';
 import { useUser } from '../../context/UserContext';
 import ExpensesTable from './Components/ExpenseTable';
-import ExpenseDialog from '../../components/ExpenseDialog';
+import ExpenseDialog from './Components/ExpenseDialog';
 import Header from '../../components/Header';
 
 /**
@@ -40,7 +42,7 @@ const Expenses = (): JSX.Element => {
         const response = await allExpensesRequest({ userId, token });
 
         if (response.status === 200) {
-          const allExpenses = await response.data.data;
+          const allExpenses = response.data.data;
           setExpenses(allExpenses);
         }
       }

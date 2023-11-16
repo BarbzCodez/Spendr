@@ -1,15 +1,15 @@
 import * as React from 'react';
-import { PrimaryDiv } from '../../assets/styles/';
-import Header from '../../components/Header';
 import { Typography } from '@mui/material';
 
+import { PrimaryDiv, PopupDiv } from '../../assets/styles';
 import { SettingsStack } from './styles';
-import { PopupDiv } from '../../styles';
-import SettingsListComponent from './components/SettingsListItem';
+import Header from '../../components/Header';
+import SettingsListComponent from './components/SettingsList';
 import DangerZone from './components/DangerZone';
 
 /**
  * User Settings page component
+ *
  * @returns {JSX.Element} - User Settings page
  */
 const UserSettings = (): JSX.Element => {

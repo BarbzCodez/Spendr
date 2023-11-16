@@ -5,21 +5,25 @@ import EditIcon from '@mui/icons-material/Edit';
 import ClearIcon from '@mui/icons-material/Clear';
 
 import { ProgressBarBudgetProps } from '../../../interfaces/budgetInterfaces';
+import { capitalizeWord } from '../../../assets/utils';
 
 /**
  * Progress Bar component
- * @returns {FC<ProgressBarBudgetProps>} - Progress Bar
+ *
+ * @property {BudgetWithExpensesData[]} budgets - The array of budget data with expenses
+ * @property {function} handleEditDialog - The function to handle editing budget details
+ * @property {function} handleDeleteBudget - The function to handle deleting a budget
+ *
+ * @returns {JSX.Element} - Progress Bar component
  */
 const ProgressBar: FC<ProgressBarBudgetProps> = ({
   budgets,
   handleEditDialog,
   handleDeleteBudget,
-}) => {
+}): JSX.Element => {
   const getTitle = (category: string | undefined, duration: string) => {
     if (category) {
-      return `${
-        category.charAt(0).toUpperCase() + category.slice(1).toLowerCase()
-      } - ${duration}`;
+      return `${capitalizeWord(category)} - ${duration}`;
     }
     return `${duration}`;
   };

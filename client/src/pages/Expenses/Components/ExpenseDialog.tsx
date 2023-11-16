@@ -11,17 +11,15 @@ import {
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 import { Upload } from '@mui/icons-material';
+
 import {
   ExpenseUIData,
   ExpenseDialogProps,
-} from '../../interfaces/expenseInterfaces';
-import {
-  PrimaryButton,
-  PrimaryLoadingButton,
-} from '../../assets/styles/styles';
-import { getReceiptData } from '../../api/EdenAPI';
-import { categories } from '../../assets/constants/constants';
-import { isoToFormattedDate } from '../../utils/utils';
+} from '../../../interfaces/expenseInterfaces';
+import { PrimaryButton, PrimaryLoadingButton } from '../../../assets/styles';
+import { getReceiptData } from '../../../api/EdenAPI';
+import { categories } from '../../../assets/constants';
+import { capitalizeWord, isoToFormattedDate } from '../../../assets/utils';
 
 const validationSchema = yup.object().shape({
   title: yup.string().required('Title cannot be empty'),
@@ -43,11 +41,13 @@ const validationSchema = yup.object().shape({
 /**
  * Expense dialog component
  *
- * @param {boolean} open - open/closed state of the dialog
- * @param {function} onClose - function when cancel is clicked
- * @param {function} onSave - function when save is clicked
- * @param {ExpenseVals} expenseData - expense data when editing
- * @returns {FC<ExpenseDialogProps>} - expense dialog component
+ * @property {boolean} open - open/closed state of the dialog
+ * @property {function} onClose - function when cancel is clicked when adding a expense
+ * @property {function} onAdd - function when add a new expense is clicked
+ * @property {function} onEdit - function when edit is clicked
+ * @property {budgetData} expenseData - budget data when editing
+ *
+ * @returns {JSX.Element} - expense dialog component
  */
 const ExpenseDialog: FC<ExpenseDialogProps> = ({
   open,
@@ -55,7 +55,7 @@ const ExpenseDialog: FC<ExpenseDialogProps> = ({
   onAdd,
   onEdit,
   expenseData,
-}) => {
+}): JSX.Element => {
   const [loading, setLoading] = useState<boolean>(false);
 
   const formik = useFormik({
@@ -215,7 +215,7 @@ const ExpenseDialog: FC<ExpenseDialogProps> = ({
             >
               {categories.map((category) => (
                 <MenuItem key={category} value={category}>
-                  {category}
+                  {capitalizeWord(category)}
                 </MenuItem>
               ))}
             </TextField>

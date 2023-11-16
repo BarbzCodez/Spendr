@@ -5,16 +5,13 @@ import * as yup from 'yup';
 import { Typography, TextField, Alert, Snackbar } from '@mui/material';
 import axios, { AxiosError } from 'axios';
 
-import { PrimaryButton } from '../../../assets/styles/styles';
+import { PrimaryButton } from '../../../assets/styles';
 import { signupRequest } from '../../../api/UserAPI';
 import {
   SignupFields,
   SignupTextFieldProps,
 } from '../../../interfaces/userInterfaces';
-
-function delay(ms: number) {
-  return new Promise((resolve) => setTimeout(resolve, ms));
-}
+import { delay } from '../../../assets/utils';
 
 const validationSchema = yup.object().shape({
   username: yup.string().required('Username cannot be empty'),

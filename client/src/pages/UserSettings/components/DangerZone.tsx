@@ -8,7 +8,6 @@ import { useFormik } from 'formik';
 import { theme } from '../../../assets/styles';
 import { deleteUser } from '../../../api/UserAPI';
 import { useUser } from '../../../context/UserContext';
-
 import {
   SettingStack,
   DangerZoneStackElements,
@@ -16,13 +15,11 @@ import {
   ErrorBox,
   SecondaryTextDangerZone,
 } from './styles';
-
-function delay(ms: number) {
-  return new Promise((resolve) => setTimeout(resolve, ms));
-}
+import { delay } from '../../../assets/utils';
 
 /**
  * Return the the box component with the danger zone attributes
+ *
  * @returns {JSX.Element} - Danger Zone component
  */
 const DangerZone = (): JSX.Element => {

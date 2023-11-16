@@ -5,7 +5,7 @@ import * as yup from 'yup';
 import axios, { AxiosResponse, AxiosError } from 'axios';
 import { Typography, TextField } from '@mui/material';
 
-import { PrimaryButton } from '../../../assets/styles/styles';
+import { PrimaryButton } from '../../../assets/styles';
 import { loginRequest } from '../../../api/UserAPI';
 import { LoginData, LoginResponse } from '../../../interfaces/userInterfaces';
 import { useUser } from '../../../context/UserContext';
@@ -15,6 +15,11 @@ const validationSchema = yup.object().shape({
   password: yup.string().required('Password cannot be empty'),
 });
 
+/**
+ * Login Form component
+ *
+ * @returns {JSX.Element} - Login form for user to login
+ */
 const LoginForm = (): JSX.Element => {
   const navigate = useNavigate();
   const [error, setError] = useState(' ');
