@@ -197,12 +197,17 @@ export const CompareGraph = (): JSX.Element => {
   const getComparisonInfo = () => {
     const firstMonthAvg = Number(getAverage(firstMonthData));
     const secondMonthAvg = Number(getAverage(secondMonthData));
-    const percentageChange =
-      firstMonthAvg == 0 && secondMonthAvg == 0
-        ? '0.00'
-        : Math.abs(
-            ((secondMonthAvg - firstMonthAvg) / firstMonthAvg) * 100,
-          ).toFixed(2);
+    const percentageChange = (() => {
+      if (firstMonthAvg == 0 && secondMonthAvg == 0) {
+        return '0.00';
+      } else if (firstMonthAvg == 0) {
+        return '?';
+      }
+
+      return Math.abs(
+        ((secondMonthAvg - firstMonthAvg) / firstMonthAvg) * 100,
+      ).toFixed(2);
+    })();
     const isDecrease = firstMonthAvg >= secondMonthAvg;
 
     const averageText = (
