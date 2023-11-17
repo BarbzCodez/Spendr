@@ -29,10 +29,12 @@ const ProgressBar: FC<ProgressBarBudgetProps> = ({
   };
 
   const getAmountUsed = (totalUsed: number, amount: number) => {
+    const amountUsed = Math.abs(amount - totalUsed).toFixed(2);
+
     if (totalUsed < amount) {
-      return `$${amount - totalUsed} Left`;
+      return `$${amountUsed} Left`;
     }
-    return `$${totalUsed - amount} Over`;
+    return `$${amountUsed} Over`;
   };
 
   const getColor = (totalUsed: number, amount: number) => {
@@ -46,7 +48,7 @@ const ProgressBar: FC<ProgressBarBudgetProps> = ({
 
   const getProgressBarNumber = (totalUsed: number, amount: number) => {
     const progress = (totalUsed * 100) / (amount * 1.15);
-    return progress <= 100 ? progress : 100;
+    return progress <= 100 ? Number(progress.toFixed(2)) : 100;
   };
 
   return (
@@ -82,7 +84,7 @@ const ProgressBar: FC<ProgressBarBudgetProps> = ({
             spacing={2}
           >
             <Typography variant="body1" component="div">
-              ${budget.totalExpense} of ${budget.amount}
+              ${budget.totalExpense.toFixed(2)} of ${budget.amount}
             </Typography>
             <Stack direction="row" justifyContent="center" alignItems="center">
               <IconButton onClick={() => handleDeleteBudget(budget)}>
