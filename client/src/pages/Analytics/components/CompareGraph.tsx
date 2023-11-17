@@ -201,7 +201,7 @@ export const CompareGraph = (): JSX.Element => {
       if (firstMonthAvg == 0 && secondMonthAvg == 0) {
         return '0.00';
       } else if (firstMonthAvg == 0) {
-        return '?';
+        return '-';
       }
 
       return Math.abs(
