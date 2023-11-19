@@ -370,7 +370,7 @@ const GroupExpenseDialog: FC<GroupExpenseDialogProps> = ({
             </Stack>
             {userList.map((values, index) => (
               <Stack
-                key={index}
+                key={username}
                 direction="row"
                 justifyContent="space-between"
                 alignItems="center"
