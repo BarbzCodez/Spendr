@@ -673,9 +673,9 @@ describe('GET /users/:userId/budgets', () => {
     expect(monthlyBudget).toBeDefined();
     expect(yearlyTransportBudget).toBeDefined();
 
-    expect(groceryBudget!.totalExpense).toBe(50);
-    expect(monthlyBudget!.totalExpense).toBe(250);
-    expect(yearlyTransportBudget!.totalExpense).toBe(400);
+    expect(groceryBudget.totalExpense).toBe(50);
+    expect(monthlyBudget.totalExpense).toBe(250);
+    expect(yearlyTransportBudget.totalExpense).toBe(400);
   });
 
   it('returns 200 with empty array if no budgets are found', async () => {

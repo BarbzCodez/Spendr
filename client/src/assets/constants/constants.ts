@@ -19,3 +19,13 @@ export const categoryGraphColors = [
 ];
 
 export const compareGraphColors = ['#C353DB', '#F1E194'];
+
+export const categoryNameAndGraphColour: [
+  index: number,
+  name: string,
+  colour: string,
+][] = categories.map((value, index) => [
+  index,
+  value,
+  categoryGraphColors[index],
+]);

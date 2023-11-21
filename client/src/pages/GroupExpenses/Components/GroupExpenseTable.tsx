@@ -12,7 +12,7 @@ import {
 import { GridColDef, GridRenderCellParams } from '@mui/x-data-grid';
 
 import {
-  splitDataWithId,
+  SplitDataWithId,
   GroupExpenseTableProps,
   GroupExpenseAsPaid,
   GroupExpenseData,
@@ -63,7 +63,7 @@ export const GroupExpensesTable: FC<GroupExpenseTableProps> = ({
   };
 
   const splitWithId = (data: GroupExpenseData) => {
-    const newSplit: splitDataWithId[] = [];
+    const newSplit: SplitDataWithId[] = [];
 
     data.split.forEach(
       (splitData, index) =>
@@ -95,8 +95,25 @@ export const GroupExpensesTable: FC<GroupExpenseTableProps> = ({
     setNewGroupExpenses(updatedGroupExpense);
   }, [groupExpenses]);
 
+  const userCheckColour = (
+    user: SplitDataWithId,
+    currentUserId: number,
+  ): string => {
+    let colour = theme.palette.primary.main;
+
+    if (user.userId == currentUserId) {
+      if (user.hasPaid) {
+        colour = theme.palette.info.light;
+      } else {
+        colour = theme.palette.warning.main;
+      }
+    }
+
+    return colour;
+  };
+
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  function UsersCol(props: GridRenderCellParams<any, splitDataWithId[]>) {
+  const UsersCol = (props: GridRenderCellParams<any, SplitDataWithId[]>) => {
     const { value } = props;
 
     const handleChange = (isChecked: boolean, groupId: number) => {
@@ -132,12 +149,7 @@ export const GroupExpensesTable: FC<GroupExpenseTableProps> = ({
               checked={user.hasPaid}
               onChange={(event) => handleChange(event.target.checked, user.id)}
               style={{
-                color:
-                  user.userId == currUserId
-                    ? user.hasPaid
-                      ? theme.palette.info.light
-                      : theme.palette.warning.main
-                    : theme.palette.primary.main,
+                color: userCheckColour(user, currUserId),
               }}
             />
             <Typography>
@@ -147,7 +159,7 @@ export const GroupExpensesTable: FC<GroupExpenseTableProps> = ({
         ))}
       </Stack>
     );
-  }
+  };
 
   const columns: GridColDef[] = [
     {

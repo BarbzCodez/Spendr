@@ -1,7 +1,6 @@
 import React, { useState, useEffect, SyntheticEvent } from 'react';
 import AddIcon from '@mui/icons-material/Add';
-import { Alert, Snackbar } from '@mui/material';
-import { Stack } from '@mui/material';
+import { Alert, Snackbar, Stack } from '@mui/material';
 import axios, { AxiosError } from 'axios';
 
 import {
