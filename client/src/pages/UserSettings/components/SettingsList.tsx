@@ -75,16 +75,12 @@ export const SettingsListComponent = (): JSX.Element => {
       if (axios.isAxiosError(error)) {
         const axiosError: AxiosError = error;
         const errorData = axiosError.response?.data as { message: string };
-        if (
-          axiosError.response?.status === 400 &&
-          errorData.message === 'Invalid credentials'
-        ) {
-          setUsernameError('Invalid credentials');
-        } else if (
-          axiosError.response?.status === 400 &&
-          errorData.message === 'Username already exists'
-        ) {
-          setUsernameError('Username already exists');
+        if (axiosError.response?.status === 400) {
+          if (errorData.message === 'Invalid credentials') {
+            setUsernameError('Invalid credentials');
+          } else if (errorData.message === 'Username already exists') {
+            setUsernameError('Username already exists');
+          }
         } else {
           setGeneralError('An error occurred, please try again');
         }
@@ -231,7 +227,7 @@ export const SettingsListComponent = (): JSX.Element => {
           <SecondaryText variant={'subtitle2'}>{currUsername}</SecondaryText>
           <IconButton
             disabled={editPassword}
-            style={{ opacity: editPassword ? 0 : 1, color: 'white' }}
+            style={{ color: 'white' }}
             onClick={() => {
               editPassword ? setEditUsername(false) : setEditUsername(true);
             }}
@@ -284,7 +280,7 @@ export const SettingsListComponent = (): JSX.Element => {
           <SecondaryText variant={'subtitle2'}>{'********'}</SecondaryText>
           <IconButton
             disabled={editUsername}
-            style={{ opacity: editUsername ? 0 : 1, color: 'white' }}
+            style={{ color: 'white' }}
             onClick={() => {
               editUsername ? setEditPassword(false) : setEditPassword(true);
             }}

@@ -36,14 +36,14 @@ export interface GroupExpenseTableProps {
   currUserId: number;
 }
 
-export interface splitData {
+export interface SplitData {
   userId: number;
   username: string;
   hasPaid: boolean;
   shareAmount: number;
 }
 
-export interface splitDataWithId extends splitData {
+export interface SplitDataWithId extends SplitData {
   id: number;
 }
 
@@ -53,7 +53,7 @@ export interface GroupExpenseData {
   totalAmount: number;
   category: string;
   createdAt: string;
-  split: splitData[];
+  split: SplitData[];
 }
 
 export interface GroupExpenseDataWithId {
@@ -62,7 +62,7 @@ export interface GroupExpenseDataWithId {
   totalAmount: number;
   category: string;
   createdAt: string;
-  split: splitDataWithId[];
+  split: SplitDataWithId[];
 }
 
 export interface AllGroupExpensesResponse {

@@ -5,6 +5,7 @@ import React, {
   ReactNode,
   useEffect,
   FC,
+  useMemo,
 } from 'react';
 
 interface UserContextType {
@@ -84,12 +85,20 @@ export const UserProvider: FC<UserProviderProps> = ({
     sessionStorage.removeItem('token');
   };
 
+  const memoValue = useMemo(
+    () => ({
+      userId,
+      username,
+      token,
+      login,
+      logout,
+      isLoading,
+    }),
+    [userId, username, token, login, logout, isLoading],
+  );
+
   return (
-    <UserContext.Provider
-      value={{ userId, username, token, login, logout, isLoading }}
-    >
-      {children}
-    </UserContext.Provider>
+    <UserContext.Provider value={memoValue}>{children}</UserContext.Provider>
   );
 };
 

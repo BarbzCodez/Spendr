@@ -292,7 +292,7 @@ export const CompareGraph = (): JSX.Element => {
           }}
         >
           {monthsArray.map((item, index) => (
-            <MenuItem key={index} value={index}>
+            <MenuItem key={item.month} value={index}>
               {item.text}
             </MenuItem>
           ))}
@@ -312,7 +312,7 @@ export const CompareGraph = (): JSX.Element => {
           }}
         >
           {monthsArray.map((item, index) => (
-            <MenuItem key={index} value={index}>
+            <MenuItem key={item.month} value={index}>
               {item.text}
             </MenuItem>
           ))}
