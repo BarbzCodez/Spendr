@@ -8,6 +8,7 @@ import { categoryTotalExpensesRequest } from '../../../api/UserAPI';
 import {
   categories,
   categoryGraphColors,
+  categoryNameAndGraphColour,
 } from '../../../assets/constants/constants';
 import {
   BackgroundBox,
@@ -62,7 +63,7 @@ export const CategoryGraph = (): JSX.Element => {
     );
     const processedData = categories.map((category, index) => ({
       id: index,
-      value: categoryMap.get(category) || 0,
+      value: categoryMap.get(category) ?? 0,
       label: category,
     }));
 
@@ -72,15 +73,15 @@ export const CategoryGraph = (): JSX.Element => {
   const getCategoriesLegend = () => {
     return (
       <CategoriesLegendBox>
-        {categories.map((category, index) => (
+        {categoryNameAndGraphColour.map((category) => (
           <Box
-            key={index}
+            key={category[0]}
             sx={{
               display: 'flex',
               flexDirection: 'row',
             }}
           >
-            <CircleIcon style={{ color: categoryGraphColors[index] }} />
+            <CircleIcon style={{ color: category[2] }} />
             <Typography
               variant="body1"
               align="center"
@@ -90,7 +91,7 @@ export const CategoryGraph = (): JSX.Element => {
                 },
               }}
             >
-              {capitalizeWord(category)}
+              {capitalizeWord(category[1])}
             </Typography>
           </Box>
         ))}

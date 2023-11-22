@@ -12,7 +12,7 @@ import {
 import { GridColDef, GridRenderCellParams } from '@mui/x-data-grid';
 
 import {
-  splitDataWithId,
+  SplitDataWithId,
   GroupExpenseTableProps,
   GroupExpenseAsPaid,
   GroupExpenseData,
@@ -63,7 +63,7 @@ export const GroupExpensesTable: FC<GroupExpenseTableProps> = ({
   };
 
   const splitWithId = (data: GroupExpenseData) => {
-    const newSplit: splitDataWithId[] = [];
+    const newSplit: SplitDataWithId[] = [];
 
     data.split.forEach(
       (splitData, index) =>
@@ -96,7 +96,7 @@ export const GroupExpensesTable: FC<GroupExpenseTableProps> = ({
   }, [groupExpenses]);
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  function UsersCol(props: GridRenderCellParams<any, splitDataWithId[]>) {
+  const UsersCol = (props: GridRenderCellParams<any, SplitDataWithId[]>) => {
     const { value } = props;
 
     const handleChange = (isChecked: boolean, groupId: number) => {
@@ -137,7 +137,7 @@ export const GroupExpensesTable: FC<GroupExpenseTableProps> = ({
         ))}
       </Stack>
     );
-  }
+  };
 
   const columns: GridColDef[] = [
     {
