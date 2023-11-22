@@ -275,7 +275,7 @@ export const CompareGraph = (): JSX.Element => {
   };
 
   return (
-    <BackgroundBox style={{ width: '100%' }}>
+    <BackgroundBox boxShadow={3} style={{ width: '100%' }}>
       <CenteredBox>
         <TextField
           select

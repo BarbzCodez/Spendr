@@ -1,6 +1,6 @@
 import React, { useState, useEffect, SyntheticEvent } from 'react';
 import AddIcon from '@mui/icons-material/Add';
-import { Alert, Snackbar, Stack } from '@mui/material';
+import { Alert, Snackbar, Stack, Typography } from '@mui/material';
 
 import { ExpenseUIData, ExpenseData } from '../../interfaces/expenseInterfaces';
 import { allExpensesRequest } from '../../api/UserAPI';
@@ -9,12 +9,7 @@ import {
   deleteExpenseRequest,
   editExpenseRequest,
 } from '../../api/ExpenseAPI';
-import {
-  theme,
-  PrimaryDiv,
-  PrimaryButton,
-  TableBox,
-} from '../../assets/styles';
+import { theme, PrimaryDiv, PrimaryButton, CardBox } from '../../assets/styles';
 import { useUser } from '../../context/UserContext';
 import ExpensesTable from './Components/ExpenseTable';
 import ExpenseDialog from './Components/ExpenseDialog';
@@ -188,14 +183,15 @@ const Expenses = (): JSX.Element => {
       </Snackbar>
       <Header />
       <Stack
-        maxWidth="80vw"
+        display="flex"
         direction="row"
-        justifyContent="flex-end"
-        alignItems="center"
-        spacing={2}
+        justifyContent="space-between"
         paddingTop="5vh"
         paddingBottom="2vh"
+        marginLeft="5%"
+        marginRight="5%"
       >
+        <Typography variant="h4">My Expenses</Typography>
         <PrimaryButton
           startIcon={<AddIcon style={{ color: theme.palette.info.main }} />}
           style={{ width: '180px' }}
@@ -204,13 +200,13 @@ const Expenses = (): JSX.Element => {
           Add Expense
         </PrimaryButton>
       </Stack>
-      <TableBox>
+      <CardBox>
         <ExpensesTable
           expenses={expenses}
           handleEditDialog={handleEditDialog}
           handleDeleteExpense={handleDeleteExpense}
         />
-      </TableBox>
+      </CardBox>
     </PrimaryDiv>
   );
 };

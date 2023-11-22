@@ -6,13 +6,7 @@ import Header from '../../components/Header';
 import BudgetDialog from './Components/BudgetDialog';
 import ProgressBar from './Components/ProgressBar';
 
-import {
-  PrimaryDiv,
-  PrimaryButton,
-  theme,
-  PopupDiv,
-} from '../../assets/styles';
-import { BudgetStack } from './styles';
+import { PrimaryDiv, PrimaryButton, theme, CardBox } from '../../assets/styles';
 import { useUser } from '../../context/UserContext';
 import {
   BudgetData,
@@ -192,12 +186,15 @@ const Budgets = (): JSX.Element => {
       </Snackbar>
       <Header />
       <Stack
-        maxWidth="80vw"
+        display="flex"
         direction="row"
-        justifyContent="flex-end"
-        alignItems="center"
-        paddingTop="2vh"
+        justifyContent="space-between"
+        paddingTop="5vh"
+        paddingBottom="2vh"
+        marginLeft="25%"
+        marginRight="25%"
       >
+        <Typography variant="h4">My Budgets</Typography>
         <PrimaryButton
           startIcon={<AddIcon style={{ color: theme.palette.info.main }} />}
           style={{ width: '180px' }}
@@ -206,18 +203,13 @@ const Budgets = (): JSX.Element => {
           Add Budget
         </PrimaryButton>
       </Stack>
-      <PopupDiv style={{ paddingTop: '2vh' }}>
-        <BudgetStack spacing={2} boxShadow={5}>
-          <Typography variant="h4" component="h2" noWrap>
-            {'My Budgets'}
-          </Typography>
-          <ProgressBar
-            budgets={budgets}
-            handleEditDialog={handleEditDialog}
-            handleDeleteBudget={handleDeleteBudget}
-          />
-        </BudgetStack>
-      </PopupDiv>
+      <CardBox>
+        <ProgressBar
+          budgets={budgets}
+          handleEditDialog={handleEditDialog}
+          handleDeleteBudget={handleDeleteBudget}
+        />
+      </CardBox>
     </PrimaryDiv>
   );
 };

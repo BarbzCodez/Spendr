@@ -99,7 +99,7 @@ export const CategoryGraph = (): JSX.Element => {
   };
 
   return (
-    <BackgroundBox>
+    <BackgroundBox boxShadow={3}>
       {!errorState && categoryTotals.length != 0 && (
         <DataHorizontalBox>
           <Box sx={{ flex: 1 }}>

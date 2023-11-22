@@ -33,7 +33,7 @@ export const PrimaryLoadingButton = styled(LoadingButton)(({ theme }) => ({
   },
 }));
 
-export const TableBox = styled(Box)({
+export const CardBox = styled(Box)({
   display: 'flex',
   flexDirection: 'column',
   justifyContent: 'center',
@@ -70,13 +70,3 @@ export const EntryRightBox = styled(Box)(() => ({
   position: 'relative',
   width: '50%',
 }));
-
-export const PopupDiv = styled(Box)({
-  maxHeight: '100vh',
-  display: 'flex',
-  margin: '1px',
-  paddingTop: '2vh',
-  flexDirection: 'column',
-  justifyContent: 'center',
-  alignItems: 'center',
-});

@@ -92,7 +92,7 @@ export const MonthlyExpensesGraph = (): JSX.Element => {
   };
 
   return (
-    <BackgroundBox>
+    <BackgroundBox boxShadow={3}>
       {!errorState && accumulatedTotals.length != 0 && (
         <LineChart
           xAxis={[

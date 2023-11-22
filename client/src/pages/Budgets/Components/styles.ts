@@ -1,6 +1,7 @@
-import { styled, Stack } from '@mui/system';
+import { styled } from '@mui/system';
+import { Box } from '@mui/material';
 
-export const SettingsStack = styled(Stack)(({ theme }) => ({
+export const BudgetsBox = styled(Box)(({ theme }) => ({
   width: '50%',
   height: '70vh',
   padding: '2rem',

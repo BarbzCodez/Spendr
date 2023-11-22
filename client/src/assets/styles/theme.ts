@@ -19,7 +19,7 @@ export const theme = createTheme({
     },
     subtitle1: {
       fontWeight: 'normal',
-      fontSize: '18px',
+      fontSize: '15px',
     },
     subtitle2: {
       fontWeight: 'lighter',

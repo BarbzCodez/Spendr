@@ -103,7 +103,7 @@ export const ExpensesTable: FC<ExpenseTableProps> = ({
   };
 
   return (
-    <BackgroundBox>
+    <BackgroundBox boxShadow={3}>
       <ExpensesDataGrid
         disableColumnSelector
         rows={expenses}

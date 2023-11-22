@@ -109,19 +109,13 @@ export const GroupExpensesTable: FC<GroupExpenseTableProps> = ({
     };
 
     return (
-      <Stack
-        direction="column"
-        justifyContent="center"
-        alignItems="flex-start"
-        spacing={2}
-      >
+      <Stack direction="column" justifyContent="center" alignItems="flex-start">
         {value?.map((user) => (
           <Stack
             key={user.userId}
             direction="row"
             justifyContent="center"
             alignItems="center"
-            spacing={2}
           >
             <Checkbox
               disabled={
@@ -132,16 +126,12 @@ export const GroupExpensesTable: FC<GroupExpenseTableProps> = ({
               checked={user.hasPaid}
               onChange={(event) => handleChange(event.target.checked, user.id)}
               style={{
-                color:
-                  user.userId == currUserId
-                    ? user.hasPaid
-                      ? theme.palette.info.light
-                      : theme.palette.warning.main
-                    : theme.palette.primary.main,
+                color: theme.palette.primary.contrastText,
+                opacity: user.userId == currUserId && !user.hasPaid ? 1 : 0.4,
               }}
             />
-            <Typography>
-              | {user.username}: ${user.shareAmount.toFixed(2)}
+            <Typography variant="subtitle1">
+              {user.username}: ${user.shareAmount.toFixed(2)}
             </Typography>
           </Stack>
         ))}
@@ -202,7 +192,7 @@ export const GroupExpensesTable: FC<GroupExpenseTableProps> = ({
   ];
 
   return (
-    <BackgroundBox>
+    <BackgroundBox boxShadow={3}>
       <ExpensesDataGrid
         disableColumnSelector
         rows={newGroupExpenses}

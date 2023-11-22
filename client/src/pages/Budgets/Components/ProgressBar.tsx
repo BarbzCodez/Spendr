@@ -6,6 +6,7 @@ import ClearIcon from '@mui/icons-material/Clear';
 
 import { ProgressBarBudgetProps } from '../../../interfaces/budgetInterfaces';
 import { capitalizeWord } from '../../../assets/utils';
+import { BudgetsBox } from './styles';
 
 /**
  * Progress Bar component
@@ -52,10 +53,7 @@ const ProgressBar: FC<ProgressBarBudgetProps> = ({
   };
 
   return (
-    <Box
-      sx={{ overflow: 'auto' }}
-      style={{ padding: '1rem', width: '85%', height: '60vh' }}
-    >
+    <BudgetsBox sx={{ overflow: 'auto' }} boxShadow={3}>
       {budgets.map((budget) => (
         <Box key={budget.id}>
           <Stack
@@ -97,7 +95,7 @@ const ProgressBar: FC<ProgressBarBudgetProps> = ({
           </Stack>
         </Box>
       ))}
-    </Box>
+    </BudgetsBox>
   );
 };
 
