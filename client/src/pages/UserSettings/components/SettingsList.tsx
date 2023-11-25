@@ -49,6 +49,24 @@ export const SettingsListComponent = (): JSX.Element => {
   const [generalError, setGeneralError] = useState(' ');
   const [openSnackbar, setOpenSnackbar] = useState(false);
 
+  const parseUserError = (error: unknown) => {
+    if (axios.isAxiosError(error)) {
+      const axiosError: AxiosError = error;
+      const errorData = axiosError.response?.data as { message: string };
+      if (axiosError.response?.status === 400) {
+        if (errorData.message === 'Invalid credentials') {
+          setUsernameError('Invalid credentials');
+        } else if (errorData.message === 'Username already exists') {
+          setUsernameError('Username already exists');
+        }
+      } else {
+        setGeneralError('An error occurred, please try again');
+      }
+    } else {
+      setGeneralError('An error occurred, please try again');
+    }
+  };
+
   const handleUpdateUsername = async (values: UpdateUsernameData) => {
     try {
       const { username } = values;
@@ -72,21 +90,7 @@ export const SettingsListComponent = (): JSX.Element => {
         }
       }
     } catch (error) {
-      if (axios.isAxiosError(error)) {
-        const axiosError: AxiosError = error;
-        const errorData = axiosError.response?.data as { message: string };
-        if (axiosError.response?.status === 400) {
-          if (errorData.message === 'Invalid credentials') {
-            setUsernameError('Invalid credentials');
-          } else if (errorData.message === 'Username already exists') {
-            setUsernameError('Username already exists');
-          }
-        } else {
-          setGeneralError('An error occurred, please try again');
-        }
-      } else {
-        setGeneralError('An error occurred, please try again');
-      }
+      parseUserError(error);
     }
   };
 
