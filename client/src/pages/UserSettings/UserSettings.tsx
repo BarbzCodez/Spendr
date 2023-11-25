@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Typography } from '@mui/material';
 
-import { PrimaryDiv, PopupDiv } from '../../assets/styles';
+import { PrimaryDiv, CardBox } from '../../assets/styles';
 import { SettingsStack } from './styles';
 import Header from '../../components/Header';
 import SettingsListComponent from './components/SettingsList';
@@ -16,15 +16,21 @@ const UserSettings = (): JSX.Element => {
   return (
     <PrimaryDiv>
       <Header />
-      <PopupDiv>
-        <SettingsStack spacing={2} boxShadow={5}>
-          <Typography variant="h4" component="h2" noWrap>
-            {'User Settings'}
-          </Typography>
+      <Typography
+        variant="h4"
+        align="center"
+        noWrap
+        paddingTop="5vh"
+        paddingBottom="2vh"
+      >
+        {'User Settings'}
+      </Typography>
+      <CardBox>
+        <SettingsStack spacing={2} boxShadow={3}>
           <SettingsListComponent />
           <DangerZone />
         </SettingsStack>
-      </PopupDiv>
+      </CardBox>
     </PrimaryDiv>
   );
 };

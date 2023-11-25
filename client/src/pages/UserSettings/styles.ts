@@ -1,16 +1,10 @@
 import { styled, Stack } from '@mui/system';
 
 export const SettingsStack = styled(Stack)(({ theme }) => ({
-  background: `${theme.palette.secondary.main} 0%`,
-  width: '60vw',
-  minWidth: '450px',
-  maxWidth: '700px',
-  display: 'flex',
-  margin: '0rem',
-  flexDirection: 'column',
-  color: 'white',
-  alignItems: 'center',
-  borderRadius: '15px',
-  paddingTop: '2vh',
-  paddingBottom: '2vh',
+  width: '50%',
+  height: '55vh',
+  padding: '2rem',
+  backgroundColor: `${theme.palette.secondary.main}80`,
+  borderRadius: '16px',
+  marginBottom: '15vh',
 }));

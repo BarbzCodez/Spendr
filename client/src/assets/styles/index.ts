@@ -3,11 +3,10 @@ export {
   PrimaryButton,
   PrimaryLoadingButton,
   ResizingImg,
-  TableBox,
+  CardBox,
   EntryClipArt,
   EntryBox,
   EntryLeftStack,
   EntryRightBox,
-  PopupDiv,
 } from './styles';
 export { theme } from './theme';

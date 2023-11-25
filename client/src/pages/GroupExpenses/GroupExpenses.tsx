@@ -1,14 +1,9 @@
 import React, { useState, useEffect, SyntheticEvent } from 'react';
 import AddIcon from '@mui/icons-material/Add';
-import { Alert, Snackbar, Stack } from '@mui/material';
+import { Alert, Snackbar, Stack, Typography } from '@mui/material';
 import axios, { AxiosError } from 'axios';
 
-import {
-  theme,
-  PrimaryDiv,
-  PrimaryButton,
-  TableBox,
-} from '../../assets/styles';
+import { theme, PrimaryDiv, PrimaryButton, CardBox } from '../../assets/styles';
 import {
   GroupExpenseUIData,
   GroupExpenseData,
@@ -155,14 +150,15 @@ const GroupExpenses = (): JSX.Element => {
       </Snackbar>
       <Header />
       <Stack
-        maxWidth="80vw"
+        display="flex"
         direction="row"
-        justifyContent="flex-end"
-        alignItems="center"
-        spacing={2}
+        justifyContent="space-between"
         paddingTop="5vh"
         paddingBottom="2vh"
+        marginLeft="5%"
+        marginRight="5%"
       >
+        <Typography variant="h4">My Group Expenses</Typography>
         <PrimaryButton
           startIcon={<AddIcon style={{ color: theme.palette.info.main }} />}
           style={{ width: '250px' }}
@@ -172,13 +168,13 @@ const GroupExpenses = (): JSX.Element => {
           Add Group Expense
         </PrimaryButton>
       </Stack>
-      <TableBox>
+      <CardBox>
         <GroupExpensesTable
           groupExpenses={groupExpenses}
           handleMarkAsPaidGroupExpense={handleMarkAsPaidGroupExpense}
           currUserId={userId ?? -1}
         />
-      </TableBox>
+      </CardBox>
     </PrimaryDiv>
   );
 };

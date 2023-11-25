@@ -24,9 +24,7 @@ export const DeleteButton = styled(Button)(({ theme }) => ({
 }));
 
 export const ErrorBox = styled(Box)({
-  width: '55vw',
-  minWidth: '350px',
-  maxWidth: '600px',
+  width: '100%',
   margin: '1px',
   maxHeight: '100vh',
   border: '4px,',
@@ -39,9 +37,7 @@ export const ErrorBox = styled(Box)({
 });
 
 export const DangerZoneStackElements = styled(Stack)({
-  width: '50vw',
-  minWidth: '350px',
-  maxWidth: '600px',
+  width: '100%',
   justifyContent: 'space-between',
   spacing: '1rem',
   alignItems: 'center',
@@ -51,9 +47,7 @@ export const DangerZoneStackElements = styled(Stack)({
 });
 
 export const SettingStack = styled(Stack)({
-  width: '55vw',
-  minWidth: '350px',
-  maxWidth: '600px',
+  width: '100%',
   alignItems: 'center',
   justifyContent: 'space-between',
 });
