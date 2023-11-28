@@ -20,12 +20,20 @@ Embracing the Spendr vision, we've not only progressed but elevated our journey!
 
 [Spendr GitHub Repository](https://github.com/BarbzCodez/Spendr)
 
-### DockerHub repository - Mark
+### DockerHub repository
+
+DockerHub is a way to automatically deploy versions of both the server image and the client image. These images can be pulled and used to run the most recent version of the app. DockerHub also has previous versions of the application which can be used. These images are pushed automatically by the CD pipeline which is ran via github actions.
 
 The Docker image includes everything to run the application. Once the docker image is run, no additional actions are required to launch the application.
 
-1. Provide the DockerHub link for your image. [DockerHub]()
-2. Provide instructions to run your docker image(s).
+#### DockerHub Links
+
+- [Spendr client](https://hub.docker.com/r/lysackm/spendr-client)
+- [Spendr server](https://hub.docker.com/r/lysackm/spendr-server)
+
+#### DockerHub Instructions
+
+1. Provide instructions to run your docker image(s).
 
 ### User Stories
 
@@ -252,14 +260,23 @@ These are the most 5 important files in our repo:
 |                                        |                      |
 |                                        |                      |
 
-## Continuous Integration and Deployment (CI/CD) - Mark
+## Continuous Integration and Deployment (CI/CD)
 
-- Describe your CI/CD environment and provide the clickable link to your CI/CD pipeline.
+Both our CI/CD pipelines were created using Github Actions. The CI pipeline was triggered when a PR was created, or updated. This builds both the server and client separately. Verifying that both are able to build from that branch. As well as running the test suits and using a linter to check for formatting errors. Now the code smells are reported using SonarCloud when the CI pipeline triggers. The results are then able to be seen in the github actions tab or the PR itself.
+
+The CD pipeline runs when a commit is added to the main branch, most likely from a PR being closed. It builds the client and server, then creates a docker image which is then pushed to DockerHub.
 
 [Continuous Integration](https://github.com/BarbzCodez/Spendr/blob/main/.github/workflows/ci.yml)
+
 [Continuous Deployment](https://github.com/BarbzCodez/Spendr/blob/main/.github/workflows/cd.yml)
 
-- Snapshots of the CI/CD execution. Provide one for CI and one for CD.
+#### Snapshots
+
+[CD](https://github.com/BarbzCodez/Spendr/actions/runs/6985882437/job/19010698130)
+![CD snapshot](./pictures/CD.PNG)
+
+[CI](https://github.com/BarbzCodez/Spendr/actions/runs/7010842181)
+![CI snapshot](./pictures/CI.PNG)
 
 [CI/CD Workflow](https://github.com/BarbzCodez/Spendr/actions/workflows/cd.yml)
 
@@ -310,11 +327,29 @@ If your acceptance tests are done manually, you should have detailed steps how t
 1. Describe how you run regression testing and provide the link to the regression testing script.
 2. Provide the last snapshot of the execution and results of regression testing.
 
-### Load Testing - Mark
+### Load Testing
 
-1. Describe the environment for load testing, including the tool and load test cases.
-2. Provide the test report for load testing.
-3. Discuss one bottleneck found in the load testing.
+The load testing was done using JMeter, then run against a locally running version of the app. The test cases was a simulation of what a standard user may do when using the app. This includes creating an account, logging in, creating an expense, fetching expense data, creating a budget, and fetching budget, fetching analytics data, creating and fetching group expenses.
+
+#### Load Testing: JMeter Summary Report
+
+| Label                 | # Samples | Average | Min | Max | Std. Dev. | Error % | Throughput | Received KB/sec | Sent KB/sec | Avg. Bytes |
+|-----------------------|-----------|---------|-----|-----|-----------|---------|------------|-----------------|-------------|------------|
+| create user1          | 20        | 215     | 0   | 275 | 24.65     | 0.00%   | 1.97161    | 0.69            | 0.55        | 358.9      |
+| create user2          | 20        | 222     | 0   | 435 | 65.54     | 0.00%   | 1.96967    | 0.69            | 0.55        | 358.9      |
+| login                 | 20        | 70      | 0   | 100 | 12.17     | 0.00%   | 1.99283    | 0.94            | 0.45        | 481.7      |
+| create expense        | 20        | 69      | 0   | 135 | 19.12     | 0.00%   | 2          | 0.9             | 0.55        | 459        |
+| fetch expenses        | 20        | 4       | 0   | 16  | 3.22      | 0.00%   | 2.01227    | 0.58            | 0.33        | 293        |
+| add budget            | 20        | 115     | 0   | 190 | 32.6      | 0.00%   | 2.0008     | 0.81            | 0.45        | 413        |
+| fetch budgets         | 20        | 7       | 0   | 13  | 3.35      | 0.00%   | 2.01837    | 0.58            | 0.32        | 293        |
+| fetch analytics       | 240       | 5       | 0   | 17  | 2.07      | 0.00%   | 24.09155   | 6.89            | 5.78        | 293        |
+| create group expenses | 20        | 278     | 0   | 331 | 36.67     | 0.00%   | 1.97316    | 0.85            | 0.64        | 440        |
+| fetch group expenses  | 20        | 7       | 0   | 23  | 5         | 0.00%   | 2.00582    | 1.1             | 0.34        | 559.8      |
+| TOTAL                 | 420       | 50      | 0   | 435 | 84.9      | 0.00%   | 38.40176   | 12.81           | 9.1         | 341.6      |
+
+![JMeter Summary Report](./pictures/JMeter.PNG)
+
+A bottleneck found during load testing was the amount of data that fetching group expenses caused. Since this is an operation that happens whenever the group expenses page is loaded, this is a frequent API call. This means that the high data transfer should be reduced. This could be solved by using caching on client side, or an optimization of the data returned from the endpoint.
 
 ### Security Analysis - Dan
 
