@@ -33,30 +33,7 @@ The Docker image includes everything to run the application. Once the docker ima
 
 #### DockerHub Instructions
 
-First pull the images using the commands `docker pull lysackm/spendr-client` and `docker pull lysackm/spendr-client`. Then you need to have a configured postgres database running for the app to work. The dockerfile code to run both of these can be is here:
-
-```<dockerfile>
-   db:
-    image: postgres:latest
-    volumes:
-      - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
-    environment:
-      POSTGRES_DB: spendr_database
-      POSTGRES_USER: admin
-      POSTGRES_PASSWORD: admin
-    ports:
-      - "5432:5432"
-
-  pgadmin:
-    image: dpage/pgadmin4
-    environment:
-      PGADMIN_DEFAULT_EMAIL: 'admin@admin.com'
-      PGADMIN_DEFAULT_PASSWORD: 'root'
-    ports:
-      - '5050:80'
-```
-
-After having the database container started, spin up the client and server containers to start the app running locally.
+1. Provide instructions to run your docker image(s).
 
 ### User Stories
 
