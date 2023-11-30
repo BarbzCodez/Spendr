@@ -2,12 +2,12 @@
 
 ## Team Members
 
-| Name                  | Email                                              | GitHub username | Role                                          |
-| --------------------- | -------------------------------------------------- | --------------- | --------------------------------------------- |
-| Daniel La Rocque      | [larocq17@myumanitoba.ca](larocq17@myumanitoba.ca) | dlarocque       | Full Stack Developer                          |
-| Victoria Kogan        | [koganv@myumanitoba.ca](koganv@myumanitoba.ca)     | VictoriaKGN     | Frontend Developer                            |
+| Name                  | Email                                              | GitHub username | Role                                         |
+| --------------------- | -------------------------------------------------- | --------------- | -------------------------------------------- |
+| Daniel La Rocque      | [larocq17@myumanitoba.ca](larocq17@myumanitoba.ca) | dlarocque       | Full Stack Developer                         |
+| Victoria Kogan        | [koganv@myumanitoba.ca](koganv@myumanitoba.ca)     | VictoriaKGN     | Frontend Developer                           |
 | Mark Lysack           | [lysackm@myumanitoba.ca](lysackm@myumanitoba.ca)   | lysackm         | Backend Developer and CI/CD                  |
-| Barbara Guzman Romero | [guzmanrb@myumanitoba.ca](guzmanrb@myumanitoba.ca) | BarbzCodez      | Frontend Developer                            |
+| Barbara Guzman Romero | [guzmanrb@myumanitoba.ca](guzmanrb@myumanitoba.ca) | BarbzCodez      | Frontend Developer                           |
 | Ethan Ducharme        | [duchar36@myumanitoba.ca](duchar36@myumanitoba.ca) | DucharmeEthan   | Backend Developer and Database Administrator |
 
 ## Project Summary
@@ -35,7 +35,8 @@ The Docker image includes everything to run the application. Once the docker ima
 
 First pull the images using the commands `docker pull lysackm/spendr-client` and `docker pull lysackm/spendr-client`. Then you need to have a configured postgres database running for the app to work. The dockerfile code to run both of these can be is here:
 
-```<dockerfile>
+```bash
+<dockerfile>
    db:
     image: postgres:latest
     volumes:
@@ -294,13 +295,13 @@ The CD pipeline runs when a commit is added to the main branch, most likely from
 
 [Continuous Deployment](https://github.com/BarbzCodez/Spendr/blob/main/.github/workflows/cd.yml)
 
-#### Snapshots
+### Snapshots
 
 [CD](https://github.com/BarbzCodez/Spendr/actions/runs/6985882437/job/19010698130)
-![CD snapshot](./pictures/CD.PNG)
+![CD snapshot](./images/CD.jpeg)
 
 [CI](https://github.com/BarbzCodez/Spendr/actions/runs/7010842181)
-![CI snapshot](./pictures/CI.PNG)
+![CI snapshot](./images/CI.jpeg)
 
 [CI/CD Workflow](https://github.com/BarbzCodez/Spendr/actions/workflows/cd.yml)
 
@@ -358,7 +359,7 @@ The load testing was done using JMeter, then run against a locally running versi
 #### Load Testing: JMeter Summary Report
 
 | Label                 | # Samples | Average | Min | Max | Std. Dev. | Error % | Throughput | Received KB/sec | Sent KB/sec | Avg. Bytes |
-|-----------------------|-----------|---------|-----|-----|-----------|---------|------------|-----------------|-------------|------------|
+| --------------------- | --------- | ------- | --- | --- | --------- | ------- | ---------- | --------------- | ----------- | ---------- |
 | create user1          | 20        | 215     | 0   | 275 | 24.65     | 0.00%   | 1.97161    | 0.69            | 0.55        | 358.9      |
 | create user2          | 20        | 222     | 0   | 435 | 65.54     | 0.00%   | 1.96967    | 0.69            | 0.55        | 358.9      |
 | login                 | 20        | 70      | 0   | 100 | 12.17     | 0.00%   | 1.99283    | 0.94            | 0.45        | 481.7      |
@@ -371,7 +372,7 @@ The load testing was done using JMeter, then run against a locally running versi
 | fetch group expenses  | 20        | 7       | 0   | 23  | 5         | 0.00%   | 2.00582    | 1.1             | 0.34        | 559.8      |
 | TOTAL                 | 420       | 50      | 0   | 435 | 84.9      | 0.00%   | 38.40176   | 12.81           | 9.1         | 341.6      |
 
-![JMeter Summary Report](./pictures/JMeter.PNG)
+![JMeter Summary Report](./images/JMeter.jpeg)
 
 A bottleneck found during load testing was the amount of data that fetching group expenses caused. Since this is an operation that happens whenever the group expenses page is loaded, this is a frequent API call. This means that the high data transfer should be reduced. This could be solved by using caching on client side, or an optimization of the data returned from the endpoint.
 
