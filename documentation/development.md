@@ -15,6 +15,12 @@
 - **Docker**: [Docker Desktop](https://www.docker.com/products/docker-desktop/)
 - **Runtime Environment**: Node.js >= 19.4
 
+The ESLint and Prettier extensions are required since they define the coding
+standards used in the project. The standards can be found on the Prettier
+and ESLint documentation pages, and custom configurations can be found 
+in the `.prettierrc` and `.eslitnrc` files in the client and server 
+directories.
+
 ### Installing Dependencies
 
 ```bash
