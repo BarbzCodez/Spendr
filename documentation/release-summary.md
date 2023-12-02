@@ -150,7 +150,7 @@ This is the Spendr [Architecture Design](https://github.com/BarbzCodez/Spendr/bl
 
 ![Analytics Diagram](./sequence-diagrams/group-expense-splitting.jpeg)
 
-## Infrastructure - Dan
+## Infrastructure
 
 ### Libraries
 
@@ -273,17 +273,17 @@ Dev Dependencies
 
 We used standard [Google TypeScript Style Guide](https://google.github.io/styleguide/tsguide.html) as both the front our front and back end are in TypeScript
 
-## Code - Dan
+## Code
 
-These are the most 5 important files in our repo:
+These are the five most important files in our repo:
 
 | Path                                   | Purpose              |
 | -------------------------------------- | -------------------- |
-| [File Path with Clickable GitHub Link] | (1 line description) |
-|                                        |                      |
-|                                        |                      |
-|                                        |                      |
-|                                        |                      |
+| `client/src/App.tsx` | The entry point for the client. |
+| `server/src/middleware/authenticate.ts`                                       | Middleware for authenticating HTTP requests.                     |
+| `server/src/routes/users.ts`                                      |  Defines the API routes for the `/users` endpoints.                   |
+| `server/src/app.ts`                                      | The entry point for the server.                     |
+| `docker-compose.yml`                                      | Defines the set up for the Docker environment                     |
 
 ## Continuous Integration and Deployment (CI/CD)
 
@@ -305,52 +305,50 @@ The CD pipeline runs when a commit is added to the main branch, most likely from
 
 [CI/CD Workflow](https://github.com/BarbzCodez/Spendr/actions/workflows/cd.yml)
 
-## Testing - Dan
+## Testing
 
 [Testing Plan](https://github.com/BarbzCodez/Spendr/blob/main/documentation/test-plan.md)
 
-### Unit Tests - Dan
+### Unit Tests
 
-List the 10 most important unit test with links below (if there are more than one unit tests in one test file, indicate clearly) 2 per feature
+| Test File                              | Test Purpose        |
+| - | - |
+| [authenticate.test.ts](https://github.com/BarbzCodez/Spendr/blob/main/server/src/test/unit/middleware/authenticate.test.ts#L23) | Validates that requests with no tokens return a 401. |
+| [authenticate.test.ts](https://github.com/BarbzCodez/Spendr/blob/main/server/src/test/unit/middleware/authenticate.test.ts#L30)  | Validates that requests with an invalid token return a 401.  |
+| [budgets.test.ts](https://github.com/BarbzCodez/Spendr/blob/main/server/src/test/unit/routes/budgets.test.ts#L19)                                       | Validates that a request with a valid body to create a budget returns a 201.                     |
+| [budgets.test.ts](https://github.com/BarbzCodez/Spendr/blob/main/server/src/test/unit/routes/budgets.test.ts#L40)                                       | Validates that a request with a valid body to create a budget without a category returns a 201.                     |
+| [expenses.test.ts](https://github.com/BarbzCodez/Spendr/blob/main/server/src/test/unit/routes/expenses.test.ts#L19) | Validates that a request with a valid body to create an expense returns a 201. |
+| [expenses.test.ts](https://github.com/BarbzCodez/Spendr/blob/main/server/src/test/unit/routes/expenses.test.ts#L43) | Validates that a request with an invalid title to create an expense returns a 400. |
+| [groupExpenses.test.ts](https://github.com/BarbzCodez/Spendr/blob/main/server/src/test/unit/routes/groupExpenses.test.ts#L36) | Validates that a request with a valid body to create a group expense returns a 201. |
+| [groupExpenses.test.ts](https://github.com/BarbzCodez/Spendr/blob/main/server/src/test/unit/routes/groupExpenses.test.ts#L84) | Validates that a request with an invalid title to create a group expense returns a 400. |
+| [users.test.ts](https://github.com/BarbzCodez/Spendr/blob/main/server/src/test/unit/routes/users.test.ts#L964) | Validates that a request to fetch the total expenses for categories returns a 200 if the expenses are found. |
+| [users.test.ts](https://github.com/BarbzCodez/Spendr/blob/main/server/src/test/unit/routes/users.test.ts#1031) | Validates that a request to fetch the total expenses for categories returns a 400 if the user does not exist. |
 
-| Test File                              | Whats Testing        |
+### Integration Tests
+
+| Test File                              | Test Purpose        |
 | -------------------------------------- | -------------------- |
-| [File Path with Clickable GitHub Link] | (1 line description) |
-|                                        |                      |
-|                                        |                      |
-|                                        |                      |
-|                                        |                      |
+| [login.test.ts](https://github.com/BarbzCodez/Spendr/blob/main/server/src/test/integration/users/login.test.ts#L5) | Validates that a JWT is returned upon successful login, and it can be used to make authenticated requests. |
+| [createGroupExpense.test.ts](https://github.com/BarbzCodez/Spendr/blob/main/server/src/test/integration/groupExpenses/createGroupExpense.test.ts#L6) | Validates that a group expense is created in the database upon successful request. |
+| [deleteExpense.test.ts](https://github.com/BarbzCodez/Spendr/blob/main/server/src/test/integration/expenses/deleteExpense.test.ts) | Validates that an expense is deleted in the database upon request to delete. |
+| [createBudget.test.ts](https://github.com/BarbzCodez/Spendr/blob/main/server/src/test/integration/budgets/createBudget.test.ts) | Validates that a budget is created upon successful request. |
+| [deleteUser.test.ts](https://github.com/BarbzCodez/Spendr/blob/main/server/src/test/integration/users/deleteUser.test.ts) | Validates that a users account is deleted in the database, and can no longer successfully login after deleting their account. |
 
-### Integration Tests - Dan
+### Acceptance Tests
 
-List the 5 most important integration test with links below (if there are more than one unit
-tests in one test file, indicate clearly)
+All acceptance tests are outlined in our documentation, and test steps are included in the test files, along with the expected outcome.
 
-| Test File                              | Whats Testing        |
+| Test File                              | Test Purpose        |
 | -------------------------------------- | -------------------- |
-| [File Path with Clickable GitHub Link] | (1 line description) |
-|                                        |                      |
-|                                        |                      |
-|                                        |                      |
-|                                        |                      |
+| [budget-management-tests.md](https://github.com/BarbzCodez/Spendr/blob/main/documentation/acceptance-tests/budget-management-tests.md) | Create, view, and modify Budget. |
+| [expense-analytics-tests.md](https://github.com/BarbzCodez/Spendr/blob/main/documentation/acceptance-tests/expense-analytics-tests.md#view-current-month-analytics) | View current month analytics. |
+| [expense-management-tests.md](https://github.com/BarbzCodez/Spendr/blob/main/documentation/acceptance-tests/expense-management-tests.md#create-edit-and-delete-expense) | Create, edit, and delete expense. |
+| [group-expense-splitting-tests.md](https://github.com/BarbzCodez/Spendr/blob/main/documentation/acceptance-tests/group-expense-splitting-tests.md#create-group-expense-view-distribution) | Create group expense view distribution.  |
+| [user-management-tests.md](https://github.com/BarbzCodez/Spendr/blob/main/documentation/acceptance-tests/user-managagement-tests.md#register-login-and-logout) | Register, login, and logout. |
 
-### Acceptance Tests - Dan
+### Regression Testing
 
-List the 5 most important acceptance tests with links below.
-If your acceptance tests are done manually, you should have detailed steps how to run the test and the expected outcome for test.
-
-| Test File                              | Whats Testing        |
-| -------------------------------------- | -------------------- |
-| [File Path with Clickable GitHub Link] | (1 line description) |
-|                                        |                      |
-|                                        |                      |
-|                                        |                      |
-|                                        |                      |
-
-### Regression Testing - Dan
-
-1. Describe how you run regression testing and provide the link to the regression testing script.
-2. Provide the last snapshot of the execution and results of regression testing.
+Regression testing is done by running all unit tests after each commit to main in GitHub Actions.
 
 ### Load Testing
 
@@ -376,7 +374,9 @@ The load testing was done using JMeter, then run against a locally running versi
 
 A bottleneck found during load testing was the amount of data that fetching group expenses caused. Since this is an operation that happens whenever the group expenses page is loaded, this is a frequent API call. This means that the high data transfer should be reduced. This could be solved by using caching on client side, or an optimization of the data returned from the endpoint.
 
-### Security Analysis - Dan
+### Security Analysis
 
-1. Describe the choice of the security analysis tool and how you run it.
-2. Attach a report as an appendix below from static analysis tools by running the security analysis tool on your source code. Randomly select 5 detected problems and discuss what you see.
+We use SonarCloud as our security analysis tool. The analysis is run on each pull request, and each merge
+to main in the [sonarcloud.yml](https://github.com/BarbzCodez/Spendr/blob/main/.github/workflows/sonarcloud.yml) GitHub Action.
+There are no detected problems on the 7.9k LOC analyzed.
+![Sonarcloud](images/sonarcloud.png)
