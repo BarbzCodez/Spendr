@@ -128,7 +128,7 @@ This is the Spendr [Architecture Design](https://github.com/BarbzCodez/Spendr/bl
 
 ![Architecture Diagram](./architecture/client-server-architecture.jpeg)
 
-### Architecture Diagrams per Feature
+### Sequence Diagrams
 
 #### [User Management](https://github.com/BarbzCodez/Spendr/blob/main/documentation/sequence-diagrams/user-management.jpeg)
 
