@@ -271,7 +271,7 @@ Dev Dependencies
 
 ## Naming Conventions
 
-We used standard [Google TypeScript Style Guide](https://google.github.io/styleguide/tsguide.html) as both the front our front and back end are in TypeScript
+We followed the [Google TypeScript naming conventions](https://google.github.io/styleguide/tsguide.html#identifiers) for identifier naming conventions.
 
 ## Code
 
