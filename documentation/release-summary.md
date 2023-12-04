@@ -33,7 +33,7 @@ The Docker image includes everything to run the application. Once the docker ima
 
 #### DockerHub Instructions
 
-First pull the images using the commands `docker pull lysackm/spendr-client` and `docker pull lysackm/spendr-client`. Then you need to have a configured postgres database running for the app to work. The dockerfile code to run both of these can be is here:
+First pull the images using the commands `docker pull lysackm/spendr-client` and `docker pull lysackm/spendr-client`. Then you need to have a configured postgres database running for the app to work. The following Dockerfile can be used to run the client and server images:
 
 ```bash
 <dockerfile>
