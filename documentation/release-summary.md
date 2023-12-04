@@ -267,7 +267,7 @@ Dev Dependencies
 - [Docker](https://www.docker.com)
   - We chose Docker for containerization since it was the easiest way to have a consistent way of running the project.
 - [GitHub Actions](https://github.com/features/actions)
-  - We chose GitHub actions since it was easy to integrate to the workflow.
+  - We chose GitHub Actions since it allowed us to run jobs in the cloud for free and required minimal setup.
 
 ## Naming Conventions
 
