@@ -80,47 +80,152 @@ Provide instructions on how to run the application for each core feature.
 
 #### Create a User
 
+1. Go to where the Spendr is being hosted.
+2. Click **Get Started**.
+3. Enter all the fields (Username, Password, Security Question and Security Answer) Make sure they are all correct.
+4. Click **Sign Up**, you will see a green pop up saying that you have been successfully singed in.
+5. Wait until you get redirected to the main page.
+
 #### Log In
+
+1. Go to where the Spendr is being hosted.
+2. Click **Log In**
+3. Enter your Username and Password.
+4. Click **Log In**.
+5. You should be redirected to the main home page.
 
 #### Log Out
 
+1. When you are logged in in Spender.
+2. Click the **User Icon** at the top right.
+3. Click **Log Out**.
+4. You should be redirected to the home page.
+
 #### Edit Credentials
 
+1. Make sure you are a logged in user.
+2. Click the **User Icon**.
+3. Click **Settings**.
+4. Click the edit icon next to **username** or **password**.
+5. Type in your new values.
+6. Click the **Save** icon.
+7. A successfully updated popup should appears.
+
 #### User Deletion
+
+1. Make sure you are a logged in user.
+2. Click the **User Icon**.
+3. Click **Settings**.
+4. Click **Delete Account**.
+5. You should have a popup saying that your account was successfully deleted and redirected to the main menu.
 
 ### Expense Management
 
 #### View your Expenses
 
+1. Make sure you are a logged in user.
+2. Click **Expenses** on the top bar.
+3. You should see all your expenses on the table.
+
 #### Create an Expense
+
+1. Make sure you are a logged in user.
+2. Click **Expenses** on the top bar.
+3. Click **Add Expense**.
+4. Fill in all the required fields (title, amount, category, and date).
+5. Click **Save**.
+6. Your new expense should be shown in the table.
 
 #### Edit an Expense
 
+1. Make sure you are a logged in user and have created an expenses.
+2. Click **Expenses** on the top bar.
+3. Click on the **Edit Icon** in the expense you want to edit.
+4. Update the field you want to change.
+5. Click **Save**.
+6. Your updated expense should be shown in the table.
+
 #### Delete an Expense
+
+1. Make sure you are a logged in user and have created an expenses.
+2. Click **Expenses** on the top bar.
+3. Click on the **Delete Icon** in the expense you want to delete.
+4. Your updated expense should be deleted from the table.
 
 ### Budget Management
 
 #### View your Budgets
 
-#### Create an Budget
+1. Make sure you are a logged in user.
+2. Click **Budgets** on the top bar.
+3. You should see all your budgets listed.
+
+#### Create a Budget
+
+1. Make sure you are a logged in user.
+2. Click **Budgets** on the top bar.
+3. Click **Add Budget**.
+4. Fill in all the required fields (amount, category and duration).
+5. Click **Save**.
+6. Your new budget should be shown in the list with how much you have used of it.
+
+#### Edit a Budget
+
+1. Make sure you are a logged in user and have created a budget.
+2. Click **Budgets** on the top bar.
+3. Click on the **Edit Icon** in the budget you want to edit.
+4. Update the field you want to change.
+5. Click **Save**.
+6. Your updated budget should be shown in the list.
 
 #### Delete a Budget
+
+1. Make sure you are a logged in user and have created a budget.
+2. Click **Budgets** on the top bar.
+3. Click on the **Delete Icon** in the expense you want to delete.
+4. Your updated expense should be deleted from the table.
 
 ### Expense Analytics
 
 #### Current Month Analysis
 
+1. Make sure you are a logged in user with expenses in current and past months.
+2. Click **Analytics** on the top bar.
+3. On the top portion you should see two graphs, one fo the current month expenses and one of the current month by category. Hover over them to see more details about your monthly expenses.
+
 #### Compare Months
+
+1. Make sure you are a logged in user with expenses in current and past months.
+2. Click **Analytics** on the top bar.
+3. On the Bottom portion of the page there is a dropdown on months, select two completed months to see the daily expense comparison.
 
 ### Group Expense Splitting
 
 #### View your Group Expenses
 
-#### Create an Group Expense
+1. Make sure you are a logged in user with expenses in current and past months.
+2. Click **Group Expenses** on the top bar.
+3. You should see a table with your group expenses.
 
-#### Edit an Group Expense
+#### Create a Group Expense
 
-#### Delete an Group Expense
+1. Make sure you are a logged in user.
+2. Click **Group Expenses** on the top bar.
+3. Click **Add Group Expense**.
+4. Fill in all the required fields (title, amount, category, and date).
+5. Click **Add User** to add the total amount of users in the split and use **Delete User** if you want less users.
+6. If you want to enter manual percentages, use the switch of **Distribute Evenly** to enter manual proportions
+7. Add usernames in each of the inputs of registered Spendr users.
+8. Click **Save**.
+9. Your new Group Split should be shown in the table.
+
+#### Mark as Paid a Group Expense
+
+1. Make sure you are a logged in user and have created a group expense or have been added to one.
+2. Click **Group Expenses** on the top bar.
+3. In a row where you have not paid your part, click on the checkbox with your name besides it.
+4. Read and confirm the disclaimer.
+5. That row should be have a checkmark on your name, and a new expense is added to your expenses on th **Expenses** page.
 
 ## Architecture Design
 
@@ -154,107 +259,67 @@ This is the Spendr [Architecture Design](https://github.com/BarbzCodez/Spendr/bl
 
 ### Libraries
 
+- What we used for the phone scanner???????
+
 - [Material UI](https://mui.com/material-ui/)
-  - We used Material UI to make the components in the front end. We chose it because is an industry standard, it has pretty icons and some of our developers have worked with it.
-  - What we used for the phone scanner
+  - We used Material UI to make the components in the front end.
+  - We chose it because is an industry standard, it has pretty icons and some of our developers have worked with it.
 
-List of Dependencies
+- [Prisma](https://www.prisma.io)
+  - Prisma an object-relational mapping (ORM) library for TypeScript and JavaScript.
+  - We wanted to use it so that its easier to add queries.
 
-1. **@prisma/client (^5.4.1):**
-   - Prisma is an open-source database toolkit. The `@prisma/client` package is an auto-generated query builder and object-relational mapping (ORM) library for TypeScript and JavaScript.
+- [Node.js](https://nodejs.org/en)
+  - Node.js is an industry standard, open-source, cross-platform JavaScript / Typescript runtime environment.
+  - We used it because most of our project was coded in Typescript.
 
-2. **bcrypt (^5.1.1):**
-   - Bcrypt is used for hashing passwords securely. It's a popular choice for password hashing to enhance the security of user authentication.
+- [Express-validator](https://express-validator.github.io/docs/)
+  - A set of middlewares for Express.js that wraps validator.js and sanitizes functions.
+  - We used it for user input validation.
 
-3. **body-parser (^1.20.2):**
-   - Body-parser is middleware for parsing the body of incoming HTTP requests. It is commonly used with Express to parse request bodies in a format such as JSON.
+- [Bcrypt](https://www.npmjs.com/package/bcrypt)
+  - Bcrypt is used for hashing passwords securely.
+  - We used it to secure the passwords in user management.
 
-4. **cors (^2.8.5):**
-   - CORS (Cross-Origin Resource Sharing) is a mechanism that allows or restricts the resources on a web page to be requested from another domain. The `cors` package simplifies handling CORS headers in Express applications.
+- [Body-parser](https://expressjs.com/en/resources/middleware/body-parser.html)
+  - Body-parser is middleware for parsing the body of incoming HTTP requests.
+  - We used it since we are using Express to parse the API requests.
 
-5. **dotenv (^16.3.1):**
-   - Dotenv is used for loading environment variables from a .env file. It helps keep sensitive information like API keys and database connection strings secure.
+- [Dotenv](https://www.npmjs.com/package/dotenv)
+  - Dotenv is used for loading environment variables from a .env file.
+  - We chose it since is good at keeping API keys and database connection secure.
 
-6. **express (^4.18.2):**
-   - Express is a fast, unopinionated, minimalist web framework for Node.js. It simplifies the process of building web applications and APIs.
+- [Jsonwebtoken](https://www.npmjs.com/package/jsonwebtoken)
+  - An implementation of JSON Web Tokens.
+  - We used it for user authentication.
 
-7. **express-validator (^7.0.1):**
-   - Express-validator is a set of Express.js middlewares that wraps validator.js validator and sanitizer functions. It is used for input validation and sanitation in Express applications.
+- [Morgan](https://expressjs.com/en/resources/middleware/morgan.html)
+  - Morgan is an HTTP request logger middleware for Node.js.
+  - We used it to make it easier to develop and have better logs.
 
-8. **jsonwebtoken (^9.0.2):**
-   - JSON Web Token (JWT) is a compact, URL-safe means of representing claims to be transferred between two parties. The `jsonwebtoken` package is used for creating and verifying JWTs, often used for authentication.
+- [Jest](https://jestjs.io)
+  - Framework to test in Javascript / Typescript.
+  - We used it to test the API.
 
-9. **morgan (^1.10.0):**
-   - Morgan is an HTTP request logger middleware for Node.js. It simplifies the process of logging requests, making it easier to debug and monitor the application.
+- [Supertest](https://www.npmjs.com/package/supertest)
+  - Library for testing HTTP assertions.
+  - We used it to test the API.
 
-10. **pg (^8.11.3):**
+- [ESLint](https://eslint.org)
+  - Javascript / Typescript linter.
+  - Used ESLint to find inconsistences in our code with the prettier configuration
 
-- The `pg` (PostgreSQL) package is a PostgreSQL client for Node.js. It is used to interact with PostgreSQL databases.
-
-Dev Dependencies
-
-1. **@types/bcrypt (^5.0.0):**
-   - TypeScript type definitions for the `bcrypt` library.
-
-2. **@types/cors (^2.8.14):**
-   - TypeScript type definitions for the `cors` library.
-
-3. **@types/express (^4.17.18):**
-   - TypeScript type definitions for the Express.js library.
-
-4. **@types/jest (^29.5.5):**
-   - TypeScript type definitions for Jest, a testing framework.
-
-5. **@types/jsonwebtoken (^9.0.3):**
-   - TypeScript type definitions for the `jsonwebtoken` library.
-
-6. **@types/mocha (^10.0.2):**
-   - TypeScript type definitions for Mocha, a JavaScript test framework.
-
-7. **@types/morgan (^1.9.7):**
-   - TypeScript type definitions for the `morgan` library.
-
-8. **@types/node (^20.7.1):**
-   - TypeScript type definitions for Node.js.
-
-9. **@types/supertest (^2.0.13):**
-   - TypeScript type definitions for SuperTest, a library for testing HTTP assertions.
-
-10. **@typescript-eslint/eslint-plugin (^6.7.3):**
-    - ESLint plugin for TypeScript.
-
-11. **eslint (^8.50.0):**
-    - ESLint is a linter tool for identifying and reporting on patterns found in ECMAScript/JavaScript code.
-
-12. **eslint-config-prettier (^9.0.0):**
-    - ESLint configuration that turns off all rules that are unnecessary or might conflict with Prettier.
-
-13. **eslint-plugin-prettier (^5.0.0):**
-    - ESLint plugin for Prettier integration.
-
-14. **jest (^29.7.0):**
-    - Jest is a JavaScript testing framework. It is widely used for unit and integration testing.
-
-15. **jest-mock-extended (^3.0.5):**
-    - Jest extension for creating and using mock functions.
-
-16. **prisma (^5.4.1):**
-    - Prisma CLI (Command Line Interface) for database migrations and other Prisma-related tasks.
-
-17. **supertest (^6.3.3):**
-    - SuperTest is a library for testing HTTP assertions. It is often used in combination with Jest for testing Express.js applications.
-
-18. **ts-jest (^29.1.1):**
-    - TypeScript preprocessor for Jest.
-
-19. **typescript (^4.4.3):**
-    - TypeScript is a superset of JavaScript that adds static types to the language. It is used for writing type-safe and scalable code in Node.js applications.
+- [Typescript](https://www.typescriptlang.org)
+  - TypeScript is a superset of JavaScript that adds static types to the language.
+  - We chose it since we wanted that extra layer of static types and type-safety in our code
 
 ### Framework
 
 - [React](https://react.dev)
+  - Industry standard front end framework.
   - We choose React because is an industry standard and some of our developers have already had experience with it.
 - [Express.js](https://expressjs.com)
+  - Express is a minimalist web framework for Node.js.
   - We used this one since our front end is in typescript so we wanted all the project to be in the same language.
 
 ### Database
@@ -277,13 +342,13 @@ We followed the [Google TypeScript naming conventions](https://google.github.io/
 
 These are the five most important files in our repo:
 
-| Path                                   | Purpose              |
-| -------------------------------------- | -------------------- |
-| `client/src/App.tsx` | The entry point for the client. |
-| `server/src/middleware/authenticate.ts`                                       | Middleware for authenticating HTTP requests.                     |
-| `server/src/routes/users.ts`                                      |  Defines the API routes for the `/users` endpoints.                   |
-| `server/src/app.ts`                                      | The entry point for the server.                     |
-| `docker-compose.yml`                                      | Defines the set up for the Docker environment                     |
+| Path                                    | Purpose                                            |
+| --------------------------------------- | -------------------------------------------------- |
+| `client/src/App.tsx`                    | The entry point for the client.                    |
+| `server/src/middleware/authenticate.ts` | Middleware for authenticating HTTP requests.       |
+| `server/src/routes/users.ts`            | Defines the API routes for the `/users` endpoints. |
+| `server/src/app.ts`                     | The entry point for the server.                    |
+| `docker-compose.yml`                    | Defines the set up for the Docker environment      |
 
 ## Continuous Integration and Deployment (CI/CD)
 
@@ -311,40 +376,40 @@ The CD pipeline runs when a commit is added to the main branch, most likely from
 
 ### Unit Tests
 
-| Test File                              | Test Purpose        |
-| - | - |
-| [authenticate.test.ts](https://github.com/BarbzCodez/Spendr/blob/main/server/src/test/unit/middleware/authenticate.test.ts#L23) | Validates that requests with no tokens return a 401. |
-| [authenticate.test.ts](https://github.com/BarbzCodez/Spendr/blob/main/server/src/test/unit/middleware/authenticate.test.ts#L30)  | Validates that requests with an invalid token return a 401.  |
-| [budgets.test.ts](https://github.com/BarbzCodez/Spendr/blob/main/server/src/test/unit/routes/budgets.test.ts#L19)                                       | Validates that a request with a valid body to create a budget returns a 201.                     |
-| [budgets.test.ts](https://github.com/BarbzCodez/Spendr/blob/main/server/src/test/unit/routes/budgets.test.ts#L40)                                       | Validates that a request with a valid body to create a budget without a category returns a 201.                     |
-| [expenses.test.ts](https://github.com/BarbzCodez/Spendr/blob/main/server/src/test/unit/routes/expenses.test.ts#L19) | Validates that a request with a valid body to create an expense returns a 201. |
-| [expenses.test.ts](https://github.com/BarbzCodez/Spendr/blob/main/server/src/test/unit/routes/expenses.test.ts#L43) | Validates that a request with an invalid title to create an expense returns a 400. |
-| [groupExpenses.test.ts](https://github.com/BarbzCodez/Spendr/blob/main/server/src/test/unit/routes/groupExpenses.test.ts#L36) | Validates that a request with a valid body to create a group expense returns a 201. |
-| [groupExpenses.test.ts](https://github.com/BarbzCodez/Spendr/blob/main/server/src/test/unit/routes/groupExpenses.test.ts#L84) | Validates that a request with an invalid title to create a group expense returns a 400. |
-| [users.test.ts](https://github.com/BarbzCodez/Spendr/blob/main/server/src/test/unit/routes/users.test.ts#L964) | Validates that a request to fetch the total expenses for categories returns a 200 if the expenses are found. |
-| [users.test.ts](https://github.com/BarbzCodez/Spendr/blob/main/server/src/test/unit/routes/users.test.ts#1031) | Validates that a request to fetch the total expenses for categories returns a 400 if the user does not exist. |
+| Test File                                                                                                                       | Test Purpose                                                                                                  |
+| ------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------- |
+| [authenticate.test.ts](https://github.com/BarbzCodez/Spendr/blob/main/server/src/test/unit/middleware/authenticate.test.ts#L23) | Validates that requests with no tokens return a 401.                                                          |
+| [authenticate.test.ts](https://github.com/BarbzCodez/Spendr/blob/main/server/src/test/unit/middleware/authenticate.test.ts#L30) | Validates that requests with an invalid token return a 401.                                                   |
+| [budgets.test.ts](https://github.com/BarbzCodez/Spendr/blob/main/server/src/test/unit/routes/budgets.test.ts#L19)               | Validates that a request with a valid body to create a budget returns a 201.                                  |
+| [budgets.test.ts](https://github.com/BarbzCodez/Spendr/blob/main/server/src/test/unit/routes/budgets.test.ts#L40)               | Validates that a request with a valid body to create a budget without a category returns a 201.               |
+| [expenses.test.ts](https://github.com/BarbzCodez/Spendr/blob/main/server/src/test/unit/routes/expenses.test.ts#L19)             | Validates that a request with a valid body to create an expense returns a 201.                                |
+| [expenses.test.ts](https://github.com/BarbzCodez/Spendr/blob/main/server/src/test/unit/routes/expenses.test.ts#L43)             | Validates that a request with an invalid title to create an expense returns a 400.                            |
+| [groupExpenses.test.ts](https://github.com/BarbzCodez/Spendr/blob/main/server/src/test/unit/routes/groupExpenses.test.ts#L36)   | Validates that a request with a valid body to create a group expense returns a 201.                           |
+| [groupExpenses.test.ts](https://github.com/BarbzCodez/Spendr/blob/main/server/src/test/unit/routes/groupExpenses.test.ts#L84)   | Validates that a request with an invalid title to create a group expense returns a 400.                       |
+| [users.test.ts](https://github.com/BarbzCodez/Spendr/blob/main/server/src/test/unit/routes/users.test.ts#L964)                  | Validates that a request to fetch the total expenses for categories returns a 200 if the expenses are found.  |
+| [users.test.ts](https://github.com/BarbzCodez/Spendr/blob/main/server/src/test/unit/routes/users.test.ts#1031)                  | Validates that a request to fetch the total expenses for categories returns a 400 if the user does not exist. |
 
 ### Integration Tests
 
-| Test File                              | Test Purpose        |
-| -------------------------------------- | -------------------- |
-| [login.test.ts](https://github.com/BarbzCodez/Spendr/blob/main/server/src/test/integration/users/login.test.ts#L5) | Validates that a JWT is returned upon successful login, and it can be used to make authenticated requests. |
-| [createGroupExpense.test.ts](https://github.com/BarbzCodez/Spendr/blob/main/server/src/test/integration/groupExpenses/createGroupExpense.test.ts#L6) | Validates that a group expense is created in the database upon successful request. |
-| [deleteExpense.test.ts](https://github.com/BarbzCodez/Spendr/blob/main/server/src/test/integration/expenses/deleteExpense.test.ts) | Validates that an expense is deleted in the database upon request to delete. |
-| [createBudget.test.ts](https://github.com/BarbzCodez/Spendr/blob/main/server/src/test/integration/budgets/createBudget.test.ts) | Validates that a budget is created upon successful request. |
-| [deleteUser.test.ts](https://github.com/BarbzCodez/Spendr/blob/main/server/src/test/integration/users/deleteUser.test.ts) | Validates that a users account is deleted in the database, and can no longer successfully login after deleting their account. |
+| Test File                                                                                                                                            | Test Purpose                                                                                                                  |
+| ---------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------- |
+| [login.test.ts](https://github.com/BarbzCodez/Spendr/blob/main/server/src/test/integration/users/login.test.ts#L5)                                   | Validates that a JWT is returned upon successful login, and it can be used to make authenticated requests.                    |
+| [createGroupExpense.test.ts](https://github.com/BarbzCodez/Spendr/blob/main/server/src/test/integration/groupExpenses/createGroupExpense.test.ts#L6) | Validates that a group expense is created in the database upon successful request.                                            |
+| [deleteExpense.test.ts](https://github.com/BarbzCodez/Spendr/blob/main/server/src/test/integration/expenses/deleteExpense.test.ts)                   | Validates that an expense is deleted in the database upon request to delete.                                                  |
+| [createBudget.test.ts](https://github.com/BarbzCodez/Spendr/blob/main/server/src/test/integration/budgets/createBudget.test.ts)                      | Validates that a budget is created upon successful request.                                                                   |
+| [deleteUser.test.ts](https://github.com/BarbzCodez/Spendr/blob/main/server/src/test/integration/users/deleteUser.test.ts)                            | Validates that a users account is deleted in the database, and can no longer successfully login after deleting their account. |
 
 ### Acceptance Tests
 
 All acceptance tests are outlined in our documentation, and test steps are included in the test files, along with the expected outcome.
 
-| Test File                              | Test Purpose        |
-| -------------------------------------- | -------------------- |
-| [budget-management-tests.md](https://github.com/BarbzCodez/Spendr/blob/main/documentation/acceptance-tests/budget-management-tests.md) | Create, view, and modify Budget. |
-| [expense-analytics-tests.md](https://github.com/BarbzCodez/Spendr/blob/main/documentation/acceptance-tests/expense-analytics-tests.md#view-current-month-analytics) | View current month analytics. |
-| [expense-management-tests.md](https://github.com/BarbzCodez/Spendr/blob/main/documentation/acceptance-tests/expense-management-tests.md#create-edit-and-delete-expense) | Create, edit, and delete expense. |
-| [group-expense-splitting-tests.md](https://github.com/BarbzCodez/Spendr/blob/main/documentation/acceptance-tests/group-expense-splitting-tests.md#create-group-expense-view-distribution) | Create group expense view distribution.  |
-| [user-management-tests.md](https://github.com/BarbzCodez/Spendr/blob/main/documentation/acceptance-tests/user-managagement-tests.md#register-login-and-logout) | Register, login, and logout. |
+| Test File                                                                                                                                                                                 | Test Purpose                            |
+| ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------- |
+| [budget-management-tests.md](https://github.com/BarbzCodez/Spendr/blob/main/documentation/acceptance-tests/budget-management-tests.md)                                                    | Create, view, and modify Budget.        |
+| [expense-analytics-tests.md](https://github.com/BarbzCodez/Spendr/blob/main/documentation/acceptance-tests/expense-analytics-tests.md#view-current-month-analytics)                       | View current month analytics.           |
+| [expense-management-tests.md](https://github.com/BarbzCodez/Spendr/blob/main/documentation/acceptance-tests/expense-management-tests.md#create-edit-and-delete-expense)                   | Create, edit, and delete expense.       |
+| [group-expense-splitting-tests.md](https://github.com/BarbzCodez/Spendr/blob/main/documentation/acceptance-tests/group-expense-splitting-tests.md#create-group-expense-view-distribution) | Create group expense view distribution. |
+| [user-management-tests.md](https://github.com/BarbzCodez/Spendr/blob/main/documentation/acceptance-tests/user-managagement-tests.md#register-login-and-logout)                            | Register, login, and logout.            |
 
 ### Regression Testing
 
@@ -379,4 +444,4 @@ A bottleneck found during load testing was the amount of data that fetching grou
 We use SonarCloud as our security analysis tool. The analysis is run on each pull request, and each merge
 to main in the [sonarcloud.yml](https://github.com/BarbzCodez/Spendr/blob/main/.github/workflows/sonarcloud.yml) GitHub Action.
 There are no detected problems on the 7.9k LOC analyzed.
-![Sonarcloud](images/sonarcloud.png)
+![SonarCloud](images/sonarcloud.jpeg)
