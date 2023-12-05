@@ -75,7 +75,8 @@ Note: The links go to to the closed user stories, you can click in each user use
 ## User Manual
 
 ### User Management
-![User Management](/documentation/images/userManagement.mp4)
+
+A video walkthrough of the User Management can be found [here](https://github.com/BarbzCodez/Spendr/blob/main/documentation/images/userManagement.mp4).
 
 #### Create a User
 
@@ -119,7 +120,8 @@ Note: The links go to to the closed user stories, you can click in each user use
 5. You should have a popup saying that your account was successfully deleted and redirected to the main menu.
 
 ### Expense Management
-![Expense Management](/documentation/images/groupExpenses.mp4)
+
+A video walkthrough of the Expense Management can be found [here](https://github.com/BarbzCodez/Spendr/blob/main/documentation/images/expenses.mp4).
 
 #### View your Expenses
 
@@ -153,7 +155,8 @@ Note: The links go to to the closed user stories, you can click in each user use
 4. Your updated expense should be deleted from the table.
 
 ### Budget Management
-![Budget Management](/documentation/images/budgets.mp4)
+
+A video walkthrough of the Budget Management can be found [here](https://github.com/BarbzCodez/Spendr/blob/main/documentation/images/budgets.mp4).
 
 #### View your Budgets
 
@@ -187,7 +190,8 @@ Note: The links go to to the closed user stories, you can click in each user use
 4. Your updated expense should be deleted from the table.
 
 ### Expense Analytics
-![Expense Analytics](/documentation/images/analytics.mp4)
+
+A video walkthrough of the Expense Analytics can be found [here](https://github.com/BarbzCodez/Spendr/blob/main/documentation/images/analytics.mp4).
 
 #### Current Month Analysis
 
@@ -202,7 +206,8 @@ Note: The links go to to the closed user stories, you can click in each user use
 3. On the Bottom portion of the page there is a dropdown on months, select two completed months to see the daily expense comparison.
 
 ### Group Expense Splitting
-![Group Expenses](/documentation/images/groupExpenses.mp4)
+
+A video walkthrough of the Expense Analytics can be found [here](https://github.com/BarbzCodez/Spendr/blob/main/documentation/images/groupExpenses.mp4).
 
 #### View your Group Expenses
 
@@ -261,7 +266,6 @@ This is the Spendr [Architecture Design](https://github.com/BarbzCodez/Spendr/bl
 ## Infrastructure
 
 ### Libraries
-
 
 - [Material UI](https://mui.com/material-ui/)
   - We used Material UI to make the components in the front end.
