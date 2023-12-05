@@ -72,11 +72,10 @@ The progress of the Spendr development can be found on the Git Milestone page.
 
 Note: The links go to to the closed user stories, you can click in each user user story to see when they where finished.
 
-## User Manual - NEED HELP
-
-Provide instructions on how to run the application for each core feature.
+## User Manual
 
 ### User Management
+![User Management](/documentation/images/userManagement.mp4)
 
 #### Create a User
 
@@ -120,6 +119,7 @@ Provide instructions on how to run the application for each core feature.
 5. You should have a popup saying that your account was successfully deleted and redirected to the main menu.
 
 ### Expense Management
+![Expense Management](/documentation/images/groupExpenses.mp4)
 
 #### View your Expenses
 
@@ -153,6 +153,7 @@ Provide instructions on how to run the application for each core feature.
 4. Your updated expense should be deleted from the table.
 
 ### Budget Management
+![Budget Management](/documentation/images/budgets.mp4)
 
 #### View your Budgets
 
@@ -186,6 +187,7 @@ Provide instructions on how to run the application for each core feature.
 4. Your updated expense should be deleted from the table.
 
 ### Expense Analytics
+![Expense Analytics](/documentation/images/analytics.mp4)
 
 #### Current Month Analysis
 
@@ -200,6 +202,7 @@ Provide instructions on how to run the application for each core feature.
 3. On the Bottom portion of the page there is a dropdown on months, select two completed months to see the daily expense comparison.
 
 ### Group Expense Splitting
+![Group Expenses](/documentation/images/groupExpenses.mp4)
 
 #### View your Group Expenses
 
