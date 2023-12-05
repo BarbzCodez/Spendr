@@ -219,7 +219,7 @@ Provide instructions on how to run the application for each core feature.
 8. Click **Save**.
 9. Your new Group Split should be shown in the table.
 
-#### Mark as Paid a Group Expense
+#### Mark a Group Expense as Paid
 
 1. Make sure you are a logged in user and have created a group expense or have been added to one.
 2. Click **Group Expenses** on the top bar.
