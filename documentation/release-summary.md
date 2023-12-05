@@ -259,7 +259,6 @@ This is the Spendr [Architecture Design](https://github.com/BarbzCodez/Spendr/bl
 
 ### Libraries
 
-- What we used for the phone scanner???????
 
 - [Material UI](https://mui.com/material-ui/)
   - We used Material UI to make the components in the front end.
