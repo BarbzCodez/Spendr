@@ -358,9 +358,7 @@ These are the five most important files in our repo:
 
 ## Continuous Integration and Deployment (CI/CD)
 
-Both our CI/CD pipelines were created using Github Actions. The CI pipeline was triggered when a PR was created, or updated. This builds both the server and client separately. Verifying that both are able to build from that branch. As well as running the test suits and using a linter to check for formatting errors. Now the code smells are reported using SonarCloud when the CI pipeline triggers. The results are then able to be seen in the github actions tab or the PR itself.
-
-The CD pipeline runs when a commit is added to the main branch, most likely from a PR being closed. It builds the client and server, then creates a docker image which is then pushed to DockerHub.
+The CI/CD pipeline runs on GitHub's hosted runners, using GitHub Secrets for credentials and environment variables.
 
 [Continuous Integration](https://github.com/BarbzCodez/Spendr/blob/main/.github/workflows/ci.yml)
 
