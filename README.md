@@ -12,6 +12,7 @@ Spendr is a web application that offers users a holistic view of their finances 
 - [Meeting Logs](./documentation/meeting-logs/)
 - [Test Plan](./documentation/test-plan.md)
 - [Sequence Diagrams](./documentation/sequence-diagrams)
+- [Release Summary](./documentation/release-summary.md)
 
 ## Recommended Extensions
 

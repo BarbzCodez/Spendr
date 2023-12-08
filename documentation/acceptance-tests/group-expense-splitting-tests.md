@@ -7,7 +7,7 @@
 1. Login as a registered user
 2. Navigate to the Group Expenses section by clicking on Group Expenses on the home page
 3. Click Add Group Expense
-4. Fill in the required fields (Title, amount, category)
+4. Fill in the required fields (title, amount, category, and date).
 5. Fill in a second registered users' name
 6. Click save
 7. Ensure the Group expense is added to the list.
