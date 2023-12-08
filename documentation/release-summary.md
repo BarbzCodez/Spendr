@@ -33,14 +33,14 @@ The Docker image includes everything to run the application. Once the docker ima
 
 #### DockerHub Instructions
 
-First pull the images using the commands `docker pull lysackm/spendr-client` and `docker pull lysackm/spendr-client`. Then you need to have a configured postgres database running for the app to work. The following Dockerfile can be used to run the client and server images:
+First, create a `docker-compose.yml` file with the following:
 
-```bash
-<dockerfile>
-   db:
+```yaml
+version: '3.8'
+
+services:
+  db:
     image: postgres:latest
-    volumes:
-      - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
     environment:
       POSTGRES_DB: spendr_database
       POSTGRES_USER: admin
@@ -55,9 +55,35 @@ First pull the images using the commands `docker pull lysackm/spendr-client` and
       PGADMIN_DEFAULT_PASSWORD: 'root'
     ports:
       - '5050:80'
+
+  spendr-server:
+    image: lysackm/spendr-server:test # TODO: Update to latest once fix is in main
+    build: ./server
+    environment:
+      - DATABASE_URL=postgresql://admin:admin@db:5432/spendr_database
+      - PORT=7005
+      - JWT_SECRET="x95jaMXb03"
+    ports:
+      - "7005:7005"
+    depends_on:
+      - db
+
+  spendr-client:
+    image: lysackm/spendr-client:sha-c02cdc0 # TODO: Update to latest once fix is in main
+    build: ./client
+    ports:
+      - "3000:3000"
+    depends_on:
+      - spendr-server
 ```
 
-After having the database container started, spin up the client and server containers to start the app running locally.
+Then, start the containers with:
+
+```bash
+docker-compose up
+```
+
+Once the containers are running, you can visit the client in your browser at `localhost:3000`.
 
 ### User Stories
 
