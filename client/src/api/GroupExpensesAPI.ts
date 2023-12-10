@@ -21,7 +21,7 @@ export const addGroupExpenseRequest = async (
   user: UserInfo,
 ): Promise<AxiosResponse<AddGroupExpenseResponse>> => {
   const response = await axios.post<AddGroupExpenseResponse>(
-    'http://localhost:7005/group-expenses',
+    `${process.env.REACT_APP_API_URL}/group-expenses`,
     data,
     {
       headers: {
@@ -45,7 +45,7 @@ export const markGroupExpenseAsPaidRequest = async (
   user: UserInfo,
 ): Promise<AxiosResponse<MessageResponse>> => {
   const response = await axios.put<MessageResponse>(
-    `http://localhost:7005/group-expenses/${data.groupExpenseId}/mark-as-paid`,
+    `${process.env.REACT_APP_API_URL}/group-expenses/${data.groupExpenseId}/mark-as-paid`,
     data,
     {
       headers: {

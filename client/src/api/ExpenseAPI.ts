@@ -22,7 +22,7 @@ export const addExpenseRequest = async (
   user: UserInfo,
 ): Promise<AxiosResponse<AddExpenseResponse>> => {
   const response = await axios.post<AddExpenseResponse>(
-    'http://localhost:7005/expenses',
+    `${process.env.REACT_APP_API_URL}/expenses`,
     data,
     {
       headers: {
@@ -46,7 +46,7 @@ export const editExpenseRequest = async (
   user: UserInfo,
 ): Promise<AxiosResponse<EditExpenseResponse>> => {
   const response = await axios.put<EditExpenseResponse>(
-    `http://localhost:7005/expenses/${data.id}`,
+    `${process.env.REACT_APP_API_URL}/expenses/${data.id}`,
     data,
     {
       headers: {
@@ -70,7 +70,7 @@ export const deleteExpenseRequest = async (
   user: UserInfo,
 ): Promise<AxiosResponse<MessageResponse>> => {
   const response = await axios.delete<MessageResponse>(
-    `http://localhost:7005/expenses/${data.id}`,
+    `${process.env.REACT_APP_API_URL}/expenses/${data.id}`,
     {
       headers: {
         Authorization: `Bearer ${user.token}`,
