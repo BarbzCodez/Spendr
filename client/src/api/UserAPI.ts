@@ -30,7 +30,7 @@ export const signupRequest = async (
   data: SignupData,
 ): Promise<AxiosResponse<SignupResponse>> => {
   const response: AxiosResponse = await axios.post<SignupResponse>(
-    'http://localhost:7005/users/register',
+    `${process.env.REACT_APP_API_URL}/users/register`,
     data,
   );
   return response;
@@ -47,7 +47,7 @@ export const loginRequest = async (
   data: LoginData,
 ): Promise<AxiosResponse<LoginResponse>> => {
   const response = await axios.post<LoginResponse>(
-    'http://localhost:7005/users/login',
+    `${process.env.REACT_APP_API_URL}/users/login`,
     data,
   );
   return response;
@@ -65,7 +65,7 @@ export const updateUsername = async (
   user: UserInfo,
 ): Promise<AxiosResponse<MessageResponse>> => {
   const response = await axios.post<MessageResponse>(
-    'http://localhost:7005/users/update-username',
+    `${process.env.REACT_APP_API_URL}/users/update-username`,
     data,
     {
       headers: {
@@ -88,7 +88,7 @@ export const updatePassword = async (
   user: UserInfo,
 ): Promise<AxiosResponse<MessageResponse>> => {
   const response = await axios.post<MessageResponse>(
-    'http://localhost:7005/users/update-password',
+    `${process.env.REACT_APP_API_URL}/users/update-password`,
     data,
     {
       headers: {
@@ -108,7 +108,7 @@ export const deleteUser = async (
   user: UserInfo,
 ): Promise<AxiosResponse<MessageResponse>> => {
   const response = await axios.delete<MessageResponse>(
-    'http://localhost:7005/users/delete',
+    `${process.env.REACT_APP_API_URL}/users/delete`,
     {
       headers: {
         Authorization: `Bearer ${user.token}`,
@@ -129,7 +129,7 @@ export const allExpensesRequest = async (
   user: UserInfo,
 ): Promise<AxiosResponse<AllExpensesResponse>> => {
   const response: AxiosResponse = await axios.get(
-    `http://localhost:7005/users/${user.userId}/expenses`,
+    `${process.env.REACT_APP_API_URL}/users/${user.userId}/expenses`,
     {
       headers: {
         Authorization: `Bearer ${user.token}`,
@@ -150,7 +150,7 @@ export const allBudgetsRequest = async (
   user: UserInfo,
 ): Promise<AxiosResponse<AllBudgetResponse>> => {
   const response: AxiosResponse = await axios.get(
-    `http://localhost:7005/users/${user.userId}/budgets`,
+    `${process.env.REACT_APP_API_URL}/users/${user.userId}/budgets`,
     {
       headers: {
         Authorization: `Bearer ${user.token}`,
@@ -173,7 +173,7 @@ export const dailyTotalExpensesRequest = async (
   data: StartEndDatesData,
 ): Promise<AxiosResponse<DailyTotalsResponse>> => {
   const response = await axios.get<DailyTotalsResponse>(
-    `http://localhost:7005/users/${user.userId}/expenses/total-daily`,
+    `${process.env.REACT_APP_API_URL}/users/${user.userId}/expenses/total-daily`,
     {
       params: data,
       headers: {
@@ -197,7 +197,7 @@ export const categoryTotalExpensesRequest = async (
   data: StartEndDatesData,
 ): Promise<AxiosResponse<CategoryTotalsResponse>> => {
   const response = await axios.get<CategoryTotalsResponse>(
-    `http://localhost:7005/users/${user.userId}/expenses/total-spending-for-categories`,
+    `${process.env.REACT_APP_API_URL}/users/${user.userId}/expenses/total-spending-for-categories`,
     {
       params: data,
       headers: {
@@ -219,7 +219,7 @@ export const allGroupExpensesRequest = async (
   user: UserInfo,
 ): Promise<AxiosResponse<AllGroupExpensesResponse>> => {
   const response: AxiosResponse = await axios.get(
-    `http://localhost:7005/users/${user.userId}/group-expenses`,
+    `${process.env.REACT_APP_API_URL}/users/${user.userId}/group-expenses`,
     {
       headers: {
         Authorization: `Bearer ${user.token}`,

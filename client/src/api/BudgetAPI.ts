@@ -22,7 +22,7 @@ export const addBudgetRequest = async (
   user: UserInfo,
 ): Promise<AxiosResponse<AddBudgetResponse>> => {
   const response = await axios.post<AddBudgetResponse>(
-    'http://localhost:7005/budgets',
+    `${process.env.REACT_APP_API_URL}/budgets`,
     data,
     {
       headers: {
@@ -46,7 +46,7 @@ export const editBudgetRequest = async (
   user: UserInfo,
 ): Promise<AxiosResponse<EditBudgetResponse>> => {
   const response = await axios.put<EditBudgetResponse>(
-    `http://localhost:7005/budgets/${data.id}`,
+    `${process.env.REACT_APP_API_URL}/budgets/${data.id}`,
     data,
     {
       headers: {
@@ -70,7 +70,7 @@ export const deleteBudgetRequest = async (
   user: UserInfo,
 ): Promise<AxiosResponse<MessageResponse>> => {
   const response = await axios.delete<MessageResponse>(
-    `http://localhost:7005/budgets/${data.id}`,
+    `${process.env.REACT_APP_API_URL}/budgets/${data.id}`,
     {
       headers: {
         Authorization: `Bearer ${user.token}`,
