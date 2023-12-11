@@ -15,7 +15,7 @@ COPY . .
 RUN npm run build
 
 # Install 'serve' to serve the build
-RUN npm install -g serve
+RUN npm install -g serve  --ignore-scripts
 
 # Serve the production build
 CMD ["serve", "-s", "build"]
