@@ -11,5 +11,11 @@ RUN npm install
 # Copy local code to container
 COPY . .
 
-# Start the app
-CMD ["npm", "start"]
+# Build the app for production
+RUN npm run build
+
+# Install 'serve' to serve the build
+RUN npm install -g --ignore-scripts serve
+
+# Serve the production build
+CMD ["serve", "-s", "build"]
