@@ -2,13 +2,13 @@
 
 ## Team Members
 
-| Name                  | Email                                              | GitHub username | Role                                         |
-| --------------------- | -------------------------------------------------- | --------------- | -------------------------------------------- |
-| Daniel La Rocque      | [larocq17@myumanitoba.ca](larocq17@myumanitoba.ca) | dlarocque       | Full Stack Developer                         |
-| Victoria Kogan        | [koganv@myumanitoba.ca](koganv@myumanitoba.ca)     | VictoriaKGN     | Frontend Developer                           |
-| Mark Lysack           | [lysackm@myumanitoba.ca](lysackm@myumanitoba.ca)   | lysackm         | Backend Developer and CI/CD                  |
-| Barbara Guzman Romero | [guzmanrb@myumanitoba.ca](guzmanrb@myumanitoba.ca) | BarbzCodez      | Frontend Developer                           |
-| Ethan Ducharme        | [duchar36@myumanitoba.ca](duchar36@myumanitoba.ca) | DucharmeEthan   | Backend Developer and Database Administrator |
+| Name                  | Email                                              | GitHub username | Role                                              |
+| --------------------- | -------------------------------------------------- | --------------- | ------------------------------------------------- |
+| Daniel La Rocque      | [larocq17@myumanitoba.ca](larocq17@myumanitoba.ca) | dlarocque       | Backend Developer, Test Manager, Security Analyst |
+| Victoria Kogan        | [koganv@myumanitoba.ca](koganv@myumanitoba.ca)     | VictoriaKGN     | Frontend Developer, QA Analyst                    |
+| Mark Lysack           | [lysackm@myumanitoba.ca](lysackm@myumanitoba.ca)   | lysackm         | Backend Developer, DevOps Developer               |
+| Barbara Guzman Romero | [guzmanrb@myumanitoba.ca](guzmanrb@myumanitoba.ca) | BarbzCodez      | Frontend Developer, QA Analyst                    |
+| Ethan Ducharme        | [duchar36@myumanitoba.ca](duchar36@myumanitoba.ca) | DucharmeEthan   | Backend Developer, Database Administrator         |
 
 ## Project Summary
 
@@ -23,8 +23,6 @@ Embracing the Spendr vision, we've not only progressed but elevated our journey!
 ### DockerHub repository
 
 DockerHub is a way to automatically deploy versions of both the server image and the client image. These images can be pulled and used to run the most recent version of the app. DockerHub also has previous versions of the application which can be used. These images are pushed automatically by the CD pipeline which is ran via github actions.
-
-The Docker image includes everything to run the application. Once the docker image is run, no additional actions are required to launch the application.
 
 #### DockerHub Links
 
@@ -57,7 +55,7 @@ services:
       - '5050:80'
 
   spendr-server:
-    image: lysackm/spendr-server:test # TODO: Update to latest once fix is in main
+    image: lysackm/spendr-server:main
     build: ./server
     environment:
       - DATABASE_URL=postgresql://admin:admin@db:5432/spendr_database
@@ -69,7 +67,7 @@ services:
       - db
 
   spendr-client:
-    image: lysackm/spendr-client:sha-c02cdc0 # TODO: Update to latest once fix is in main
+    image: lysackm/spendr-client:latest
     build: ./client
     ports:
       - "3000:3000"
@@ -89,7 +87,7 @@ Once the containers are running, you can visit the client in your browser at `lo
 
 The User Stories are documented in our [Project Proposal User Stories](project-proposal.md#user-stories).
 
-The progress of the Spendr development can be found on the Git Milestone page.
+The progress of the Spendr development can be found on the GitHub Milestone page.
 
 - [Sprint 1](https://github.com/BarbzCodez/Spendr/milestone/1?closed=1)
 - [Sprint 2](https://github.com/BarbzCodez/Spendr/milestone/2?closed=1)
@@ -109,7 +107,7 @@ A video walkthrough of the User Management can be found [here](https://github.co
 1. Go to where the Spendr is being hosted.
 2. Click **Get Started**.
 3. Enter all the fields (Username, Password, Security Question and Security Answer) Make sure they are all correct.
-4. Click **Sign Up**, you will see a green pop up saying that you have been successfully singed in.
+4. Click **Sign Up**, you will see a green pop up saying that you have been successfully signed in.
 5. Wait until you get redirected to the main page.
 
 #### Log In
@@ -122,7 +120,7 @@ A video walkthrough of the User Management can be found [here](https://github.co
 
 #### Log Out
 
-1. When you are logged in in Spender.
+1. Make sure you are a logged in user.
 2. Click the **User Icon** at the top right.
 3. Click **Log Out**.
 4. You should be redirected to the home page.
@@ -135,14 +133,14 @@ A video walkthrough of the User Management can be found [here](https://github.co
 4. Click the edit icon next to **username** or **password**.
 5. Type in your new values.
 6. Click the **Save** icon.
-7. A successfully updated popup should appears.
+7. A popup indicating successful update should appear.
 
 #### User Deletion
 
 1. Make sure you are a logged in user.
 2. Click the **User Icon**.
 3. Click **Settings**.
-4. Click **Delete Account**.
+4. Click **Delete Forever**.
 5. You should have a popup saying that your account was successfully deleted and redirected to the main menu.
 
 ### Expense Management
@@ -158,7 +156,7 @@ A video walkthrough of the Expense Management can be found [here](https://github
 #### Create an Expense
 
 1. Make sure you are a logged in user.
-2. Click **Expenses** on the top bar.
+2. Click **Expenses** on the navigation bar.
 3. Click **Add Expense**.
 4. Fill in all the required fields (title, amount, category, and date).
 5. Click **Save**.
@@ -212,7 +210,7 @@ A video walkthrough of the Budget Management can be found [here](https://github.
 
 1. Make sure you are a logged in user and have created a budget.
 2. Click **Budgets** on the top bar.
-3. Click on the **Delete Icon** in the expense you want to delete.
+3. Click on the **Delete Icon** in the budget you want to delete.
 4. Your updated expense should be deleted from the table.
 
 ### Expense Analytics
@@ -257,9 +255,9 @@ A video walkthrough of the Expense Analytics can be found [here](https://github.
 
 1. Make sure you are a logged in user and have created a group expense or have been added to one.
 2. Click **Group Expenses** on the top bar.
-3. In a row where you have not paid your part, click on the checkbox with your name besides it.
+3. In a row where you have not paid your part, click on the checkbox with your name  it.
 4. Read and confirm the disclaimer.
-5. That row should be have a checkmark on your name, and a new expense is added to your expenses on th **Expenses** page.
+5. That row should have a checkmark next to your name, and a new expense should be added to your expenses on the **Expenses** page.
 
 ## Architecture Design
 
@@ -447,7 +445,7 @@ Regression testing is done by running all unit tests after each commit to main i
 
 ### Load Testing
 
-The load testing was done using JMeter, then run against a locally running version of the app. The test cases was a simulation of what a standard user may do when using the app. This includes creating an account, logging in, creating an expense, fetching expense data, creating a budget, and fetching budget, fetching analytics data, creating and fetching group expenses.
+The load testing was done using JMeter, then run against a locally running version of the app. The test cases were a simulation of what a standard user may do when using the app. This includes creating an account, logging in, creating an expense, fetching expense data, creating a budget, and fetching budget, fetching analytics data, creating and fetching group expenses.
 
 #### Load Testing: JMeter Summary Report
 
