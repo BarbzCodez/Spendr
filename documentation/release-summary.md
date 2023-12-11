@@ -146,6 +146,8 @@ A video walkthrough of the User Management can be found [here](https://github.co
 5. You should have a popup saying that your account was successfully deleted and redirected to the main menu.
 
 ### Expense Management
+<img src="/documentation/images/expenses.png" alt="logo" width="500"/>
+<img src="/documentation/images/expensePrompt.png" alt="logo" width="500"/>
 
 A video walkthrough of the Expense Management can be found [here](https://github.com/BarbzCodez/Spendr/blob/main/documentation/images/expenses.mp4).
 
