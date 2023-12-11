@@ -1,3 +1,5 @@
+<img src="/documentation/images/spndr_logo.png" alt="logo" width="150"/>
+
 # Spendr Release Summary
 
 ## Team Members
