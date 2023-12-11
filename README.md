@@ -1,4 +1,4 @@
-# Spendr
+<img src="/documentation/images/spndr_logo.png" alt="logo" width="200"/>
 
 Spendr is a web application that offers users a holistic view of their finances and empowers them with the tools they need to make informed financial decisions.
 
