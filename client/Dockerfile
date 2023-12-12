@@ -11,6 +11,10 @@ RUN npm install
 # Copy local code to container
 COPY . .
 
+# Set environment variables
+ENV REACT_APP_API_URL $REACT_APP_API_URL
+ENV REACT_APP_EDENAI_API_KEY $REACT_APP_EDENAI_API_KEY
+
 # Build the app for production
 RUN npm run build
 
