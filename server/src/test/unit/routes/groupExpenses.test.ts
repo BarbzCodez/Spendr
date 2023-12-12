@@ -297,7 +297,9 @@ describe('PUT /api/group-expenses/:groupExpenseId/mark-as-paid', () => {
       },
     });
 
-    const response = await request(app).put('/api/group-expenses/1/mark-as-paid');
+    const response = await request(app).put(
+      '/api/group-expenses/1/mark-as-paid',
+    );
 
     expect(response.status).toBe(201);
     expect(response.body).toEqual({
@@ -308,7 +310,9 @@ describe('PUT /api/group-expenses/:groupExpenseId/mark-as-paid', () => {
   it('should return 401 if the user was not found', async () => {
     prismaMock.user.findUnique.mockResolvedValueOnce(null);
 
-    const response = await request(app).put('/api/group-expenses/1/mark-as-paid');
+    const response = await request(app).put(
+      '/api/group-expenses/1/mark-as-paid',
+    );
 
     expect(response.status).toBe(401);
   });
@@ -325,7 +329,9 @@ describe('PUT /api/group-expenses/:groupExpenseId/mark-as-paid', () => {
 
     prismaMock.user.findUnique.mockResolvedValueOnce(deletedUser);
 
-    const response = await request(app).put('/api/group-expenses/1/mark-as-paid');
+    const response = await request(app).put(
+      '/api/group-expenses/1/mark-as-paid',
+    );
 
     expect(response.status).toBe(401);
   });
@@ -334,7 +340,9 @@ describe('PUT /api/group-expenses/:groupExpenseId/mark-as-paid', () => {
     prismaMock.user.findUnique.mockResolvedValueOnce(firstUser);
     prismaMock.groupExpenseSplit.findFirst.mockResolvedValue(null);
 
-    const response = await request(app).put('/api/group-expenses/1/mark-as-paid');
+    const response = await request(app).put(
+      '/api/group-expenses/1/mark-as-paid',
+    );
 
     expect(response.status).toBe(404);
   });
@@ -350,7 +358,9 @@ describe('PUT /api/group-expenses/:groupExpenseId/mark-as-paid', () => {
     });
     prismaMock.groupExpense.findUnique.mockResolvedValue(null);
 
-    const response = await request(app).put('/api/group-expenses/1/mark-as-paid');
+    const response = await request(app).put(
+      '/api/group-expenses/1/mark-as-paid',
+    );
 
     expect(response.status).toBe(404);
   });
@@ -358,7 +368,9 @@ describe('PUT /api/group-expenses/:groupExpenseId/mark-as-paid', () => {
   it('should return 500 if there is a server error', async () => {
     prismaMock.user.findUnique.mockRejectedValueOnce(new Error());
 
-    const response = await request(app).put('/api/group-expenses/1/mark-as-paid');
+    const response = await request(app).put(
+      '/api/group-expenses/1/mark-as-paid',
+    );
 
     expect(response.status).toBe(500);
     expect(response.body.message).toBe('Server error');

@@ -17,7 +17,9 @@ describe('Login', () => {
       password: userData.password,
     };
 
-    const response = await request(app).post('/api/users/login').send(userCreds);
+    const response = await request(app)
+      .post('/api/users/login')
+      .send(userCreds);
 
     expect(response.status).toBe(200);
     expect(response.body).toHaveProperty('token');

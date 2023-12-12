@@ -89,7 +89,9 @@ describe('POST /api/expenses', () => {
 
     prismaMock.expense.create.mockRejectedValue(new Error('Server error'));
 
-    const response = await request(app).post('/api/expenses').send(newExpenseData);
+    const response = await request(app)
+      .post('/api/expenses')
+      .send(newExpenseData);
 
     expect(response.status).toBe(500);
     expect(response.body.message).toBe('Server error');
