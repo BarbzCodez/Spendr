@@ -9,11 +9,11 @@ describe('Reset password', () => {
       securityQuestion: 'What is your favorite color?',
       securityAnswer: 'Blue',
     };
-    await request(app).post('/users/register').send(userData);
+    await request(app).post('/api/users/register').send(userData);
 
     const newPassword = '87654321';
     const updatePasswordResponse = await request(app)
-      .post('/users/reset-password')
+      .post('/api/users/reset-password')
       .send({
         username: userData.username,
         securityAnswer: userData.securityAnswer,
@@ -22,7 +22,7 @@ describe('Reset password', () => {
 
     expect(updatePasswordResponse.status).toBe(200);
 
-    const loginResponse = await request(app).post('/users/login').send({
+    const loginResponse = await request(app).post('/api/users/login').send({
       username: userData.username,
       password: newPassword,
     });

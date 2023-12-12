@@ -48,38 +48,38 @@ This test plan covers unit, integration, acceptance, regression, and load testin
 ### Unit Tests
 
 1. User Management
-   1. Return `201 Created` upon POST request to `/users/register` with valid payload.
-   2. Return `400 Bad Request` upon POST request to `/users/register` with an already used username.
-   3. Return `200 OK` and a JWT upon POST to `/users/login` with correct credentials.
-   4. Return `400 Bad Request` upon POST to `/users/login` with incorrect credentials.
-   5. Return `200 OK` upon POST to `/users/reset-password` with the correct security answer.
-   6. Return `400 Bad Request` upon POST to `/users/reset-password` with the incorrect security answer.
-   7. Return `400 Bad Request` upon POST to `/users/reset-password` with a missing payload.
-   8. Return `200 OK` upon PUT to `/users` with valid new user data.
-   9. Return `400 Bad Request` upon PUT to `/users` with a new username that already exists.
-   10. Return `200 OK` upon DELETE to `/users` from authenticated session.
+   1. Return `201 Created` upon POST request to `/api/users/register` with valid payload.
+   2. Return `400 Bad Request` upon POST request to `/api/users/register` with an already used username.
+   3. Return `200 OK` and a JWT upon POST to `/api/users/login` with correct credentials.
+   4. Return `400 Bad Request` upon POST to `/api/users/login` with incorrect credentials.
+   5. Return `200 OK` upon POST to `/api/users/reset-password` with the correct security answer.
+   6. Return `400 Bad Request` upon POST to `/api/users/reset-password` with the incorrect security answer.
+   7. Return `400 Bad Request` upon POST to `/api/users/reset-password` with a missing payload.
+   8. Return `200 OK` upon PUT to `/api/users` with valid new user data.
+   9. Return `400 Bad Request` upon PUT to `/api/users` with a new username that already exists.
+   10. Return `200 OK` upon DELETE to `/api/users` from authenticated session.
 2. Expense Entry and History
-   1. Return `201 Created` upon POST to `/expenses` with a valid new expense.
-   2. Return `200 OK` upon DELETE to `/expenses/:id` with valid expense ID.
-   3. Return `200 OK` upon PATCH to `/expenses/:id` with valid updates.
-   4. Return `200 OK` and correct expenses upon GET to `/expenses`.
-   5. Return `200 OK` and correct expense upon GET to `/expenses/:id` with a valid expense ID.
-   6. Return `400 Bad Request` upon POST to `/expenses/:id` with an invalid payload.
-   7. Return `400 Bad Request` upon POST to `/expenses/:id` with an invalid expense value.
-   8. Return `404 Not Found` upon DELETE to `/expenses/:id` with a non-existent expense ID.
-   9. Return `404 Not Found` upon PATCH to `/expenses/:id` with a non-existent expense ID.
-   10. Return `400 Bad Request` upon PATCH to `/expenses/:id` with an invalid expense.
+   1. Return `201 Created` upon POST to `/api/expenses` with a valid new expense.
+   2. Return `200 OK` upon DELETE to `/api/expenses/:id` with valid expense ID.
+   3. Return `200 OK` upon PATCH to `/api/expenses/:id` with valid updates.
+   4. Return `200 OK` and correct expenses upon GET to `/api/expenses`.
+   5. Return `200 OK` and correct expense upon GET to `/api/expenses/:id` with a valid expense ID.
+   6. Return `400 Bad Request` upon POST to `/api/expenses/:id` with an invalid payload.
+   7. Return `400 Bad Request` upon POST to `/api/expenses/:id` with an invalid expense value.
+   8. Return `404 Not Found` upon DELETE to `/api/expenses/:id` with a non-existent expense ID.
+   9. Return `404 Not Found` upon PATCH to `/api/expenses/:id` with a non-existent expense ID.
+   10. Return `400 Bad Request` upon PATCH to `/api/expenses/:id` with an invalid expense.
 3. Budget Management
-   1. Return `201 Created` upon POST to `/budgets` with valid payload for setting a budget.
-   2. Return `200 OK` upon PUT to `/budgets/:id` with valid budget.
-   3. Return `200 OK` upon DELETE to `/budgets/:id` with a valid budget ID.
-   4. Return `200 OK` and all the correct budgets upon GET to `/budgets` to retrieve all set budgets.
+   1. Return `201 Created` upon POST to `/api/budgets` with valid payload for setting a budget.
+   2. Return `200 OK` upon PUT to `/api/budgets/:id` with valid budget.
+   3. Return `200 OK` upon DELETE to `/api/budgets/:id` with a valid budget ID.
+   4. Return `200 OK` and all the correct budgets upon GET to `/api/budgets` to retrieve all set budgets.
    5. Return `200 OK` and the correct budget upon GET to `/budget/:id` to retrieve a specific budget.
-   6. Return `400 Bad Request` upon POST to `/budgets` with invalid payload.
-   7. Return `404 Not Found` upon DELETE to `/budgets/:id` with a budget ID that does not exist.
-   8. Return `404 Not Found` upon PUT to `/budgets/:id` with an invalid payload.
-   9. Return `400 Bad Request` upon GET to `/budgets/:id` with a budget ID that does not exist.
-   10. Return `400 Bad Request` upon POST to `/budgets` with an negative budget amount.
+   6. Return `400 Bad Request` upon POST to `/api/budgets` with invalid payload.
+   7. Return `404 Not Found` upon DELETE to `/api/budgets/:id` with a budget ID that does not exist.
+   8. Return `404 Not Found` upon PUT to `/api/budgets/:id` with an invalid payload.
+   9. Return `400 Bad Request` upon GET to `/api/budgets/:id` with a budget ID that does not exist.
+   10. Return `400 Bad Request` upon POST to `/api/budgets` with an negative budget amount.
 4. Expense Analytics
    1. Return `200 OK` and average amount spent per day for a month upon GET to `/analytics/average-daily/` with a valid year and month.
    2. Return `400 Bad Request` upon GET to `/analytics/average-daily` for a month in the future.
@@ -92,29 +92,29 @@ This test plan covers unit, integration, acceptance, regression, and load testin
    9. Return `200 OK` and total amount spent for a specific category upon GET to `/analytics/amount` with an existing category.
    10. Return `400 Bad Request` upon GET to `/analytics/amount` with a category that does not exist.
 5. Group Expense Splitting
-   1. Return `201 Created` upon POST to `/group-expenses` with valid amount, breakdown, and users that exist.
-   2. Return `200 OK` and correct group expense data upon GET to `/group-expenses/:id` with an existing group expense ID.
-   3. Return `200 OK` upon PUT to `/group-expenses/:id/paid` to mark a group expense as paid.
-   4. Return `200 OK` upon GET to `/group-expenses/:id/paid` to retrieve status of 'paid' by all other users.
-   5. Return `200 OK` and all group expense data upon GET to `/group-expenses`.
-   6. Return `200 OK` upon PUT to `/group-expenses/:id/opt-out` to opt out of a group expense.
-   7. Return `200 OK` upon DELETE to `/group-expenses/:id` to delete a group expense, as the creator of the expense with a valid group expense ID.
-   8. Return `400 Bad Request` upon POST to `/group-expenses` with a negative expense value.
-   9. Return `400 Bad Request` upon POST to `/group-expenses` including a username that does not exist.
-   10. Return `400 Bad Request` upon GET to `/group-expenses/:id` with a group expense ID that does not exist.
+   1. Return `201 Created` upon POST to `/api/group-expenses` with valid amount, breakdown, and users that exist.
+   2. Return `200 OK` and correct group expense data upon GET to `/api/group-expenses/:id` with an existing group expense ID.
+   3. Return `200 OK` upon PUT to `/api/group-expenses/:id/paid` to mark a group expense as paid.
+   4. Return `200 OK` upon GET to `/api/group-expenses/:id/paid` to retrieve status of 'paid' by all other users.
+   5. Return `200 OK` and all group expense data upon GET to `/api/group-expenses`.
+   6. Return `200 OK` upon PUT to `/api/group-expenses/:id/opt-out` to opt out of a group expense.
+   7. Return `200 OK` upon DELETE to `/api/group-expenses/:id` to delete a group expense, as the creator of the expense with a valid group expense ID.
+   8. Return `400 Bad Request` upon POST to `/api/group-expenses` with a negative expense value.
+   9. Return `400 Bad Request` upon POST to `/api/group-expenses` including a username that does not exist.
+   10. Return `400 Bad Request` upon GET to `/api/group-expenses/:id` with a group expense ID that does not exist.
 
 ### Integration Tests
 
-1. After creating a new user via `POST /users/register`, the new user data is found in the database with the hashed security answer and password.
-2. After a client obtains JWT from signing in via `POST /users/login`, the JWT can be used to make request to an protected route.
-3. After an authenticated client updates their user data via `POST /users/update-user`, their new user data is updated with the hashed security answer and password.
-4. After an authenticated client deletes their account via `DELETE /users/delete`, they can no longer log in via `POST /users/login`.
-5. After an authenticated client creates a new expense via `POST /expenses`, the expense exists in the database.
-6. After an authenticated client creates a new budget via `POST /budgets`, the budget exists in the database.
-7. After an authenticated client creates a new group expense via `POST /group-expenses`, a group expense is created in the database, and each user has a group expense split.
-8. After an authenticated client marks a group expense as paid via `PUT /group-expenses/:groupExpenseId/mark-as-paid`, a new expense is created for the user, and the group expense split is marked as paid in the database.
-9. After an authenticated client deletes an expense via `DELETE /expenses/:expenseId`, it should no longer exist in the database.
-10. After a client tries to reset an accounts password using the correct answer to the security question via `POST /users/reset-password`, they should be able to log in via `POST users/login`  using the updated password.
+1. After creating a new user via `POST /api/users/register`, the new user data is found in the database with the hashed security answer and password.
+2. After a client obtains JWT from signing in via `POST /api/users/login`, the JWT can be used to make request to an protected route.
+3. After an authenticated client updates their user data via `POST /api/users/update-user`, their new user data is updated with the hashed security answer and password.
+4. After an authenticated client deletes their account via `DELETE /api/users/delete`, they can no longer log in via `POST /api/users/login`.
+5. After an authenticated client creates a new expense via `POST /api/expenses`, the expense exists in the database.
+6. After an authenticated client creates a new budget via `POST /api/budgets`, the budget exists in the database.
+7. After an authenticated client creates a new group expense via `POST /api/group-expenses`, a group expense is created in the database, and each user has a group expense split.
+8. After an authenticated client marks a group expense as paid via `PUT /api/group-expenses/:groupExpenseId/mark-as-paid`, a new expense is created for the user, and the group expense split is marked as paid in the database.
+9. After an authenticated client deletes an expense via `DELETE /api/expenses/:expenseId`, it should no longer exist in the database.
+10. After a client tries to reset an accounts password using the correct answer to the security question via `POST /api/users/reset-password`, they should be able to log in via `POST users/login`  using the updated password.
 
 ### 2.2 Test Completeness
 

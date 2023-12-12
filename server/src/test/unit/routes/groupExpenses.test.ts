@@ -28,7 +28,7 @@ jest.mock('../../../middleware/authenticate', () => ({
   },
 }));
 
-describe('POST /group-expenses', () => {
+describe('POST /api/group-expenses', () => {
   afterEach(() => {
     jest.clearAllMocks();
   });
@@ -59,7 +59,7 @@ describe('POST /group-expenses', () => {
     });
 
     const response = await request(app)
-      .post('/group-expenses')
+      .post('/api/group-expenses')
       .send({
         title: 'Test Group Expense',
         amount: 100,
@@ -83,7 +83,7 @@ describe('POST /group-expenses', () => {
 
   it('should return 400 if the title is invalid', async () => {
     const response = await request(app)
-      .post('/group-expenses')
+      .post('/api/group-expenses')
       .send({
         title: 1234,
         amount: 100,
@@ -97,7 +97,7 @@ describe('POST /group-expenses', () => {
 
   it('should return 400 if the amount is invalid', async () => {
     const response = await request(app)
-      .post('/group-expenses')
+      .post('/api/group-expenses')
       .send({
         title: 'Test Group Expense',
         amount: '100x',
@@ -111,7 +111,7 @@ describe('POST /group-expenses', () => {
 
   it('should return 400 if the category is invalid', async () => {
     const response = await request(app)
-      .post('/group-expenses')
+      .post('/api/group-expenses')
       .send({
         title: 'Test Group Expense',
         amount: 100,
@@ -125,7 +125,7 @@ describe('POST /group-expenses', () => {
 
   it('should return 400 if the createdAt is invalid', async () => {
     const response = await request(app)
-      .post('/group-expenses')
+      .post('/api/group-expenses')
       .send({
         title: 'Test Group Expense',
         amount: 100,
@@ -139,7 +139,7 @@ describe('POST /group-expenses', () => {
 
   it('should return 400 if the split has the invalid format', async () => {
     const response = await request(app)
-      .post('/group-expenses')
+      .post('/api/group-expenses')
       .send({
         title: 'Test Group Expense',
         amount: 100,
@@ -153,7 +153,7 @@ describe('POST /group-expenses', () => {
 
   it('should return 400 if the split does not sum to 1', async () => {
     const response = await request(app)
-      .post('/group-expenses')
+      .post('/api/group-expenses')
       .send({
         title: 'Test Group Expense',
         amount: 100,
@@ -167,7 +167,7 @@ describe('POST /group-expenses', () => {
 
   it('should return 400 if the split is close to 1', async () => {
     const response = await request(app)
-      .post('/group-expenses')
+      .post('/api/group-expenses')
       .send({
         title: 'Test Group Expense',
         amount: 100,
@@ -183,7 +183,7 @@ describe('POST /group-expenses', () => {
     prismaMock.user.findUnique.mockResolvedValueOnce(null);
 
     const response = await request(app)
-      .post('/group-expenses')
+      .post('/api/group-expenses')
       .send({
         title: 'Test Group Expense',
         amount: 100,
@@ -209,7 +209,7 @@ describe('POST /group-expenses', () => {
     prismaMock.user.findMany.mockResolvedValue([firstUser, deletedUser]);
 
     const response = await request(app)
-      .post('/group-expenses')
+      .post('/api/group-expenses')
       .send({
         title: 'Test Group Expense',
         amount: 100,
@@ -226,7 +226,7 @@ describe('POST /group-expenses', () => {
     prismaMock.user.findMany.mockResolvedValue([firstUser]);
 
     const response = await request(app)
-      .post('/group-expenses')
+      .post('/api/group-expenses')
       .send({
         title: 'Test Group Expense',
         amount: 100,
@@ -242,7 +242,7 @@ describe('POST /group-expenses', () => {
     prismaMock.user.findUnique.mockRejectedValueOnce(new Error());
 
     const response = await request(app)
-      .post('/group-expenses')
+      .post('/api/group-expenses')
       .send({
         title: 'Test Group Expense',
         amount: 100,
@@ -256,7 +256,7 @@ describe('POST /group-expenses', () => {
   });
 });
 
-describe('PUT /group-expenses/:groupExpenseId/mark-as-paid', () => {
+describe('PUT /api/group-expenses/:groupExpenseId/mark-as-paid', () => {
   afterEach(() => {
     jest.clearAllMocks();
   });
@@ -297,7 +297,9 @@ describe('PUT /group-expenses/:groupExpenseId/mark-as-paid', () => {
       },
     });
 
-    const response = await request(app).put('/group-expenses/1/mark-as-paid');
+    const response = await request(app).put(
+      '/api/group-expenses/1/mark-as-paid',
+    );
 
     expect(response.status).toBe(201);
     expect(response.body).toEqual({
@@ -308,7 +310,9 @@ describe('PUT /group-expenses/:groupExpenseId/mark-as-paid', () => {
   it('should return 401 if the user was not found', async () => {
     prismaMock.user.findUnique.mockResolvedValueOnce(null);
 
-    const response = await request(app).put('/group-expenses/1/mark-as-paid');
+    const response = await request(app).put(
+      '/api/group-expenses/1/mark-as-paid',
+    );
 
     expect(response.status).toBe(401);
   });
@@ -325,7 +329,9 @@ describe('PUT /group-expenses/:groupExpenseId/mark-as-paid', () => {
 
     prismaMock.user.findUnique.mockResolvedValueOnce(deletedUser);
 
-    const response = await request(app).put('/group-expenses/1/mark-as-paid');
+    const response = await request(app).put(
+      '/api/group-expenses/1/mark-as-paid',
+    );
 
     expect(response.status).toBe(401);
   });
@@ -334,7 +340,9 @@ describe('PUT /group-expenses/:groupExpenseId/mark-as-paid', () => {
     prismaMock.user.findUnique.mockResolvedValueOnce(firstUser);
     prismaMock.groupExpenseSplit.findFirst.mockResolvedValue(null);
 
-    const response = await request(app).put('/group-expenses/1/mark-as-paid');
+    const response = await request(app).put(
+      '/api/group-expenses/1/mark-as-paid',
+    );
 
     expect(response.status).toBe(404);
   });
@@ -350,7 +358,9 @@ describe('PUT /group-expenses/:groupExpenseId/mark-as-paid', () => {
     });
     prismaMock.groupExpense.findUnique.mockResolvedValue(null);
 
-    const response = await request(app).put('/group-expenses/1/mark-as-paid');
+    const response = await request(app).put(
+      '/api/group-expenses/1/mark-as-paid',
+    );
 
     expect(response.status).toBe(404);
   });
@@ -358,7 +368,9 @@ describe('PUT /group-expenses/:groupExpenseId/mark-as-paid', () => {
   it('should return 500 if there is a server error', async () => {
     prismaMock.user.findUnique.mockRejectedValueOnce(new Error());
 
-    const response = await request(app).put('/group-expenses/1/mark-as-paid');
+    const response = await request(app).put(
+      '/api/group-expenses/1/mark-as-paid',
+    );
 
     expect(response.status).toBe(500);
     expect(response.body.message).toBe('Server error');

@@ -10,8 +10,8 @@ describe('Create Group Expense', () => {
       securityQuestion: 'What is your favorite color?',
       securityAnswer: 'Blue',
     };
-    await request(app).post('/users/register').send(userData);
-    const loginResponse = await request(app).post('/users/login').send({
+    await request(app).post('/api/users/register').send(userData);
+    const loginResponse = await request(app).post('/api/users/login').send({
       username: userData.username,
       password: userData.password,
     });
@@ -23,7 +23,7 @@ describe('Create Group Expense', () => {
       securityQuestion: 'What is your favorite color?',
       securityAnswer: 'Blue',
     };
-    await request(app).post('/users/register').send(secondUserData);
+    await request(app).post('/api/users/register').send(secondUserData);
 
     const groupExpenseData = {
       title: 'Costco',
@@ -34,7 +34,7 @@ describe('Create Group Expense', () => {
     };
 
     const groupExpenseResopnse = await request(app)
-      .post('/group-expenses')
+      .post('/api/group-expenses')
       .set('Authorization', `Bearer ${token}`)
       .send(groupExpenseData);
 
