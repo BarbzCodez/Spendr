@@ -82,7 +82,7 @@ jobs:
     name: 'spendr client continuous deployment - publish'
     needs: build-client
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/client-envs'
+    if: github.ref == 'refs/heads/client-env'
 
     steps:
     - name: checkout code
