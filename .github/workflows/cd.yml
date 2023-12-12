@@ -2,7 +2,7 @@ name: 'Spendr Continuous Deployment'
 
 on:
   push:
-    branches: [main]
+    branches: [client-env] # temp
 
 jobs:
   build-server:
@@ -43,6 +43,9 @@ jobs:
         REACT_APP_API_URL: http://spendr.pro
         REACT_APP_EDENAI_API_KEY: ${{ secrets.REACT_APP_EDENAI_API_KEY }}
       run: cd client && npm run build
+
+    - name: Echo REACT_APP_API_URL
+      run: echo "REACT_APP_API_URL is set to $REACT_APP_API_URL"
 
     - name: Upload production ready build files
       uses: actions/upload-artifact@v3
