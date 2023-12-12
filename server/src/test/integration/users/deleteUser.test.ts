@@ -11,7 +11,7 @@ describe('Delete user', () => {
       securityAnswer: 'Blue',
     };
 
-    await request(app).post('/users/register').send(userData);
+    await request(app).post('/api/users/register').send(userData);
 
     const userCreds = {
       username: userData.username,
@@ -19,11 +19,11 @@ describe('Delete user', () => {
     };
 
     const loginResponse = await request(app)
-      .post('/users/login')
+      .post('/api/users/login')
       .send(userCreds);
 
     const deleteResponse = await request(app)
-      .delete('/users/delete')
+      .delete('/api/users/delete')
       .set('Authorization', `Bearer ${loginResponse.body.token}`);
 
     expect(deleteResponse.status).toBe(200);
@@ -35,7 +35,7 @@ describe('Delete user', () => {
     expect(deletedUser?.userDeleted).toBe(true);
 
     const afterDeleteLoginResponse = await request(app)
-      .post('/users/login')
+      .post('/api/users/login')
       .send(userCreds);
 
     expect(afterDeleteLoginResponse.status).toBe(400);

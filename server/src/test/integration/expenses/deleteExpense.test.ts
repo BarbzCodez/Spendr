@@ -10,8 +10,8 @@ describe('Delete Expense', () => {
       securityQuestion: 'What is your favorite color?',
       securityAnswer: 'Blue',
     };
-    await request(app).post('/users/register').send(userData);
-    const loginResponse = await request(app).post('/users/login').send({
+    await request(app).post('/api/users/register').send(userData);
+    const loginResponse = await request(app).post('/api/users/login').send({
       username: userData.username,
       password: userData.password,
     });
@@ -25,14 +25,14 @@ describe('Delete Expense', () => {
     };
 
     const expenseResponse = await request(app)
-      .post('/expenses')
+      .post('/api/expenses')
       .set('Authorization', `Bearer ${token}`)
       .send(expenseData);
 
     const expenseId = expenseResponse.body.expense.newExpense.id;
 
     const deleteExpenseResponse = await request(app)
-      .delete(`/expenses/${expenseId}`)
+      .delete(`/api/expenses/${expenseId}`)
       .set('Authorization', `Bearer ${token}`);
 
     expect(deleteExpenseResponse.status).toBe(200);

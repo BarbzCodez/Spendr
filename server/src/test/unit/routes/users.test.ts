@@ -12,7 +12,7 @@ jest.mock('../../../middleware/authenticate', () => ({
   },
 }));
 
-describe('POST /users/register', () => {
+describe('POST /api/users/register', () => {
   afterEach(() => {
     jest.clearAllMocks();
   });
@@ -31,7 +31,7 @@ describe('POST /users/register', () => {
 
     prismaMock.user.create.mockResolvedValue(user);
 
-    const response = await request(app).post('/users/register').send({
+    const response = await request(app).post('/api/users/register').send({
       username: 'testuser1',
       password: 'testpassword',
       securityQuestion: 'Your favorite color?',
@@ -53,7 +53,7 @@ describe('POST /users/register', () => {
       userDeleted: false,
     });
 
-    const response = await request(app).post('/users/register').send({
+    const response = await request(app).post('/api/users/register').send({
       username: 'testuser2',
       password: 'testpassword',
       securityQuestion: 'Your favorite color?',
@@ -65,7 +65,7 @@ describe('POST /users/register', () => {
   });
 
   it('should return 400 if any required field is missing', async () => {
-    const response = await request(app).post('/users/register').send({
+    const response = await request(app).post('/api/users/register').send({
       username: 'testuser3',
       password: 'testpassword',
       securityQuestion: 'Your favorite color?',
@@ -78,7 +78,7 @@ describe('POST /users/register', () => {
   it('should return 500 if user fails to be created', async () => {
     prismaMock.user.create.mockRejectedValue(new Error()); // Mocking database error
 
-    const response = await request(app).post('/users/register').send({
+    const response = await request(app).post('/api/users/register').send({
       username: 'testuser3',
       password: 'testpassword',
       securityQuestion: 'Your favorite color?',
@@ -90,9 +90,9 @@ describe('POST /users/register', () => {
   });
 });
 
-describe('POST /users/login', () => {
+describe('POST /api/users/login', () => {
   it('should return 400 if the validation fails', async () => {
-    const response = await request(app).post('/users/login').send({
+    const response = await request(app).post('/api/users/login').send({
       username: 'testUser',
       password: 12345678, // Invalid password type (number instead of string)
     });
@@ -104,7 +104,7 @@ describe('POST /users/login', () => {
   it('should return 400 if username does not exist', async () => {
     prismaMock.user.findUnique.mockResolvedValue(null); // Mocking no user found
 
-    const response = await request(app).post('/users/login').send({
+    const response = await request(app).post('/api/users/login').send({
       username: 'wrongUsername',
       password: 'testPassword',
     });
@@ -124,7 +124,7 @@ describe('POST /users/login', () => {
       userDeleted: false,
     });
 
-    const response = await request(app).post('/users/login').send({
+    const response = await request(app).post('/api/users/login').send({
       username: 'testUser',
       password: 'wrongPassword',
     });
@@ -146,7 +146,7 @@ describe('POST /users/login', () => {
       userDeleted: false,
     });
 
-    const response = await request(app).post('/users/login').send({
+    const response = await request(app).post('/api/users/login').send({
       username: 'testUser',
       password: password,
     });
@@ -158,7 +158,7 @@ describe('POST /users/login', () => {
   it('should return 500 if there is a server error', async () => {
     prismaMock.user.findUnique.mockRejectedValue(new Error()); // Mocking database error
 
-    const response = await request(app).post('/users/login').send({
+    const response = await request(app).post('/api/users/login').send({
       username: 'testUser',
       password: 'testPassword',
     });
@@ -168,9 +168,9 @@ describe('POST /users/login', () => {
   });
 });
 
-describe('/users/reset-password', () => {
+describe('/api/users/reset-password', () => {
   it('returns 400 for validation errors', async () => {
-    const response = await request(app).post('/users/reset-password').send({
+    const response = await request(app).post('/api/users/reset-password').send({
       username: 123, // invalid username for testing
       securityAnswer: 'testAnswer',
       newPassword: 'newPassword',
@@ -183,7 +183,7 @@ describe('/users/reset-password', () => {
   it('returns 400 if user not found', async () => {
     prismaMock.user.findUnique.mockResolvedValue(null); // Mocking no user found
 
-    const response = await request(app).post('/users/reset-password').send({
+    const response = await request(app).post('/api/users/reset-password').send({
       username: 'testUser',
       securityAnswer: 'testAnswer',
       newPassword: 'newPassword',
@@ -204,7 +204,7 @@ describe('/users/reset-password', () => {
       userDeleted: false,
     });
 
-    const response = await request(app).post('/users/reset-password').send({
+    const response = await request(app).post('/api/users/reset-password').send({
       username: 'testUser',
       securityAnswer: 'wrongAnswer',
       newPassword: 'newPassword',
@@ -226,7 +226,7 @@ describe('/users/reset-password', () => {
       userDeleted: false,
     });
 
-    const response = await request(app).post('/users/reset-password').send({
+    const response = await request(app).post('/api/users/reset-password').send({
       username: 'testUser',
       securityAnswer: correctAnswer,
       newPassword: 'newPassword',
@@ -239,7 +239,7 @@ describe('/users/reset-password', () => {
   it('returns 500 if there is a server error', async () => {
     prismaMock.user.findUnique.mockRejectedValue(new Error()); // Mocking database error
 
-    const response = await request(app).post('/users/reset-password').send({
+    const response = await request(app).post('/api/users/reset-password').send({
       username: 'testUser',
       securityAnswer: 'testAnswer',
       newPassword: 'newPassword',
@@ -250,13 +250,13 @@ describe('/users/reset-password', () => {
   });
 });
 
-describe('POST /users/update-user', () => {
+describe('POST /api/users/update-user', () => {
   afterEach(() => {
     jest.clearAllMocks();
   });
 
   it('returns 400 for validation errors', async () => {
-    const response = await request(app).post('/users/update-user').send({
+    const response = await request(app).post('/api/users/update-user').send({
       username: 123, // not a string
       password: 'testpassword',
       securityQuestion: 'Your favorite color?',
@@ -271,7 +271,7 @@ describe('POST /users/update-user', () => {
     // Mocking the user check based on ID
     prismaMock.user.findUnique.mockResolvedValueOnce(null);
 
-    const response = await request(app).post('/users/update-user').send({
+    const response = await request(app).post('/api/users/update-user').send({
       username: 'testuser',
       password: 'testpassword',
       securityQuestion: 'Your favorite color?',
@@ -302,7 +302,7 @@ describe('POST /users/update-user', () => {
       userDeleted: false,
     }); // Indicates new username doesn't exist
 
-    const response = await request(app).post('/users/update-user').send({
+    const response = await request(app).post('/api/users/update-user').send({
       username: 'testuser',
       password: 'testpassword',
       securityQuestion: 'Your favorite color?',
@@ -335,7 +335,7 @@ describe('POST /users/update-user', () => {
       userDeleted: false,
     });
 
-    const response = await request(app).post('/users/update-user').send({
+    const response = await request(app).post('/api/users/update-user').send({
       username: 'testuser',
       password: 'testpassword',
       securityQuestion: 'Your favorite color?',
@@ -348,7 +348,7 @@ describe('POST /users/update-user', () => {
   it('returns 500 when there is a server error', async () => {
     prismaMock.user.findUnique.mockRejectedValue(new Error()); // Mocking database error
 
-    const response = await request(app).post('/users/update-user').send({
+    const response = await request(app).post('/api/users/update-user').send({
       username: 'testuser',
       password: 'testpassword',
       securityQuestion: 'Your favorite color?',
@@ -360,15 +360,17 @@ describe('POST /users/update-user', () => {
   });
 });
 
-describe('POST /users/update-username', () => {
+describe('POST /api/users/update-username', () => {
   afterEach(() => {
     jest.clearAllMocks();
   });
 
   it('returns 400 for validation errors', async () => {
-    const response = await request(app).post('/users/update-username').send({
-      // missing username
-    });
+    const response = await request(app)
+      .post('/api/users/update-username')
+      .send({
+        // missing username
+      });
 
     expect(response.status).toBe(400);
     expect(response.body.errors).toBeDefined();
@@ -378,9 +380,11 @@ describe('POST /users/update-username', () => {
     // Mocking the user check based on ID
     prismaMock.user.findUnique.mockResolvedValueOnce(null);
 
-    const response = await request(app).post('/users/update-username').send({
-      username: 'newUsername',
-    });
+    const response = await request(app)
+      .post('/api/users/update-username')
+      .send({
+        username: 'newUsername',
+      });
 
     expect(response.status).toBe(400);
   });
@@ -406,9 +410,11 @@ describe('POST /users/update-username', () => {
       userDeleted: false,
     });
 
-    const response = await request(app).post('/users/update-username').send({
-      username: 'existingUsername',
-    });
+    const response = await request(app)
+      .post('/api/users/update-username')
+      .send({
+        username: 'existingUsername',
+      });
 
     expect(response.status).toBe(400);
     expect(response.body.message).toBe('Username already exists');
@@ -437,9 +443,11 @@ describe('POST /users/update-username', () => {
       userDeleted: false,
     });
 
-    const response = await request(app).post('/users/update-username').send({
-      username: 'newUsername',
-    });
+    const response = await request(app)
+      .post('/api/users/update-username')
+      .send({
+        username: 'newUsername',
+      });
 
     expect(response.status).toBe(200);
   });
@@ -447,24 +455,28 @@ describe('POST /users/update-username', () => {
   it('returns 500 when there is a server error', async () => {
     prismaMock.user.findUnique.mockRejectedValue(new Error()); // Mocking database error
 
-    const response = await request(app).post('/users/update-username').send({
-      username: 'newUsername',
-    });
+    const response = await request(app)
+      .post('/api/users/update-username')
+      .send({
+        username: 'newUsername',
+      });
 
     expect(response.status).toBe(500);
     expect(response.body.message).toBe('Server error');
   });
 });
 
-describe('POST /users/update-password', () => {
+describe('POST /api/users/update-password', () => {
   afterEach(() => {
     jest.clearAllMocks();
   });
 
   it('returns 400 for validation errors', async () => {
-    const response = await request(app).post('/users/update-password').send({
-      // missing password
-    });
+    const response = await request(app)
+      .post('/api/users/update-password')
+      .send({
+        // missing password
+      });
 
     expect(response.status).toBe(400);
     expect(response.body.errors).toBeDefined();
@@ -474,9 +486,11 @@ describe('POST /users/update-password', () => {
     // Mocking the user check based on ID
     prismaMock.user.findUnique.mockResolvedValueOnce(null);
 
-    const response = await request(app).post('/users/update-password').send({
-      password: 'newPassword',
-    });
+    const response = await request(app)
+      .post('/api/users/update-password')
+      .send({
+        password: 'newPassword',
+      });
 
     expect(response.status).toBe(400);
   });
@@ -501,9 +515,11 @@ describe('POST /users/update-password', () => {
       userDeleted: false,
     });
 
-    const response = await request(app).post('/users/update-password').send({
-      password: 'newPassword',
-    });
+    const response = await request(app)
+      .post('/api/users/update-password')
+      .send({
+        password: 'newPassword',
+      });
 
     expect(response.status).toBe(200);
   });
@@ -511,16 +527,18 @@ describe('POST /users/update-password', () => {
   it('returns 500 when there is a server error', async () => {
     prismaMock.user.findUnique.mockRejectedValue(new Error()); // Mocking database error
 
-    const response = await request(app).post('/users/update-password').send({
-      password: 'newPassword',
-    });
+    const response = await request(app)
+      .post('/api/users/update-password')
+      .send({
+        password: 'newPassword',
+      });
 
     expect(response.status).toBe(500);
     expect(response.body.message).toBe('Server error');
   });
 });
 
-describe('DELETE /users/delete', () => {
+describe('DELETE /api/users/delete', () => {
   afterEach(() => {
     jest.clearAllMocks();
   });
@@ -535,7 +553,7 @@ describe('DELETE /users/delete', () => {
       userDeleted: true,
     });
 
-    const response = await request(app).delete('/users/delete').send();
+    const response = await request(app).delete('/api/users/delete').send();
 
     expect(response.status).toBe(200);
     expect(response.body.message).toBe('User successfully deleted');
@@ -544,14 +562,14 @@ describe('DELETE /users/delete', () => {
   it('returns 500 when there is a server error', async () => {
     prismaMock.user.update.mockRejectedValue(new Error());
 
-    const response = await request(app).delete('/users/delete').send();
+    const response = await request(app).delete('/api/users/delete').send();
 
     expect(response.status).toBe(500);
     expect(response.body.message).toBe('Server error');
   });
 });
 
-describe('GET /users/:userId/expenses', () => {
+describe('GET /api/users/:userId/expenses', () => {
   afterEach(() => {
     jest.clearAllMocks();
   });
@@ -561,7 +579,7 @@ describe('GET /users/:userId/expenses', () => {
   it('returns empty array if no expenses are found', async () => {
     prismaMock.expense.findMany.mockResolvedValue([]);
 
-    const response = await request(app).get('/users/1/expenses').send();
+    const response = await request(app).get('/api/users/1/expenses').send();
 
     expect(response.status).toBe(200);
     expect(response.body.data).toStrictEqual([]);
@@ -570,14 +588,14 @@ describe('GET /users/:userId/expenses', () => {
   it('returns 500 when there is a server error', async () => {
     prismaMock.expense.findMany.mockRejectedValue(new Error());
 
-    const response = await request(app).get('/users/1/expenses').send();
+    const response = await request(app).get('/api/users/1/expenses').send();
 
     expect(response.status).toBe(500);
     expect(response.body.message).toBe('Server error');
   });
 });
 
-describe('GET /users/:userId/budgets', () => {
+describe('GET /api/users/:userId/api/budgets', () => {
   afterEach(() => {
     jest.clearAllMocks();
   });
@@ -653,11 +671,11 @@ describe('GET /users/:userId/budgets', () => {
       mockExpenses[2],
     ]);
 
-    const response = await request(app).get('/users/1/budgets').send();
+    const response = await request(app).get('/api/users/1/budgets ').send();
 
     expect(response.status).toBe(200);
     expect(response.body.success).toBe(true);
-    expect(response.body.data).toHaveLength(3); // Expecting 2 budgets in the response
+    expect(response.body.data).toHaveLength(3); // Expecting 3 budgets in the response
 
     const groceryBudget = response.body.data.find(
       (budget: BudgetWithTotalExpense) => budget.id === 1,
@@ -689,7 +707,7 @@ describe('GET /users/:userId/budgets', () => {
     });
     prismaMock.budget.findMany.mockResolvedValue([]);
 
-    const response = await request(app).get('/users/1/budgets').send();
+    const response = await request(app).get('/api/users/1/budgets').send();
 
     expect(response.status).toBe(200);
     expect(response.body.data).toStrictEqual([]);
@@ -698,7 +716,7 @@ describe('GET /users/:userId/budgets', () => {
   it('returns 400 if user does not exist or is deleted', async () => {
     prismaMock.user.findUnique.mockResolvedValue(null); // Mocking no user
 
-    const response = await request(app).get('/users/1/budgets').send();
+    const response = await request(app).get('/api/users/1/budgets').send();
 
     expect(response.status).toBe(400);
     expect(response.body.message).toBe('Invalid Credentials');
@@ -707,14 +725,14 @@ describe('GET /users/:userId/budgets', () => {
   it('returns 500 when there is a server error', async () => {
     prismaMock.user.findUnique.mockRejectedValue(new Error());
 
-    const response = await request(app).get('/users/1/budgets').send();
+    const response = await request(app).get('/api/users/1/budgets').send();
 
     expect(response.status).toBe(500);
     expect(response.body.message).toBe('Server error');
   });
 });
 
-describe('GET /users/:userId/group-expenses', () => {
+describe('GET /api/users/:userId/api/group-expenses', () => {
   afterEach(() => {
     jest.clearAllMocks();
   });
@@ -776,7 +794,9 @@ describe('GET /users/:userId/group-expenses', () => {
 
     prismaMock.groupExpenseSplit.findMany.mockResolvedValueOnce(mockedData);
 
-    const response = await request(app).get('/users/1/group-expenses').send();
+    const response = await request(app)
+      .get('/api/users/1/group-expenses')
+      .send();
 
     expect(response.status).toBe(200);
     expect(response.body.success).toBe(true);
@@ -817,7 +837,9 @@ describe('GET /users/:userId/group-expenses', () => {
 
     prismaMock.groupExpenseSplit.findMany.mockResolvedValue([]);
 
-    const response = await request(app).get('/users/1/group-expenses').send();
+    const response = await request(app)
+      .get('/api/users/1/group-expenses')
+      .send();
 
     expect(response.status).toBe(200);
     expect(response.body.data).toStrictEqual([]);
@@ -826,7 +848,9 @@ describe('GET /users/:userId/group-expenses', () => {
   it('returns 400 if user does not exist or is deleted', async () => {
     prismaMock.user.findUnique.mockResolvedValue(null); // Mocking no user
 
-    const response = await request(app).get('/users/1/group-expenses').send();
+    const response = await request(app)
+      .get('/api/users/1/group-expenses')
+      .send();
 
     expect(response.status).toBe(400);
     expect(response.body.message).toBe('Invalid Credentials');
@@ -835,14 +859,16 @@ describe('GET /users/:userId/group-expenses', () => {
   it('returns 500 when there is a server error', async () => {
     prismaMock.user.findUnique.mockRejectedValue(new Error());
 
-    const response = await request(app).get('/users/1/group-expenses').send();
+    const response = await request(app)
+      .get('/api/users/1/group-expenses')
+      .send();
 
     expect(response.status).toBe(500);
     expect(response.body.message).toBe('Server error');
   });
 });
 
-describe('GET /users/:userId/expenses/total-daily', () => {
+describe('GET /api/users/:userId/expenses/total-daily', () => {
   afterEach(() => {
     jest.clearAllMocks();
   });
@@ -887,7 +913,7 @@ describe('GET /users/:userId/expenses/total-daily', () => {
     prismaMock.expense.findMany.mockResolvedValue(mockedExpenses);
 
     const response = await request(app).get(
-      '/users/1/expenses/total-daily?startDate=2023-10-12&endDate=2023-10-14',
+      '/api/users/1/expenses/total-daily?startDate=2023-10-12&endDate=2023-10-14',
     );
 
     expect(response.status).toBe(200);
@@ -910,7 +936,7 @@ describe('GET /users/:userId/expenses/total-daily', () => {
     prismaMock.user.findUnique.mockResolvedValue(null); // Mocking no user
 
     const response = await request(app).get(
-      '/users/1/expenses/total-daily?startDate=2023-10-12&endDate=2023-10-14',
+      '/api/users/1/expenses/total-daily?startDate=2023-10-12&endDate=2023-10-14',
     );
 
     expect(response.status).toBe(400);
@@ -929,7 +955,7 @@ describe('GET /users/:userId/expenses/total-daily', () => {
     prismaMock.user.findUnique.mockResolvedValue(user);
 
     const response = await request(app).get(
-      '/users/1/expenses/total-daily?startDate=2023-10-12&endDate=2023-10-14',
+      '/api/users/1/expenses/total-daily?startDate=2023-10-12&endDate=2023-10-14',
     );
 
     expect(response.status).toBe(400);
@@ -938,7 +964,7 @@ describe('GET /users/:userId/expenses/total-daily', () => {
 
   it('returns 400 when there is an error in the input format', async () => {
     const response = await request(app).get(
-      '/users/1/expenses/total-daily?startDate=random&endDate=string',
+      '/api/users/1/expenses/total-daily?startDate=random&endDate=string',
     );
 
     expect(response.status).toBe(400);
@@ -948,7 +974,7 @@ describe('GET /users/:userId/expenses/total-daily', () => {
     prismaMock.user.findUnique.mockRejectedValue(new Error());
 
     const response = await request(app).get(
-      '/users/1/expenses/total-daily?startDate=2023-10-12&endDate=2023-10-14',
+      '/api/users/1/expenses/total-daily?startDate=2023-10-12&endDate=2023-10-14',
     );
 
     expect(response.status).toBe(500);
@@ -956,7 +982,7 @@ describe('GET /users/:userId/expenses/total-daily', () => {
   });
 });
 
-describe('GET /users/:userId/expenses/total-spending-for-categories', () => {
+describe('GET /api/users/:userId/expenses/total-spending-for-categories', () => {
   afterEach(() => {
     jest.clearAllMocks();
   });
@@ -1009,7 +1035,7 @@ describe('GET /users/:userId/expenses/total-spending-for-categories', () => {
     prismaMock.expense.findMany.mockResolvedValue(mockedExpenses);
 
     const response = await request(app).get(
-      '/users/1/expenses/total-spending-for-categories?startDate=2023-10-12&endDate=2023-10-14',
+      '/api/users/1/expenses/total-spending-for-categories?startDate=2023-10-12&endDate=2023-10-14',
     );
 
     expect(response.status).toBe(200);
@@ -1032,7 +1058,7 @@ describe('GET /users/:userId/expenses/total-spending-for-categories', () => {
     prismaMock.user.findUnique.mockResolvedValue(null); // Mocking no user
 
     const response = await request(app).get(
-      '/users/1/expenses/total-spending-for-categories?startDate=2023-10-12&endDate=2023-10-14',
+      '/api/users/1/expenses/total-spending-for-categories?startDate=2023-10-12&endDate=2023-10-14',
     );
 
     expect(response.status).toBe(400);
@@ -1051,7 +1077,7 @@ describe('GET /users/:userId/expenses/total-spending-for-categories', () => {
     prismaMock.user.findUnique.mockResolvedValue(user);
 
     const response = await request(app).get(
-      '/users/1/expenses/total-spending-for-categories?startDate=2023-10-12&endDate=2023-10-14',
+      '/api/users/1/expenses/total-spending-for-categories?startDate=2023-10-12&endDate=2023-10-14',
     );
 
     expect(response.status).toBe(400);
@@ -1060,7 +1086,7 @@ describe('GET /users/:userId/expenses/total-spending-for-categories', () => {
 
   it('returns 400 when there is an error in the input format', async () => {
     const response = await request(app).get(
-      '/users/1/expenses/total-spending-for-categories?startDate=random&endDate=string',
+      '/api/users/1/expenses/total-spending-for-categories?startDate=random&endDate=string',
     );
 
     expect(response.status).toBe(400);
@@ -1070,7 +1096,7 @@ describe('GET /users/:userId/expenses/total-spending-for-categories', () => {
     prismaMock.user.findUnique.mockRejectedValue(new Error());
 
     const response = await request(app).get(
-      '/users/1/expenses/total-spending-for-categories?startDate=2023-10-12&endDate=2023-10-14',
+      '/api/users/1/expenses/total-spending-for-categories?startDate=2023-10-12&endDate=2023-10-14',
     );
 
     expect(response.status).toBe(500);

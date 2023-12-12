@@ -11,7 +11,7 @@ jest.mock('../../../middleware/authenticate', () => ({
   },
 }));
 
-describe('POST /budgets', () => {
+describe('POST /api/budgets', () => {
   afterEach(() => {
     jest.clearAllMocks();
   });
@@ -32,7 +32,7 @@ describe('POST /budgets', () => {
     };
 
     prismaMock.budget.create.mockResolvedValue(newBudget);
-    const response = await request(app).post('/budgets').send(budget);
+    const response = await request(app).post('/api/budgets').send(budget);
     expect(response.status).toBe(201);
     expect(response.body.budget).toEqual({ newBudget });
   });
@@ -52,7 +52,7 @@ describe('POST /budgets', () => {
     };
 
     prismaMock.budget.create.mockResolvedValue(newBudget);
-    const response = await request(app).post('/budgets').send(budget);
+    const response = await request(app).post('/api/budgets').send(budget);
     expect(response.status).toBe(201);
     expect(response.body.budget).toEqual({ newBudget });
   });
@@ -63,7 +63,7 @@ describe('POST /budgets', () => {
       amount: 'not a float',
     };
 
-    const response = await request(app).post('/budgets').send(budget);
+    const response = await request(app).post('/api/budgets').send(budget);
     expect(response.status).toBe(400);
     expect(response.body.errors[0].msg).toEqual('Amount must be a number');
   });
@@ -74,7 +74,7 @@ describe('POST /budgets', () => {
       amount: 100.0,
     };
 
-    const response = await request(app).post('/budgets').send(budget);
+    const response = await request(app).post('/api/budgets').send(budget);
     expect(response.status).toBe(400);
     expect(response.body.errors[0].msg).toEqual(
       'Duration must be a valid duration',
@@ -88,7 +88,7 @@ describe('POST /budgets', () => {
       amount: 100.0,
     };
 
-    const response = await request(app).post('/budgets').send(budget);
+    const response = await request(app).post('/api/budgets').send(budget);
     expect(response.status).toBe(400);
     expect(response.body.errors[0].msg).toEqual(
       'Category must be a valid category',
@@ -103,13 +103,13 @@ describe('POST /budgets', () => {
     };
 
     prismaMock.budget.create.mockRejectedValue(new Error('Server error'));
-    const response = await request(app).post('/budgets').send(budget);
+    const response = await request(app).post('/api/budgets').send(budget);
     expect(response.status).toBe(500);
     expect(response.body.message).toEqual('Server error');
   });
 });
 
-describe('DELETE /budgets/:budgetId', () => {
+describe('DELETE /api/budgets/:budgetId', () => {
   afterEach(() => {
     jest.clearAllMocks();
   });
@@ -126,7 +126,7 @@ describe('DELETE /budgets/:budgetId', () => {
     prismaMock.budget.findUnique.mockResolvedValue(newBudget);
     prismaMock.budget.delete.mockResolvedValue(newBudget);
 
-    const response = await request(app).delete('/budgets/1');
+    const response = await request(app).delete('/api/budgets/1');
 
     expect(response.status).toBe(200);
   });
@@ -134,7 +134,7 @@ describe('DELETE /budgets/:budgetId', () => {
   it('should return 404 is the expense is not found', async () => {
     prismaMock.budget.findUnique.mockResolvedValue(null);
 
-    const response = await request(app).delete('/budgets/1');
+    const response = await request(app).delete('/api/budgets/1');
 
     expect(response.status).toBe(404);
   });
@@ -142,14 +142,14 @@ describe('DELETE /budgets/:budgetId', () => {
   it('should return 500 if there is a server error', async () => {
     prismaMock.budget.findUnique.mockRejectedValue(new Error());
 
-    const response = await request(app).delete('/budgets/1');
+    const response = await request(app).delete('/api/budgets/1');
 
     expect(response.status).toBe(500);
     expect(response.body.message).toBe('Server error');
   });
 });
 
-describe('PUT /budgets/:budgetId', () => {
+describe('PUT /api/budgets/:budgetId', () => {
   afterEach(() => {
     jest.clearAllMocks();
   });
@@ -174,7 +174,7 @@ describe('PUT /budgets/:budgetId', () => {
 
     prismaMock.budget.update.mockResolvedValue(updatedBudget);
 
-    const response = await request(app).put('/budgets/1').send({
+    const response = await request(app).put('/api/budgets/1').send({
       category: ExpenseCategory.ENTERTAINMENT,
       duration: BudgetDuration.MONTHLY,
       amount: 10,
@@ -192,7 +192,7 @@ describe('PUT /budgets/:budgetId', () => {
   it('should return 404 is the budget is not found', async () => {
     prismaMock.budget.findUnique.mockResolvedValue(null);
 
-    const response = await request(app).put('/budgets/1').send({
+    const response = await request(app).put('/api/budgets/1').send({
       category: ExpenseCategory.ENTERTAINMENT,
       duration: BudgetDuration.MONTHLY,
       amount: 10,
@@ -204,7 +204,7 @@ describe('PUT /budgets/:budgetId', () => {
   it('should return 500 if there is a server error', async () => {
     prismaMock.budget.findUnique.mockRejectedValue(new Error());
 
-    const response = await request(app).put('/budgets/1').send({
+    const response = await request(app).put('/api/budgets/1').send({
       category: ExpenseCategory.ENTERTAINMENT,
       duration: BudgetDuration.MONTHLY,
       amount: 10,
@@ -224,7 +224,7 @@ describe('PUT /budgets/:budgetId', () => {
     };
     prismaMock.budget.findUnique.mockResolvedValue(budget);
 
-    const response = await request(app).put('/budgets/1').send({
+    const response = await request(app).put('/api/budgets/1').send({
       duration: 'random',
       amount: 'string',
     });

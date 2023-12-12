@@ -12,7 +12,7 @@ describe('Register', () => {
       securityAnswer: 'Blue',
     };
 
-    const response = await request(app).post('/users/register').send(userData);
+    const response = await request(app).post('/api/users/register').send(userData);
 
     expect(response.status).toBe(201);
     expect(response.body).toHaveProperty('user');

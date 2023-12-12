@@ -12,7 +12,7 @@ describe('Update user', () => {
       securityAnswer: 'Blue',
     };
 
-    await request(app).post('/users/register').send(userData);
+    await request(app).post('/api/users/register').send(userData);
 
     const userCreds = {
       username: userData.username,
@@ -20,7 +20,7 @@ describe('Update user', () => {
     };
 
     const loginResponse = await request(app)
-      .post('/users/login')
+      .post('/api/users/login')
       .send(userCreds);
 
     const newUserData = {
@@ -31,7 +31,7 @@ describe('Update user', () => {
     };
 
     const updateResponse = await request(app)
-      .post('/users/update-user')
+      .post('/api/users/update-user')
       .set('Authorization', `Bearer ${loginResponse.body.token}`)
       .send(newUserData);
 

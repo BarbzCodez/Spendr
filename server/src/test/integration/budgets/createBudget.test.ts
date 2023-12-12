@@ -10,8 +10,8 @@ describe('Create Budget', () => {
       securityQuestion: 'What is your favorite color?',
       securityAnswer: 'Blue',
     };
-    await request(app).post('/users/register').send(userData);
-    const loginResponse = await request(app).post('/users/login').send({
+    await request(app).post('/api/users/register').send(userData);
+    const loginResponse = await request(app).post('/api/users/login').send({
       username: userData.username,
       password: userData.password,
     });
@@ -24,7 +24,7 @@ describe('Create Budget', () => {
     };
 
     const budgetResponse = await request(app)
-      .post('/budgets')
+      .post('/api/budgets')
       .set('Authorization', `Bearer ${token}`)
       .send(budgetData);
 

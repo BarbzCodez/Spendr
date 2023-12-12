@@ -17,9 +17,13 @@ app.use(userErrorLog);
 app.use(sysErrorLog);
 
 // Routes
-app.use('/users', userRoutes);
-app.use('/expenses', expenseRoutes);
-app.use('/group-expenses', groupExpenseRoutes);
-app.use('/budgets', budgetRoutes);
+const apiRouter = express.Router();
+
+apiRouter.use('/users', userRoutes);
+apiRouter.use('/expenses', expenseRoutes);
+apiRouter.use('/group-expenses', groupExpenseRoutes);
+apiRouter.use('/budgets', budgetRoutes);
+
+app.use('/api', apiRouter);
 
 export default app;

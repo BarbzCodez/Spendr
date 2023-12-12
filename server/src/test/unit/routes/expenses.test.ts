@@ -11,7 +11,7 @@ jest.mock('../../../middleware/authenticate', () => ({
   },
 }));
 
-describe('POST /expenses', () => {
+describe('POST /api/expenses', () => {
   afterEach(() => {
     jest.clearAllMocks();
   });
@@ -35,7 +35,7 @@ describe('POST /expenses', () => {
 
     prismaMock.expense.create.mockResolvedValue(createdExpense);
 
-    const response = await request(app).post('/expenses').send(newExpense);
+    const response = await request(app).post('/api/expenses').send(newExpense);
 
     expect(response.status).toBe(201);
   });
@@ -48,7 +48,7 @@ describe('POST /expenses', () => {
       category: 'GROCERIES',
     };
 
-    const response = await request(app).post('/expenses').send(newExpense);
+    const response = await request(app).post('/api/expenses').send(newExpense);
 
     expect(response.status).toBe(400);
   });
@@ -61,7 +61,7 @@ describe('POST /expenses', () => {
       category: 'GROCERIES',
     };
 
-    const response = await request(app).post('/expenses').send(newExpense);
+    const response = await request(app).post('/api/expenses').send(newExpense);
 
     expect(response.status).toBe(201);
   });
@@ -74,7 +74,7 @@ describe('POST /expenses', () => {
       category: 'GROCERIES',
     };
 
-    const response = await request(app).post('/expenses').send(newExpense);
+    const response = await request(app).post('/api/expenses').send(newExpense);
 
     expect(response.status).toBe(400);
   });
@@ -89,14 +89,14 @@ describe('POST /expenses', () => {
 
     prismaMock.expense.create.mockRejectedValue(new Error('Server error'));
 
-    const response = await request(app).post('/expenses').send(newExpenseData);
+    const response = await request(app).post('/api/expenses').send(newExpenseData);
 
     expect(response.status).toBe(500);
     expect(response.body.message).toBe('Server error');
   });
 });
 
-describe('GET /expenses/:expenseId', () => {
+describe('GET /api/expenses/:expenseId', () => {
   afterEach(() => {
     jest.clearAllMocks();
   });
@@ -113,7 +113,7 @@ describe('GET /expenses/:expenseId', () => {
 
     prismaMock.expense.findUnique.mockResolvedValue(expense);
 
-    const response = await request(app).get('/expenses/1');
+    const response = await request(app).get('/api/expenses/1');
 
     expect(response.status).toBe(200);
   });
@@ -121,7 +121,7 @@ describe('GET /expenses/:expenseId', () => {
   it('should return 404 if the expense id is not found', async () => {
     prismaMock.expense.findUnique.mockResolvedValue(null);
 
-    const response = await request(app).get('/expenses/1');
+    const response = await request(app).get('/api/expenses/1');
 
     expect(response.status).toBe(404);
   });
@@ -129,14 +129,14 @@ describe('GET /expenses/:expenseId', () => {
   it('should return 500 if there is a server error', async () => {
     prismaMock.expense.findUnique.mockRejectedValue(new Error());
 
-    const response = await request(app).get('/expenses/1');
+    const response = await request(app).get('/api/expenses/1');
 
     expect(response.status).toBe(500);
     expect(response.body.message).toBe('Server error');
   });
 });
 
-describe('PUT /expenses/:expenseId', () => {
+describe('PUT /api/expenses/:expenseId', () => {
   afterEach(() => {
     jest.clearAllMocks();
   });
@@ -163,7 +163,7 @@ describe('PUT /expenses/:expenseId', () => {
 
     prismaMock.expense.update.mockResolvedValue(updatedExpense);
 
-    const response = await request(app).put('/expenses/1').send({
+    const response = await request(app).put('/api/expenses/1').send({
       title: 'Updated Expense',
       amount: 100,
       createdAt: '2023-10-12T10:20:30Z',
@@ -174,7 +174,7 @@ describe('PUT /expenses/:expenseId', () => {
   });
 
   it('should return 400 if the title is invalid', async () => {
-    const response = await request(app).put('/expenses/1').send({
+    const response = await request(app).put('/api/expenses/1').send({
       title: 1234,
       amount: 100,
       createdAt: '2023-10-12T10:20:30Z',
@@ -187,7 +187,7 @@ describe('PUT /expenses/:expenseId', () => {
   it('should return 404 is the expense is not found', async () => {
     prismaMock.expense.findUnique.mockResolvedValue(null);
 
-    const response = await request(app).put('/expenses/1').send({
+    const response = await request(app).put('/api/expenses/1').send({
       title: 'Test Expense',
       amount: 100,
       createdAt: '2023-10-12T10:20:30Z',
@@ -200,7 +200,7 @@ describe('PUT /expenses/:expenseId', () => {
   it('should return 500 if there is a server error', async () => {
     prismaMock.expense.findUnique.mockRejectedValue(new Error());
 
-    const response = await request(app).put('/expenses/1').send({
+    const response = await request(app).put('/api/expenses/1').send({
       title: 'Test Expense',
       amount: 100,
       createdAt: '2023-10-12T10:20:30Z',
@@ -212,7 +212,7 @@ describe('PUT /expenses/:expenseId', () => {
   });
 });
 
-describe('DELETE /expenses/:expenseId', () => {
+describe('DELETE /api/expenses/:expenseId', () => {
   afterEach(() => {
     jest.clearAllMocks();
   });
@@ -230,7 +230,7 @@ describe('DELETE /expenses/:expenseId', () => {
     prismaMock.expense.findUnique.mockResolvedValue(expense);
     prismaMock.expense.delete.mockResolvedValue(expense);
 
-    const response = await request(app).delete('/expenses/1');
+    const response = await request(app).delete('/api/expenses/1');
 
     expect(response.status).toBe(200);
   });
@@ -238,7 +238,7 @@ describe('DELETE /expenses/:expenseId', () => {
   it('should return 404 is the expense is not found', async () => {
     prismaMock.expense.findUnique.mockResolvedValue(null);
 
-    const response = await request(app).delete('/expenses/1');
+    const response = await request(app).delete('/api/expenses/1');
 
     expect(response.status).toBe(404);
   });
@@ -246,7 +246,7 @@ describe('DELETE /expenses/:expenseId', () => {
   it('should return 500 if there is a server error', async () => {
     prismaMock.expense.findUnique.mockRejectedValue(new Error());
 
-    const response = await request(app).delete('/expenses/1');
+    const response = await request(app).delete('/api/expenses/1');
 
     expect(response.status).toBe(500);
     expect(response.body.message).toBe('Server error');

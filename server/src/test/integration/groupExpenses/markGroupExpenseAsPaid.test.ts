@@ -10,8 +10,8 @@ describe('Mark group expense as paid', () => {
       securityQuestion: 'What is your favorite color?',
       securityAnswer: 'Blue',
     };
-    await request(app).post('/users/register').send(userData);
-    const loginResponse = await request(app).post('/users/login').send({
+    await request(app).post('/api/users/register').send(userData);
+    const loginResponse = await request(app).post('/api/users/login').send({
       username: userData.username,
       password: userData.password,
     });
@@ -24,7 +24,7 @@ describe('Mark group expense as paid', () => {
       securityQuestion: 'What is your favorite color?',
       securityAnswer: 'Blue',
     };
-    await request(app).post('/users/register').send(secondUserData);
+    await request(app).post('/api/users/register').send(secondUserData);
 
     const groupExpenseData = {
       title: 'Costco',
@@ -35,14 +35,14 @@ describe('Mark group expense as paid', () => {
     };
 
     const groupExpenseResponse = await request(app)
-      .post('/group-expenses')
+      .post('/api/group-expenses')
       .set('Authorization', `Bearer ${token}`)
       .send(groupExpenseData);
 
     const groupExpenseId = groupExpenseResponse.body.groupExpense.id;
 
     const markAsPaidResponse = await request(app)
-      .put(`/group-expenses/${groupExpenseId}/mark-as-paid`)
+      .put(`/api/group-expenses/${groupExpenseId}/mark-as-paid`)
       .set('Authorization', `Bearer ${token}`);
 
     expect(markAsPaidResponse.status).toBe(201);
