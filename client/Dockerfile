@@ -15,9 +15,6 @@ COPY . .
 ARG REACT_APP_API_URL
 ARG REACT_APP_EDENAI_API_KEY
 
-RUN echo $REACT_APP_API_URL
-RUN echo $REACT_APP_EDENAI_API_KEY
-
 # Build the app for production
 RUN npm run build
 
