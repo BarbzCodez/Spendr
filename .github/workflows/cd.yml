@@ -118,7 +118,5 @@ jobs:
         tags: ${{ steps.meta.outputs.tags }}
         labels: ${{ steps.meta.outputs.labels }}
         build-args: |
+          REACT_APP_EDENAI_API_KEY=${{ secrets.REACT_APP_EDENAI_API_KEY }}
           REACT_APP_API_URL=http://spendr.pro
-          REACT_APP_EDENAI_API_KEY=${{ secrets.REACT_APP_EDENAI_API_KEY }}
-        secrets: |
-          REACT_APP_EDENAI_API_KEY=${{ secrets.REACT_APP_EDENAI_API_KEY }}
