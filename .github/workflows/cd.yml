@@ -2,7 +2,7 @@ name: 'Spendr Continuous Deployment'
 
 on:
   push:
-    branches: [edenai-prod]
+    branches: [main]
 
 jobs:
   build-server:
@@ -51,7 +51,7 @@ jobs:
     name: 'spendr server continuous deployment - publish'
     needs: build-server
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/edenai-prod'
+    if: github.ref == 'refs/heads/main'
 
     steps:
     - name: checkout code
@@ -82,7 +82,7 @@ jobs:
     name: 'spendr client continuous deployment - publish'
     needs: build-client
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/edenai-prod'
+    if: github.ref == 'refs/heads/main'
 
     steps:
     - name: checkout code
@@ -118,5 +118,5 @@ jobs:
         tags: ${{ steps.meta.outputs.tags }}
         labels: ${{ steps.meta.outputs.labels }}
         build-args: |
-          REACT_APP_EDENAI_API_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiZmM1ZGUyZWUtNzFlYi00OWY4LWI4OGItMWJiNjM3YWVkZGQ5IiwidHlwZSI6ImFwaV90b2tlbiJ9.3JyVbqmn17CKozrbIawWh9-8eZaiyH6LDX6Ld3sa_DQ
+          REACT_APP_EDENAI_API_KEY={{ secrets.REACT_APP_EDENAI_API_KEY }}
           REACT_APP_API_URL=http://spendr.pro
